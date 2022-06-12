@@ -1,7 +1,6 @@
-package com.example.inr_management_md3.ui.theme
+package com.example.inr_management_md3.presentation.theme
 
 import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
