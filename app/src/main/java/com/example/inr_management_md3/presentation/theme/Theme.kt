@@ -2,12 +2,12 @@ package com.example.inr_management_md3.presentation.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.*
-import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 
@@ -38,7 +38,7 @@ private val LightThemeColors = lightColorScheme(
     outline = md_theme_light_outline,
     inverseOnSurface = md_theme_light_inverseOnSurface,
     inverseSurface = md_theme_light_inverseSurface,
-    inversePrimary = md_theme_light_inversePrimary,
+    inversePrimary = md_theme_light_inversePrimary
 )
 private val DarkThemeColors = darkColorScheme(
 
@@ -67,7 +67,7 @@ private val DarkThemeColors = darkColorScheme(
     outline = md_theme_dark_outline,
     inverseOnSurface = md_theme_dark_inverseOnSurface,
     inverseSurface = md_theme_dark_inverseSurface,
-    inversePrimary = md_theme_dark_inversePrimary,
+    inversePrimary = md_theme_dark_inversePrimary
 )
 
 @Composable
