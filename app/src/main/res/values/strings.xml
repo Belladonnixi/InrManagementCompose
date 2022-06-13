@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Inr Management</string>
+    <string name="home">Home</string>
+    <string name="dose">Dose</string>
+    <string name="measure">Measure</string>
+    <string name="calendar">Calendar</string>
+    <string name="statistic">Statistics</string>
+    <string name="settings">Set</string>
+    <string name="set_measure">INR Measure</string>
+    <string name="set_target_range">Target Range</string>
+    <string name="set_medicament">Medicament</string>
+    <string name="set_dose_week">Dose Week</string>
+    <string name="set_dose_interval">Dose Interval</string>
+    <string name="dose_adjustment">Dose Adjustment</string>
+    <string name="calendar_month_view">Calendar</string>
+    <string name="calendar_list_view">Calendar</string>
+    <string name="calendar_day">Calendar</string>
+    <string name="calendar_comment">Comment</string>
+    <string name="statistc_charts">Statistics</string>
 </resources>
