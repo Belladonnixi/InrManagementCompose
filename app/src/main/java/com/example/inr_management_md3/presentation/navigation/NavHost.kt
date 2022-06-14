@@ -1,4 +1,4 @@
-/** CopyRight 2022 Jessica Ernst */
+/** Copyright © 2022 Jessica Ernst */
 
 package com.example.inr_management_md3.presentation.navigation
 
