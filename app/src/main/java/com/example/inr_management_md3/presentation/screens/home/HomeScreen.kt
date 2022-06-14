@@ -1,17 +1,31 @@
 package com.example.inr_management_md3.presentation.screens
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.inr_management_md3.R
+import com.example.inr_management_md3.presentation.components.BottomNavBar
+import com.example.inr_management_md3.presentation.navigation.Screens
+import com.example.inr_management_md3.presentation.navigation.items
 import com.example.inr_management_md3.presentation.screens.home.StatisticCard
 import com.example.inr_management_md3.presentation.screens.home.TodayDoseCard
 import com.example.inr_management_md3.presentation.screens.home.TomorrowDoseInrCard
@@ -20,7 +34,7 @@ import com.example.inr_management_md3.presentation.theme.nautigalFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -34,7 +48,7 @@ fun HomeScreen() {
                 },
                 actions = {
                     IconButton(
-                        onClick = { /* doSomething() */ }
+                        onClick = { navController.navigate(Screens.Settings.route) }
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Settings,
@@ -71,9 +85,13 @@ fun HomeScreen() {
                 }
             }
         },
-        bottomBar = {}
+        bottomBar = {
+            BottomNavBar(navController = navController)
+        }
     )
 }
+
+
 
 @Preview(name = "Light Mode")
 @Preview(
@@ -84,6 +102,7 @@ fun HomeScreen() {
 @Composable
 fun PreviewCardsorderedCard() {
     INR_Management_Theme {
-        HomeScreen()
+        val navController = rememberNavController()
+        HomeScreen(navController)
     }
 }
