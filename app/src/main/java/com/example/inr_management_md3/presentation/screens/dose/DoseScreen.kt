@@ -11,8 +11,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.inr_management_md3.R
+import com.example.inr_management_md3.presentation.components.BottomNavBar
 import com.example.inr_management_md3.presentation.navigation.Screens
-import com.example.inr_management_md3.presentation.screens.BottomNavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
