@@ -1,3 +1,5 @@
+/** CopyRight 2022 Jessica Ernst */
+
 package com.example.inr_management_md3.presentation.screens.settings
 
 import androidx.compose.material.icons.Icons
@@ -8,7 +10,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.BottomNavBar
-import com.example.inr_management_md3.presentation.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -22,7 +23,7 @@ fun SettingsScreen(navController: NavHostController) {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate(Screens.Home.route) }) {
+                    IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Localized description"

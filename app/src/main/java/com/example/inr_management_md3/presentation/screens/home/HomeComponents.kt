@@ -1,14 +1,14 @@
+/** CopyRight 2022 Jessica Ernst */
+
 package com.example.inr_management_md3.presentation.screens.home
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.DefaultShadowColor
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,16 +65,3 @@ fun StatisticCard() {
     ) {
     }
 }
-
-// @Preview(name = "Light Mode")
-// @Preview(
-//    name = "Dark Mde",
-//    uiMode = Configuration.UI_MODE_NIGHT_YES,
-//    showBackground = true
-// )
-// @Composable
-// fun PreviewCardsorderedCard() {
-//    INR_Management_Theme {
-//        TomorrowDoseInrCard()
-//    }
-// }

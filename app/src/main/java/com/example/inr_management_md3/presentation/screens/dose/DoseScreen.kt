@@ -1,3 +1,5 @@
+/** CopyRight 2022 Jessica Ernst */
+
 package com.example.inr_management_md3.presentation.screens.dose
 
 import androidx.compose.foundation.layout.size
