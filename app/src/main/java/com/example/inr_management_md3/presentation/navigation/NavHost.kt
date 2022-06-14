@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.inr_management_md3.presentation.screens.HomeScreen
+import com.example.inr_management_md3.presentation.screens.dose.DoseScreen
+import com.example.inr_management_md3.presentation.screens.settings.SettingsScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 
@@ -38,27 +40,47 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier) {
                 else null
             }
         ) {
-            HomeScreen()
+            HomeScreen(navController)
         }
 
-//        composable(
-//            Screens.SettingsScreen.route,
-//            enterTransition = {
-//                if (initialState.destination.route == Screens.HomeScreen.route) slideIntoContainer(
-//                    AnimatedContentScope.SlideDirection.Left,
-//                    animationSpec = tween(600)
-//                )
-//                else null
-//            },
-//            exitTransition = {
-//                if (targetState.destination.route == Screens.HomeScreen.route) slideOutOfContainer(
-//                    AnimatedContentScope.SlideDirection.Right,
-//                    animationSpec = tween(600)
-//                )
-//                else null
-//            }
-//        ) {
-//            SettingsScreen(navController)
-//        }
+        composable(
+            Screens.Settings.route,
+            enterTransition = {
+                if (initialState.destination.route == Screens.Home.route) slideIntoContainer(
+                    AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(600)
+                )
+                else null
+            },
+            exitTransition = {
+                if (targetState.destination.route == Screens.Home.route) slideOutOfContainer(
+                    AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(600)
+                )
+                else null
+            }
+        ) {
+            SettingsScreen(navController)
+        }
+
+        composable(
+            Screens.Dose.route,
+            enterTransition = {
+                if (initialState.destination.route == Screens.Home.route) slideIntoContainer(
+                    AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(600)
+                )
+                else null
+            },
+            exitTransition = {
+                if (targetState.destination.route == Screens.Home.route) slideOutOfContainer(
+                    AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(600)
+                )
+                else null
+            }
+        ) {
+            DoseScreen(navController)
+        }
     }
 }
