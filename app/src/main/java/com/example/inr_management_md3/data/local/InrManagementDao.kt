@@ -7,6 +7,5 @@ import androidx.room.Dao
 @Dao
 interface InrManagementDao {
 
-//    @Insert(onConflict = REPLACE)
-//    suspend fun
+
 }

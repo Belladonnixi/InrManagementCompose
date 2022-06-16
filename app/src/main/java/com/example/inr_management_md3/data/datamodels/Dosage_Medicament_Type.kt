@@ -5,10 +5,10 @@ package com.example.inr_management_md3.data.datamodels
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "medicament")
-data class Medicament(
+@Entity(tableName = "dosage_medicament_type")
+data class Dosage_Medicament_Type(
     @PrimaryKey(autoGenerate = true)
-    val id_medicament: Long = 0,
-    val name: String = "",
+    val id_dosage_medicament_type: Long = 0,
+    val divisibility: Float = 0f,
     val type: String = ""
 )

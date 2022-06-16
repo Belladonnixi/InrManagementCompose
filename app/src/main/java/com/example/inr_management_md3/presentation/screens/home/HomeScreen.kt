@@ -49,7 +49,7 @@ fun HomeScreen(navController: NavController) {
                             imageVector = Icons.Filled.Settings,
                             contentDescription = "Settings",
                             tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(40.dp)
+                            modifier = Modifier.size(30.dp)
                         )
                     }
                 }
