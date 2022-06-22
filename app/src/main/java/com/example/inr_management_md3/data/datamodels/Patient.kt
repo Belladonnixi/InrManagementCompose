@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
     tableName = "patient",
     foreignKeys = [
         ForeignKey(
-            entity = Medicament_Dosage::class,
+            entity = MedicamentDosage::class,
             parentColumns = ["id_medicament_dosage"],
             childColumns = ["medicament_dosage_id"],
             onDelete = ForeignKey.RESTRICT,
@@ -20,7 +20,7 @@ import androidx.room.PrimaryKey
 )
 data class Patient(
     @PrimaryKey(autoGenerate = true)
-    val id_Patient: Long = 0,
+    val id_patient: Long = 0,
     val account_Id: Long = 0,
     val target_range_from: Float = 0f,
     val target_range_to: Float = 0f,

@@ -7,7 +7,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "base_medication_weekdays",
+    tableName = "base_medication_interval",
     foreignKeys = [
         ForeignKey(
             entity = Patient::class,
@@ -17,7 +17,7 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.RESTRICT
         ),
         ForeignKey(
-            entity = Medicament_Dosage::class,
+            entity = MedicamentDosage::class,
             parentColumns = ["id_medicament_dosage"],
             childColumns = ["medicament_dosage_id"],
             onUpdate = ForeignKey.RESTRICT,
@@ -25,10 +25,12 @@ import androidx.room.PrimaryKey
         )
     ]
 )
-data class Base_Medication_Weekdays(
+data class BaseMedicationInterval(
     @PrimaryKey(autoGenerate = true)
-    val id_base_medication_weekdays: Long = 0,
-    val weekdays_dosage: Float = 0f,
+    val id_base_medication_interval: Long = 0,
+    val dosage_on_taking_days: Float = 0f,
+    val taking_days_row: Int = 0,
+    val taking_break_days_row: Int = 0,
     val patient_id: Long = 0,
     val medicament_dosage_id: Long = 0
 )

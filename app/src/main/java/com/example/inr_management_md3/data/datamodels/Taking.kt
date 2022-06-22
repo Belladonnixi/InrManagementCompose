@@ -5,20 +5,19 @@ package com.example.inr_management_md3.data.datamodels
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity(
     tableName = "taking",
     foreignKeys = [
         ForeignKey(
-            entity = Base_Medication_Weekdays::class,
+            entity = BaseMedicationWeekdays::class,
             parentColumns = ["id_base_medication_weekdays"],
             childColumns = ["base_medication_weekdays_id"],
             onUpdate = ForeignKey.RESTRICT,
             onDelete = ForeignKey.RESTRICT
         ),
         ForeignKey(
-            entity = Base_Medication_Interval::class,
+            entity = BaseMedicationInterval::class,
             parentColumns = ["id_base_medication_interval"],
             childColumns = ["base_medication_interval_id"],
             onUpdate = ForeignKey.RESTRICT,
@@ -39,8 +38,8 @@ data class Taking(
     val base_medication_weekdays_id: Long = 0,
     val base_medication_interval_id: Long = 0,
     val patient_id: Long = 0,
-    val time_specified: Date? = null,
-    val taking_time: Date? = null,
-    val taking_date: Date? = null,
+    val time_specified: String = "",
+    val taking_time: String = "",
+    val taking_date: String = "",
     val comment_day: String = ""
 )
