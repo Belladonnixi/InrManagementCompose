@@ -1,3 +1,5 @@
+/** Copyright 2022 Jessica Ernst */
+
 package com.example.inr_management_md3.presentation.screens.dose
 
 import androidx.compose.foundation.layout.size
@@ -8,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.inr_management_md3.R
@@ -20,7 +23,12 @@ fun DoseScreen(navController: NavController) {
     Scaffold(
         topBar = {
             SmallTopAppBar(
-                title = { Text(text = stringResource(id = R.string.dose)) },
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.dose),
+                        fontWeight = FontWeight.SemiBold
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate(Screens.Home.route) }) {
                         Icon(
@@ -37,7 +45,7 @@ fun DoseScreen(navController: NavController) {
                             imageVector = Icons.Filled.Settings,
                             contentDescription = "Settings",
                             tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(40.dp)
+                            modifier = Modifier.size(30.dp)
                         )
                     }
                 }
