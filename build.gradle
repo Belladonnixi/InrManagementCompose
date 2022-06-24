@@ -15,6 +15,20 @@ plugins {
     id 'com.android.application' version '7.2.1' apply false
     id 'com.android.library' version '7.2.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.6.21' apply false
+    id 'com.diffplug.spotless' version '6.2.2'
+}
+
+subprojects {
+    apply(plugin: 'com.diffplug.spotless')
+    spotless {
+        kotlin {
+            target("**/*.kt")
+            licenseHeaderFile(
+                    rootProject.file("${project.rootDir}/spotless/copyright.kt"),
+                    "^(package|object|import|interface)"
+            )
+        }
+    }
 }
 
 task clean(type: Delete) {
