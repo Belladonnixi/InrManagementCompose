@@ -38,12 +38,12 @@ import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsMenu(navController: NavController) {
-    Card(
+    ElevatedCard(
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surfaceVariant),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(24.dp)
-
+            .padding(16.dp),
+        elevation = CardDefaults.cardElevation(10.dp)
     ) {
         Row(
             modifier = Modifier
