@@ -12,6 +12,8 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+
 package com.example.inr_management_md3.presentation.screens
 
 import android.content.res.Configuration
