@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.inr_management_md3.presentation.navigation.Screens
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,7 +64,7 @@ fun SettingsMenu(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { navController.navigate(Screens.SetMedicament.route) },
                 ) {
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -93,7 +94,7 @@ fun SettingsMenu(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { navController.navigate(Screens.SetTargetRange.route) },
                 ) {
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -123,7 +124,7 @@ fun SettingsMenu(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { navController.navigate(Screens.SetMeasure.route) },
                 ) {
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -153,7 +154,7 @@ fun SettingsMenu(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { navController.navigate(Screens.About.route) },
                 ) {
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -172,7 +173,7 @@ fun SettingsMenu(navController: NavController) {
     showBackground = true
 )
 @Composable
-fun PreviewCardsorderedCard() {
+fun PreviewSettingsMenuCard() {
     INR_Management_Theme {
         val navController = rememberNavController()
         SettingsMenu(navController)

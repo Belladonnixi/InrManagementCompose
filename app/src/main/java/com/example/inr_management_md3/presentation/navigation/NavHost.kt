@@ -24,10 +24,14 @@ import androidx.compose.animation.shrinkOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.inr_management_md3.presentation.screens.HomeScreen
+import com.example.inr_management_md3.presentation.screens.about.AboutScreen
 import com.example.inr_management_md3.presentation.screens.calendar.CalendarScreen
 import com.example.inr_management_md3.presentation.screens.dose.DoseScreen
 import com.example.inr_management_md3.presentation.screens.measure.MeasureScreen
+import com.example.inr_management_md3.presentation.screens.settings.MeasureSettingsScreen
+import com.example.inr_management_md3.presentation.screens.settings.MedicamentSettingsScreen
 import com.example.inr_management_md3.presentation.screens.settings.SettingsScreen
+import com.example.inr_management_md3.presentation.screens.settings.TargetRangeSettingsScreen
 import com.example.inr_management_md3.presentation.screens.statistics.StatisticsScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -159,6 +163,86 @@ fun AppNavigation(navController: NavHostController) {
             }
         ) {
             StatisticsScreen(navController)
+        }
+
+        composable(
+            Screens.SetMedicament.route,
+            enterTransition = {
+                if (initialState.destination.route == Screens.Settings.route) slideIntoContainer(
+                    AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(600)
+                )
+                else null
+            },
+            exitTransition = {
+                if (targetState.destination.route == Screens.Settings.route) slideOutOfContainer(
+                    AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(600)
+                )
+                else null
+            }
+        ) {
+            MedicamentSettingsScreen(navController)
+        }
+
+        composable(
+            Screens.SetTargetRange.route,
+            enterTransition = {
+                if (initialState.destination.route == Screens.Settings.route) slideIntoContainer(
+                    AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(600)
+                )
+                else null
+            },
+            exitTransition = {
+                if (targetState.destination.route == Screens.Settings.route) slideOutOfContainer(
+                    AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(600)
+                )
+                else null
+            }
+        ) {
+            TargetRangeSettingsScreen(navController)
+        }
+
+        composable(
+            Screens.SetMeasure.route,
+            enterTransition = {
+                if (initialState.destination.route == Screens.Settings.route) slideIntoContainer(
+                    AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(600)
+                )
+                else null
+            },
+            exitTransition = {
+                if (targetState.destination.route == Screens.Settings.route) slideOutOfContainer(
+                    AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(600)
+                )
+                else null
+            }
+        ) {
+            MeasureSettingsScreen(navController)
+        }
+
+        composable(
+            Screens.About.route,
+            enterTransition = {
+                if (initialState.destination.route == Screens.Settings.route) slideIntoContainer(
+                    AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(600)
+                )
+                else null
+            },
+            exitTransition = {
+                if (targetState.destination.route == Screens.Settings.route) slideOutOfContainer(
+                    AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(600)
+                )
+                else null
+            }
+        ) {
+            AboutScreen(navController = navController)
         }
     }
 }

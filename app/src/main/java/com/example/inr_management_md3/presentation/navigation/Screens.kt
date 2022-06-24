@@ -34,6 +34,7 @@ sealed class Screens(val route: String, @StringRes val resourceId: Int, @Drawabl
     object CalendarDay : Screens("calendarDay", R.string.calendar_day, R.drawable.ic_baseline_calendar_month_24)
     object CalendarComment : Screens("calendarCommentScreen", R.string.calendar_comment, R.drawable.ic_baseline_calendar_month_24)
     object StatisticCharts : Screens("statisticChartsScreen", R.string.statistc_charts, R.drawable.statistics)
+    object About : Screens("about", R.string.about, R.drawable.ic_launcher_foreground)
 }
 
 val items = listOf(
