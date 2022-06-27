@@ -16,10 +16,12 @@
 
 package com.example.inr_management_md3.presentation.screens.settings
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
@@ -50,7 +52,9 @@ fun MedicamentSettingsScreen(navController: NavHostController) {
                 }
             )
         },
-        content = {},
+        content = { innerPadding ->
+            MedicamentSettings(modifier = Modifier.padding(innerPadding))
+        },
         bottomBar = {
             BottomNavBar(navController = navController)
         }

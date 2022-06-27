@@ -20,23 +20,57 @@
 package com.example.inr_management_md3.presentation.screens.settings
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Update
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
-import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
+import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdownEnglish
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 
 @Composable
-fun MedicamentSettings() {
+fun MedicamentSettings(modifier: Modifier) {
+    var checked by remember { mutableStateOf(false) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 40.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 50.dp, bottom = 30.dp)
+        ) {
+            MedicamentTypeExposedDropdown()
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 40.dp, bottom = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Enable notification")
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.End,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Switch(
+                        checked = checked,
+                        onCheckedChange = { checked = it }
+                    )
+                }
+            }
+            TimePickerTextFieldDropdownEnglish()
+
+            Button(onClick = { /* Do something! */ }) { Text("Button") }
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,14 +88,15 @@ fun MedicamentTypeExposedDropdown() {
 
     ExposedDropdownMenuBox(
         expanded = expanded,
-        onExpandedChange = { expanded = !expanded }
+        onExpandedChange = { expanded = !expanded },
     ) {
         TextField(
             value = selectedOptionText,
             onValueChange = {},
             readOnly = true,
             label = { Text(stringResource(R.string.choose_medicament_type)) },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) }
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            modifier = Modifier.fillMaxWidth()
         )
         ExposedDropdownMenu(
             expanded = expanded, onDismissRequest = { expanded = false }
@@ -79,8 +114,6 @@ fun MedicamentTypeExposedDropdown() {
     }
 }
 
-
-
 @Preview(name = "Light Mode")
 @Preview(
     name = "Dark Mde",
@@ -90,7 +123,7 @@ fun MedicamentTypeExposedDropdown() {
 @Composable
 fun PreviewMedicamentSettings() {
     INR_Management_Theme {
-        MedicamentSettings()
+        MedicamentSettings(modifier = Modifier)
     }
 }
 
@@ -106,5 +139,3 @@ fun PreviewMedicamentTypeExposedDropdown() {
         MedicamentTypeExposedDropdown()
     }
 }
-
-
