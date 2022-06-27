@@ -52,8 +52,8 @@ fun MedicamentSettingsScreen(navController: NavHostController) {
                 }
             )
         },
-        content = { innerPadding ->
-            MedicamentSettings(modifier = Modifier.padding(innerPadding))
+        content = {
+            MedicamentSettings()
         },
         bottomBar = {
             BottomNavBar(navController = navController)

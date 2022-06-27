@@ -33,7 +33,7 @@ import com.example.inr_management_md3.presentation.components.TimePickerTextFiel
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 
 @Composable
-fun MedicamentSettings(modifier: Modifier) {
+fun MedicamentSettings() {
     var checked by remember { mutableStateOf(false) }
 
     Box(
@@ -123,7 +123,7 @@ fun MedicamentTypeExposedDropdown() {
 @Composable
 fun PreviewMedicamentSettings() {
     INR_Management_Theme {
-        MedicamentSettings(modifier = Modifier)
+        MedicamentSettings()
     }
 }
 
