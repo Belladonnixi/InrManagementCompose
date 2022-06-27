@@ -1,15 +1,18 @@
 /**
  * Copyright © 2022 Jessica Ernst
  *
- * This project and source code may use libraries or frameworks that are released under various
- * Open-Source licenses. Use of those libraries and frameworks are governed by their own individual
- * licenses.
-
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
- * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * This project and source code may use libraries or frameworks that are
+ * released under various Open-Source licenses. Use of those libraries
+ * and frameworks are governed by their own individual licenses.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+ * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
 @file:Suppress("OPT_IN_IS_NOT_ENABLED")
@@ -23,10 +26,10 @@ import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.inr_management_md3.presentation.screens.HomeScreen
 import com.example.inr_management_md3.presentation.screens.about.AboutScreen
 import com.example.inr_management_md3.presentation.screens.calendar.CalendarScreen
 import com.example.inr_management_md3.presentation.screens.dose.DoseScreen
+import com.example.inr_management_md3.presentation.screens.home.HomeScreen
 import com.example.inr_management_md3.presentation.screens.measure.MeasureScreen
 import com.example.inr_management_md3.presentation.screens.settings.MeasureSettingsScreen
 import com.example.inr_management_md3.presentation.screens.settings.MedicamentSettingsScreen

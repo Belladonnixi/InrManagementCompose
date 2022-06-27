@@ -19,4 +19,5 @@
     <string name="statistc_charts">Statistics</string>
     <string name="measure_screen">INR Measure</string>
     <string name="about">About</string>
+    <string name="choose_medicament_type">Choose medicament type</string>
 </resources>

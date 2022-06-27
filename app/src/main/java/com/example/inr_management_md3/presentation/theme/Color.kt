@@ -16,7 +16,7 @@ package com.example.inr_management_md3.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-val md_theme_light_primary = Color(0xFF008cb4)
+val md_theme_light_primary = Color(0xFF007090)
 val md_theme_light_onPrimary = Color(0xFFffffff)
 val md_theme_light_primaryContainer = Color(0xFFbce9ff)
 val md_theme_light_onPrimaryContainer = Color(0xFF001f2a)
@@ -44,7 +44,7 @@ val md_theme_light_inverseSurface = Color(0xFF2f3132)
 val md_theme_light_inversePrimary = Color(0xFF65d3ff)
 val md_theme_light_shadow = Color(0xFF000000)
 
-val md_theme_dark_primary = Color(0xFF007090)
+val md_theme_dark_primary = Color(0xFF008cb4)
 val md_theme_dark_onPrimary = Color(0xFFffffff)
 val md_theme_dark_primaryContainer = Color(0xFF004d66)
 val md_theme_dark_onPrimaryContainer = Color(0xFFbce9ff)

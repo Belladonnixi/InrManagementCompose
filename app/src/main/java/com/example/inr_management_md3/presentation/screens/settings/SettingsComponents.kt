@@ -19,7 +19,6 @@
 
 package com.example.inr_management_md3.presentation.screens.settings
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
@@ -28,12 +27,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.inr_management_md3.presentation.navigation.Screens
-import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -163,19 +159,5 @@ fun SettingsMenu(navController: NavController) {
                 }
             }
         }
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewSettingsMenuCard() {
-    INR_Management_Theme {
-        val navController = rememberNavController()
-        SettingsMenu(navController)
     }
 }
