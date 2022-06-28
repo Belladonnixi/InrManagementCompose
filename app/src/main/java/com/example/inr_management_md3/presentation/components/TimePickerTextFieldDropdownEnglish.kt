@@ -74,7 +74,6 @@ fun TimePickerTextFieldDropdownEnglish() {
     }
     Box(
         modifier = Modifier
-            .fillMaxSize()
             .wrapContentSize(Alignment.TopStart)
     ) {
         TextField(

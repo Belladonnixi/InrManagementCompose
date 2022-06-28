@@ -36,7 +36,7 @@ import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 fun MedicamentSettings() {
     var checked by remember { mutableStateOf(false) }
 
-    Box(
+    Surface(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 40.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
@@ -66,9 +66,24 @@ fun MedicamentSettings() {
                     )
                 }
             }
-            TimePickerTextFieldDropdownEnglish()
+            if (checked) {
+                TimePickerTextFieldDropdownEnglish()
+            }
 
-            Button(onClick = { /* Do something! */ }) { Text("Button") }
+            BoxWithConstraints(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                Button(
+                    onClick = { /* Do something! */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 60.dp)
+                        .height(60.dp),
+                    enabled = true
+                ) { Text("Save") }
+            }
         }
     }
 }
@@ -77,6 +92,7 @@ fun MedicamentSettings() {
 @Composable
 fun MedicamentTypeExposedDropdown() {
     val options = listOf(
+        "Please choose",
         "Warfarin",
         "Phenprocoumon",
         "Acenorcoumarol",
