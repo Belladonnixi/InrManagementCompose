@@ -19,11 +19,10 @@ package com.example.inr_management_md3.presentation.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Update
+import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -86,7 +85,7 @@ fun TimePickerTextFieldDropdownEnglish() {
                 IconButton(
                     onClick = { dialogState.show() }
                 ) {
-                    Icon(Icons.Default.Update, contentDescription = null)
+                    Icon(Icons.Default.Alarm, contentDescription = null)
                 }
             }
         )

@@ -20,4 +20,6 @@
     <string name="measure_screen">INR Measure</string>
     <string name="about">About</string>
     <string name="choose_medicament_type">Choose medicament type</string>
+    <string name="target_range_from">From</string>
+    <string name="target_range_to">To</string>
 </resources>
