@@ -50,7 +50,9 @@ fun MeasureSettingsScreen(navController: NavHostController) {
                 }
             )
         },
-        content = {},
+        content = {
+            SetMeasur()
+        },
         bottomBar = {
             BottomNavBar(navController = navController)
         }

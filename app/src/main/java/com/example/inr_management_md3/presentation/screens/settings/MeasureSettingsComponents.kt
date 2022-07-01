@@ -79,7 +79,7 @@ fun MeasureTimeRangeExposedDropdownTo() {
             readOnly = true,
             label = { Text(text = "every") },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            modifier = Modifier.width(100.dp)
+            modifier = Modifier.width(110.dp)
         )
         ExposedDropdownMenu(
             expanded = expanded, onDismissRequest = { expanded = false }
