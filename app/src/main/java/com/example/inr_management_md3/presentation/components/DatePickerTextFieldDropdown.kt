@@ -22,7 +22,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Alarm
+import androidx.compose.material.icons.filled.EditCalendar
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -34,41 +34,36 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.datetime.time.TimePickerDefaults
-import com.vanpra.composematerialdialogs.datetime.time.timepicker
+import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
-import java.time.LocalTime
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun TimePickerTextFieldDropdown() {
+fun DatePickerTextFieldDropdown() {
+    // not working with compose Version over 1.1.1 because of changes in grid
     val dialogState = rememberMaterialDialogState()
     val textState = remember { mutableStateOf(TextFieldValue()) }
     MaterialDialog(
         dialogState = dialogState,
         buttons = {
-            positiveButton("Ok", textStyle = TextStyle(color = MaterialTheme.colorScheme.primary))
+            positiveButton(
+                "Ok",
+                textStyle = TextStyle(color = MaterialTheme.colorScheme.primary)
+            )
             negativeButton(
                 "Cancel",
                 textStyle = TextStyle(color = MaterialTheme.colorScheme.primary)
             )
-        },
-        backgroundColor = MaterialTheme.colorScheme.surfaceVariant
+        }
     ) {
-        timepicker(
-            initialTime = LocalTime.now(),
-            colors = TimePickerDefaults.colors(
-                selectorColor = MaterialTheme.colorScheme.primary,
-                activeBackgroundColor = MaterialTheme.colorScheme.primary,
-                inactiveBackgroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                headerTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                inactiveTextColor = MaterialTheme.colorScheme.surfaceVariant
+        datepicker(
+            initialDate = LocalDate.now()
+        ) { date ->
+            val formattedDate = date.format(
+                DateTimeFormatter.ofPattern("MM.dd.yyyy")
             )
-        ) { time ->
-            val formattedTime = time.format(
-                DateTimeFormatter.ofPattern("hh:mm a")
-            )
-            textState.value = TextFieldValue(formattedTime)
+            textState.value = TextFieldValue(formattedDate)
         }
     }
     Box(
@@ -80,12 +75,12 @@ fun TimePickerTextFieldDropdown() {
             value = textState.value,
             onValueChange = { textState.value = it },
             readOnly = true,
-            label = { Text(text = "Set notification time") },
+            label = { Text(text = "Pick date") },
             trailingIcon = {
                 IconButton(
                     onClick = { dialogState.show() }
                 ) {
-                    Icon(Icons.Default.Alarm, contentDescription = null)
+                    Icon(Icons.Default.EditCalendar, contentDescription = null)
                 }
             }
         )
@@ -99,8 +94,8 @@ fun TimePickerTextFieldDropdown() {
     showBackground = true
 )
 @Composable
-fun PreviewTimePickerTextFieldDropdown() {
+fun PreviewDatePickerTextFieldDropdown() {
     INR_Management_Theme {
-        TimePickerTextFieldDropdown()
+        DatePickerTextFieldDropdown()
     }
 }

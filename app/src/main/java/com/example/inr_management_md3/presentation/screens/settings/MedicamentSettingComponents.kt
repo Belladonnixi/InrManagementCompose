@@ -29,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
-import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdownEnglish
+import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 
 @Composable
@@ -67,7 +67,7 @@ fun MedicamentSettings() {
                 }
             }
             if (checked) {
-                TimePickerTextFieldDropdownEnglish()
+                TimePickerTextFieldDropdown()
             }
 
             BoxWithConstraints(

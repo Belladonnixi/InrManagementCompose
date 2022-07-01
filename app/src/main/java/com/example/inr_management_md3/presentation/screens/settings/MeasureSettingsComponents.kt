@@ -25,21 +25,46 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.inr_management_md3.R
+import com.example.inr_management_md3.presentation.components.DatePickerTextFieldDropdown
+import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TargetRangeExposedDropdownFrom() {
+fun MeasureTimeRangeExposedDropdownTo() {
     val options = listOf(
         "1",
         "2",
         "3",
         "4",
-        "5"
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30"
     )
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[0]) }
@@ -52,48 +77,7 @@ fun TargetRangeExposedDropdownFrom() {
             value = selectedOptionText,
             onValueChange = {},
             readOnly = true,
-            label = { Text(text = stringResource(R.string.target_range_from)) },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            modifier = Modifier.width(100.dp)
-        )
-        ExposedDropdownMenu(
-            expanded = expanded, onDismissRequest = { expanded = false }
-        ) {
-            options.forEach { selectionOption ->
-                DropdownMenuItem(
-                    text = { Text(text = selectionOption) },
-                    onClick = {
-                        selectedOptionText = selectionOption
-                        expanded = false
-                    }
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TargetRangeExposedDropdownTo() {
-    val options = listOf(
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-    )
-    var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options[0]) }
-
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded }
-    ) {
-        TextField(
-            value = selectedOptionText,
-            onValueChange = {},
-            readOnly = true,
-            label = { Text(text = stringResource(R.string.target_range_to)) },
+            label = { Text(text = "every") },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             modifier = Modifier.width(100.dp)
         )
@@ -114,7 +98,7 @@ fun TargetRangeExposedDropdownTo() {
 }
 
 @Composable
-fun TargetRange() {
+fun SetMeasur() {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -125,24 +109,36 @@ fun TargetRange() {
                 .fillMaxWidth()
                 .padding(top = 50.dp, bottom = 30.dp)
         ) {
-            Text(
-                text = "Please set your target range:",
-            )
+            Text(text = "Set measure interval:")
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 40.dp, bottom = 16.dp),
+                    .padding(top = 40.dp, bottom = 32.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                TargetRangeExposedDropdownFrom()
+                MeasureTimeRangeExposedDropdownTo()
                 Column(
-                    modifier = Modifier.padding(start = 64.dp),
+                    modifier = Modifier.padding(start = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    TargetRangeExposedDropdownTo()
+                    Text(text = "Days")
                 }
+            }
+            Text(text = "Start from date:")
+            Row(
+                modifier = Modifier
+                    .padding(16.dp)
+            ) {
+                DatePickerTextFieldDropdown()
+            }
+            Text(text = "Start from date:")
+            Row(
+                modifier = Modifier
+                    .padding(16.dp)
+            ) {
+                TimePickerTextFieldDropdown()
             }
             BoxWithConstraints(
                 modifier = Modifier
@@ -169,9 +165,9 @@ fun TargetRange() {
     showBackground = true
 )
 @Composable
-fun PreviewTargetRangeExposedDropdownFrom() {
+fun PreviewMeasureTimeRangeExposedDropdownFrom() {
     INR_Management_Theme {
-        TargetRangeExposedDropdownFrom()
+        MeasureTimeRangeExposedDropdownTo()
     }
 }
 
@@ -182,21 +178,8 @@ fun PreviewTargetRangeExposedDropdownFrom() {
     showBackground = true
 )
 @Composable
-fun PreviewTargetRangeExposedDropdownTo() {
+fun PreviewSetMeasureExposedDropdownFrom() {
     INR_Management_Theme {
-        TargetRangeExposedDropdownTo()
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewTargetRange() {
-    INR_Management_Theme {
-        TargetRange()
+        SetMeasur()
     }
 }
