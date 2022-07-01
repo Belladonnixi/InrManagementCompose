@@ -18,12 +18,16 @@
 package com.example.inr_management_md3.presentation.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditCalendar
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -71,17 +75,16 @@ fun DatePickerTextFieldDropdown() {
             .wrapContentSize(Alignment.TopStart)
     ) {
         TextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { dialogState.show() },
             value = textState.value,
             onValueChange = { textState.value = it },
             readOnly = true,
             label = { Text(text = "Pick date") },
             trailingIcon = {
-                IconButton(
-                    onClick = { dialogState.show() }
-                ) {
-                    Icon(Icons.Default.EditCalendar, contentDescription = null)
-                }
+
+                Icon(Icons.Default.EditCalendar, contentDescription = null)
             }
         )
     }

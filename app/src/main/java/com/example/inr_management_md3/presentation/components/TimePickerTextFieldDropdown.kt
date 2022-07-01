@@ -76,7 +76,8 @@ fun TimePickerTextFieldDropdown() {
             .wrapContentSize(Alignment.TopStart)
     ) {
         TextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             value = textState.value,
             onValueChange = { textState.value = it },
             readOnly = true,

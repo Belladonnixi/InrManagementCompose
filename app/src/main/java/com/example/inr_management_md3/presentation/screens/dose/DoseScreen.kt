@@ -63,7 +63,9 @@ fun DoseScreen(navController: NavController) {
                 }
             )
         },
-        content = {},
+        content = {
+            BaseMedicationWeek()
+        },
         bottomBar = {
             BottomNavBar(navController = navController)
         }
