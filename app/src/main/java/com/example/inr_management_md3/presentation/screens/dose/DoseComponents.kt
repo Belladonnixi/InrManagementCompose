@@ -31,7 +31,6 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -99,10 +98,10 @@ fun DosageExposedDropdown() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}) {
+fun BaseMedicationWeek() {
     Surface(
         modifier = Modifier
-            .fillMaxSize()
+            .wrapContentSize()
             .padding(16.dp)
     ) {
         Column(
@@ -112,7 +111,6 @@ fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 8.dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -305,8 +303,8 @@ fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}) {
                 }
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp),
+                        .fillMaxWidth(),
+//                        .padding(bottom = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -339,7 +337,7 @@ fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}) {
                         onClick = { /* Do something! */ },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 60.dp)
+//                            .padding(bottom = 70.dp)
                             .height(60.dp),
                         enabled = true
                     ) { Text("Save") }
@@ -381,26 +379,6 @@ fun TrimDose() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DoseScreens() {
-    val allScreens = DoseScreens.values().toList()
-    var currentScreen by rememberSaveable { mutableStateOf(DoseScreens.Week) }
-    Scaffold(
-        topBar = {
-            DoseTabBar(
-                allScreens = allScreens,
-                onTabSelected = { screen -> currentScreen = screen },
-                currentScreen = currentScreen
-            )
-        }
-    ) { innerPadding ->
-        Box(Modifier.padding(innerPadding)) {
-            currentScreen.content(onScreenChange = { screen -> currentScreen = screen })
-        }
-    }
-}
-
 @Composable
 fun DoseTabBar(
     allScreens: List<DoseScreens>,
@@ -412,7 +390,11 @@ fun DoseTabBar(
             .height(TabHeight)
             .fillMaxWidth()
     ) {
-        Row(Modifier.selectableGroup()) {
+        Row(
+            Modifier.selectableGroup(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End
+        ) {
             allScreens.forEach { screen ->
                 DoseTab(
                     text = screen.name,
@@ -527,18 +509,5 @@ fun PreviewBaseMedicationInterval() {
 fun PreviewTrimDose() {
     INR_Management_Theme {
         TrimDose()
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewSegmentedButtonBar() {
-    INR_Management_Theme {
-        DoseScreens()
     }
 }
