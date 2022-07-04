@@ -1,19 +1,51 @@
+/**
+ * Copyright © 2022 Jessica Ernst
+ *
+ * This project and source code may use libraries or frameworks that are
+ * released under various Open-Source licenses. Use of those libraries
+ * and frameworks are governed by their own individual licenses.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+ * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 @file:Suppress("OPT_IN_IS_NOT_ENABLED")
 
 package com.example.inr_management_md3.presentation.screens.dose
 
 import android.content.res.Configuration
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
+import com.example.inr_management_md3.presentation.navigation.DoseScreens
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,90 +99,16 @@ fun DosageExposedDropdown() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BaseMedicationWeek() {
+fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 40.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
+            .padding(16.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            BoxWithConstraints(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp),
-                contentAlignment = Alignment.TopCenter
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Surface(
-                        shadowElevation = 1.dp,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier
-                            .padding(1.dp)
-                            .weight(1f),
-                        shape = RoundedCornerShape(5.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .padding(4.dp),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(text = "Week")
-                        }
-                    }
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .weight(2f)
-                    ) {
-                        Row {
-                            Surface(
-                                shadowElevation = 1.dp,
-                                color = MaterialTheme.colorScheme.surfaceVariant,
-                                modifier = Modifier
-                                    .padding(1.dp)
-                                    .weight(1f),
-                                shape = RoundedCornerShape(5.dp),
-                                onClick = {}
-                            ) {
-                                Row(
-                                    modifier = Modifier
-                                        .padding(4.dp),
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    Text(text = "Interval")
-                                }
-                            }
-                            Surface(
-                                shadowElevation = 1.dp,
-                                color = MaterialTheme.colorScheme.surfaceVariant,
-                                modifier = Modifier
-                                    .padding(1.dp)
-                                    .weight(1f),
-                                shape = RoundedCornerShape(5.dp),
-                                onClick = {}
-                            ) {
-                                Row(
-                                    modifier = Modifier
-                                        .padding(4.dp),
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    Text(text = "Trim dose")
-                                }
-                            }
-                        }
-                    }
-                }
-            }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -391,9 +349,134 @@ fun BaseMedicationWeek() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SegmentedButton() {
+fun BaseMedicationInterval() {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 40.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+        }
+    }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TrimDose() {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 40.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DoseScreens() {
+    val allScreens = DoseScreens.values().toList()
+    var currentScreen by rememberSaveable { mutableStateOf(DoseScreens.Week) }
+    Scaffold(
+        topBar = {
+            DoseTabBar(
+                allScreens = allScreens,
+                onTabSelected = { screen -> currentScreen = screen },
+                currentScreen = currentScreen
+            )
+        }
+    ) { innerPadding ->
+        Box(Modifier.padding(innerPadding)) {
+            currentScreen.content(onScreenChange = { screen -> currentScreen = screen })
+        }
+    }
+}
+
+@Composable
+fun DoseTabBar(
+    allScreens: List<DoseScreens>,
+    onTabSelected: (DoseScreens) -> Unit,
+    currentScreen: DoseScreens
+) {
+    Surface(
+        Modifier
+            .height(TabHeight)
+            .fillMaxWidth()
+    ) {
+        Row(Modifier.selectableGroup()) {
+            allScreens.forEach { screen ->
+                DoseTab(
+                    text = screen.name,
+                    icon = screen.icon,
+                    onSelected = { onTabSelected(screen) },
+                    selected = currentScreen == screen
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun DoseTab(
+    text: String,
+    icon: Int,
+    onSelected: () -> Unit,
+    selected: Boolean
+) {
+    val color = MaterialTheme.colorScheme.onSurface
+    val durationMillis = if (selected) TabFadeInAnimationDuration else TabFadeOutAnimationDuration
+    val animSpec = remember {
+        tween<Color>(
+            durationMillis = durationMillis,
+            easing = LinearEasing,
+            delayMillis = TabFadeInAnimationDelay
+        )
+    }
+    val tabTintColor by animateColorAsState(
+        targetValue = if (selected) color else color.copy(alpha = InactiveTabOpacity),
+        animationSpec = animSpec
+    )
+    Row(
+        modifier = Modifier
+            .padding(16.dp)
+            .animateContentSize()
+            .height(TabHeight)
+            .selectable(
+                selected = selected,
+                onClick = onSelected,
+                role = Role.Tab,
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(
+                    bounded = false,
+                    radius = Dp.Unspecified,
+                    color = Color.Unspecified
+                )
+            )
+            .clearAndSetSemantics { contentDescription = text }
+    ) {
+        Icon(painterResource(id = icon), contentDescription = null, tint = tabTintColor)
+        if (selected) {
+            Spacer(Modifier.width(12.dp))
+            Text(text.uppercase(Locale.getDefault()), color = tabTintColor)
+        }
+    }
+}
+
+private val TabHeight = 56.dp
+private const val InactiveTabOpacity = 0.60f
+
+private const val TabFadeInAnimationDuration = 150
+private const val TabFadeInAnimationDelay = 100
+private const val TabFadeOutAnimationDuration = 100
 
 @Preview(name = "Light Mode")
 @Preview(
@@ -418,5 +501,44 @@ fun PreviewDosageExposedDropdown() {
 fun PreviewBaseMedicationWeek() {
     INR_Management_Theme {
         BaseMedicationWeek()
+    }
+}
+
+@Preview(name = "Light Mode")
+@Preview(
+    name = "Dark Mde",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+fun PreviewBaseMedicationInterval() {
+    INR_Management_Theme {
+        BaseMedicationInterval()
+    }
+}
+
+@Preview(name = "Light Mode")
+@Preview(
+    name = "Dark Mde",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+fun PreviewTrimDose() {
+    INR_Management_Theme {
+        TrimDose()
+    }
+}
+
+@Preview(name = "Light Mode")
+@Preview(
+    name = "Dark Mde",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+fun PreviewSegmentedButtonBar() {
+    INR_Management_Theme {
+        DoseScreens()
     }
 }
