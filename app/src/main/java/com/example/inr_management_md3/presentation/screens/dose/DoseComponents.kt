@@ -98,7 +98,7 @@ fun DosageExposedDropdown() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BaseMedicationWeek() {
+fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}) {
     Surface(
         modifier = Modifier
             .wrapContentSize()
