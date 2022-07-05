@@ -93,6 +93,59 @@ fun TimePickerTextFieldDropdown() {
     }
 }
 
+@Composable
+fun MeasureResultTimePickerTextFieldDropdown() {
+    val dialogState = rememberMaterialDialogState()
+    val textState = remember { mutableStateOf(TextFieldValue()) }
+    MaterialDialog(
+        dialogState = dialogState,
+        buttons = {
+            positiveButton("Ok", textStyle = TextStyle(color = MaterialTheme.colorScheme.primary))
+            negativeButton(
+                "Cancel",
+                textStyle = TextStyle(color = MaterialTheme.colorScheme.primary)
+            )
+        },
+        backgroundColor = MaterialTheme.colorScheme.surfaceVariant
+    ) {
+        timepicker(
+            initialTime = LocalTime.now(),
+            colors = TimePickerDefaults.colors(
+                selectorColor = MaterialTheme.colorScheme.primary,
+                activeBackgroundColor = MaterialTheme.colorScheme.primary,
+                inactiveBackgroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                headerTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                inactiveTextColor = MaterialTheme.colorScheme.surfaceVariant
+            )
+        ) { time ->
+            val formattedTime = time.format(
+                DateTimeFormatter.ofPattern("hh:mm a")
+            )
+            textState.value = TextFieldValue(formattedTime)
+        }
+    }
+    Box(
+        modifier = Modifier
+            .wrapContentSize(Alignment.TopStart)
+    ) {
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth(),
+            value = textState.value,
+            onValueChange = { textState.value = it },
+            readOnly = true,
+            label = { Text(text = "Set measure time") },
+            trailingIcon = {
+                IconButton(
+                    onClick = { dialogState.show() }
+                ) {
+                    Icon(Icons.Default.Alarm, contentDescription = null)
+                }
+            }
+        )
+    }
+}
+
 @Preview(name = "Light Mode")
 @Preview(
     name = "Dark Mde",

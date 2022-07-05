@@ -65,7 +65,9 @@ fun MeasureScreen(navController: NavHostController) {
                 }
             )
         },
-        content = {},
+        content = {
+            MeasureResultContent()
+        },
         bottomBar = {
             BottomNavBar(navController = navController)
         }

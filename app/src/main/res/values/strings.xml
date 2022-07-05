@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Inr Management</string>
+    <string name="app_name" translatable="false">Inr Management</string>
     <string name="home">Home</string>
     <string name="dose">Dose</string>
     <string name="measure">Measure</string>

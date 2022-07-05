@@ -30,6 +30,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -46,6 +48,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.data.Weekdays
+import com.example.inr_management_md3.presentation.components.DatePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.navigation.DoseScreens
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import java.util.*
@@ -214,6 +217,49 @@ fun BaseMedicationInterval() {
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Base Medication",
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Interval"
+                    )
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                DosageExposedDropdown()
+            }
+            FloatingActionButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .padding(32.dp)
+                    .align(Alignment.End)
+            ) {
+                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+            }
             BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -242,6 +288,49 @@ fun TrimDose() {
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Temporary Dose Adjustment",
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 32.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Set Date and Dose"
+                    )
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .padding(16.dp)
+            ) {
+                DatePickerTextFieldDropdown()
+            }
+            Text(text = "Set dose:")
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                DosageExposedDropdown()
+            }
             BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxSize(),
