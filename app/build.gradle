@@ -124,5 +124,5 @@ dependencies {
     implementation 'com.github.tehras.charts:bar:alpha-0.12.0'
 
     // Date and Time Picker
-    implementation 'io.github.vanpra.compose-material-dialogs:datetime:0.8.0-beta'
+    implementation 'io.github.vanpra.compose-material-dialogs:datetime:0.7.1'
 }

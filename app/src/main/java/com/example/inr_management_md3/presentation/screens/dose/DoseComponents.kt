@@ -26,6 +26,8 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.ripple.rememberRipple
@@ -35,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -42,6 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
+import com.example.inr_management_md3.data.Weekdays
 import com.example.inr_management_md3.presentation.navigation.DoseScreens
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import java.util.*
@@ -96,9 +100,8 @@ fun DosageExposedDropdown() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}) {
+fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}, week: List<Weekdays>) {
     Surface(
         modifier = Modifier
             .wrapContentSize()
@@ -139,205 +142,28 @@ fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}) {
                     .fillMaxWidth()
                     .padding(top = 16.dp)
             ) {
-                Row(
+                BoxWithConstraints(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                        .height(450.dp)
+                        .padding(16.dp)
                 ) {
-                    Text(text = "Mon")
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 32.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            DosageExposedDropdown()
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Icon(
-                                painter = painterResource(id = R.drawable.noun_pill),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(28.dp),
-                                tint = MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                    }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(text = "Tue ")
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 32.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            DosageExposedDropdown()
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Icon(
-                                painter = painterResource(id = R.drawable.noun_pill),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(28.dp),
-                                tint = MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                    }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(text = "Wed")
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 32.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            DosageExposedDropdown()
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Icon(
-                                painter = painterResource(id = R.drawable.noun_pill),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(28.dp),
-                                tint = MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                    }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(text = "Thu ")
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 32.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            DosageExposedDropdown()
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Icon(
-                                painter = painterResource(id = R.drawable.noun_pill),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(28.dp),
-                                tint = MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                    }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(text = "Fri   ")
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 32.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            DosageExposedDropdown()
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Icon(
-                                painter = painterResource(id = R.drawable.noun_pill),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(28.dp),
-                                tint = MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                    }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(text = "Sat  ")
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 32.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            DosageExposedDropdown()
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Icon(
-                                painter = painterResource(id = R.drawable.noun_pill),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(28.dp),
-                                tint = MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                    }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-//                        .padding(bottom = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(text = "Sun ")
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 32.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            DosageExposedDropdown()
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Icon(
-                                painter = painterResource(id = R.drawable.noun_pill),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(28.dp),
-                                tint = MaterialTheme.colorScheme.onSurface
-                            )
+                    LazyColumn {
+                        items(week) { weekdays ->
+                            DoseWeekDay(wd = weekdays)
                         }
                     }
                 }
                 BoxWithConstraints(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .padding(bottom = 8.dp),
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     Button(
                         onClick = { /* Do something! */ },
                         modifier = Modifier
                             .fillMaxWidth()
-//                            .padding(bottom = 70.dp)
                             .height(60.dp),
                         enabled = true
                     ) { Text("Save") }
@@ -347,7 +173,37 @@ fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DoseWeekDay(wd: Weekdays) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Text(text = stringResource(id = wd.days))
+        Column(
+            modifier = Modifier
+                .padding(start = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                DosageExposedDropdown()
+                Spacer(modifier = Modifier.width(8.dp))
+                Icon(
+                    painter = painterResource(id = R.drawable.noun_pill),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(28.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
+        }
+    }
+}
+
 @Composable
 fun BaseMedicationInterval() {
     Surface(
@@ -363,7 +219,6 @@ fun BaseMedicationInterval() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrimDose() {
     Surface(
@@ -473,18 +328,18 @@ fun PreviewDosageExposedDropdown() {
     }
 }
 
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewBaseMedicationWeek() {
-    INR_Management_Theme {
-        BaseMedicationWeek()
-    }
-}
+// @Preview(name = "Light Mode")
+// @Preview(
+//    name = "Dark Mde",
+//    uiMode = Configuration.UI_MODE_NIGHT_YES,
+//    showBackground = true
+// )
+// @Composable
+// fun PreviewBaseMedicationWeek() {
+//    INR_Management_Theme {
+//        BaseMedicationWeek(LoadWeekdays.weekdays)
+//    }
+// }
 
 @Preview(name = "Light Mode")
 @Preview(
