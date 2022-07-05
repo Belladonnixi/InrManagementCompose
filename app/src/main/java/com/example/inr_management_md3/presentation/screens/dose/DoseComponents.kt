@@ -104,7 +104,7 @@ fun DosageExposedDropdown() {
 fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}, week: List<Weekdays>) {
     Surface(
         modifier = Modifier
-            .wrapContentSize()
+            .fillMaxSize()
             .padding(16.dp)
     ) {
         Column(
@@ -156,8 +156,7 @@ fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}, week: List<We
                 }
                 BoxWithConstraints(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 8.dp),
+                        .fillMaxSize(),
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     Button(
@@ -215,6 +214,19 @@ fun BaseMedicationInterval() {
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
+            BoxWithConstraints(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                Button(
+                    onClick = { /* Do something! */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp),
+                    enabled = true
+                ) { Text("Save") }
+            }
         }
     }
 }
@@ -230,6 +242,19 @@ fun TrimDose() {
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
+            BoxWithConstraints(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                Button(
+                    onClick = { /* Do something! */ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp),
+                    enabled = true
+                ) { Text("Save") }
+            }
         }
     }
 }
@@ -327,19 +352,6 @@ fun PreviewDosageExposedDropdown() {
         DosageExposedDropdown()
     }
 }
-
-// @Preview(name = "Light Mode")
-// @Preview(
-//    name = "Dark Mde",
-//    uiMode = Configuration.UI_MODE_NIGHT_YES,
-//    showBackground = true
-// )
-// @Composable
-// fun PreviewBaseMedicationWeek() {
-//    INR_Management_Theme {
-//        BaseMedicationWeek(LoadWeekdays.weekdays)
-//    }
-// }
 
 @Preview(name = "Light Mode")
 @Preview(
