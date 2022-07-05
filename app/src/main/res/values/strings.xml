@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Inr Management</string>
+    <string name="app_name" translatable="false">Inr Management</string>
     <string name="home">Home</string>
     <string name="dose">Dose</string>
     <string name="measure">Measure</string>
@@ -18,4 +18,15 @@
     <string name="calendar_comment">Comment</string>
     <string name="statistc_charts">Statistics</string>
     <string name="measure_screen">INR Measure</string>
+    <string name="about">About</string>
+    <string name="choose_medicament_type">Choose medicament type</string>
+    <string name="target_range_from">From</string>
+    <string name="target_range_to">To</string>
+    <string name="monday">Mon</string>
+    <string name="tuesday">"Tue "</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">"Thu "</string>
+    <string name="friday">"Fri   "</string>
+    <string name="saturday">"Sat  "</string>
+    <string name="sunday">"Sun "</string>
 </resources>

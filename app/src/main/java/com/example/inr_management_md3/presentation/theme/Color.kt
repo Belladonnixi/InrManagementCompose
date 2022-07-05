@@ -1,8 +1,22 @@
+/**
+ * Copyright © 2022 Jessica Ernst
+ *
+ * This project and source code may use libraries or frameworks that are released under various
+ * Open-Source licenses. Use of those libraries and frameworks are governed by their own individual
+ * licenses.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
+ * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package com.example.inr_management_md3.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-val md_theme_light_primary = Color(0xFF008cb4)
+val md_theme_light_primary = Color(0xFF007090)
 val md_theme_light_onPrimary = Color(0xFFffffff)
 val md_theme_light_primaryContainer = Color(0xFFbce9ff)
 val md_theme_light_onPrimaryContainer = Color(0xFF001f2a)
@@ -30,7 +44,7 @@ val md_theme_light_inverseSurface = Color(0xFF2f3132)
 val md_theme_light_inversePrimary = Color(0xFF65d3ff)
 val md_theme_light_shadow = Color(0xFF000000)
 
-val md_theme_dark_primary = Color(0xFF007090)
+val md_theme_dark_primary = Color(0xFF008cb4)
 val md_theme_dark_onPrimary = Color(0xFFffffff)
 val md_theme_dark_primaryContainer = Color(0xFF004d66)
 val md_theme_dark_onPrimaryContainer = Color(0xFFbce9ff)
