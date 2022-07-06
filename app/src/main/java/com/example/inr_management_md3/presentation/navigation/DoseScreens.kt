@@ -19,7 +19,7 @@ package com.example.inr_management_md3.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import com.example.inr_management_md3.R
-import com.example.inr_management_md3.data.LoadWeekdays
+import com.example.inr_management_md3.data.datamodels.LoadWeekdays
 import com.example.inr_management_md3.presentation.screens.dose.BaseMedicationInterval
 import com.example.inr_management_md3.presentation.screens.dose.BaseMedicationWeek
 import com.example.inr_management_md3.presentation.screens.dose.TrimDose
