@@ -21,8 +21,10 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 data class CalendarUiState(
-    val selectedDate: LocalDate? = null
+    val selectedDate: LocalDate? = null,
+    val animationDirection: AnimationDirection? = null
 ) {
+
     companion object {
         private val SHORT_DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd")
     }

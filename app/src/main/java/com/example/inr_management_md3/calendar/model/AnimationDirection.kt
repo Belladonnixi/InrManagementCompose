@@ -20,4 +20,7 @@ package com.example.inr_management_md3.calendar.model
 enum class AnimationDirection {
     FORWARDS,
     BACKWARDS;
+
+    fun isBackwards() = this == BACKWARDS
+    fun isForwards() = this == FORWARDS
 }
