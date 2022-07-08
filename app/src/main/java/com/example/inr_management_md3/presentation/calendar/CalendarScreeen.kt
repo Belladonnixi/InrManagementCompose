@@ -11,9 +11,6 @@
  * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
-
 package com.example.inr_management_md3.presentation.calendar
 
 import androidx.compose.foundation.layout.size
