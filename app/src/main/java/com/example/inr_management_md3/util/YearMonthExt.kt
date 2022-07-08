@@ -17,7 +17,7 @@
 
 package com.example.inr_management_md3.util
 
-import com.example.inr_management_md3.calendar.CALENDAR_STARTS_ON
+import com.example.inr_management_md3.presentation.calendar.CALENDAR_STARTS_ON
 import java.time.YearMonth
 import java.time.temporal.WeekFields
 

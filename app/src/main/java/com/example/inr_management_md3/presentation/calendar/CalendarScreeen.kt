@@ -12,7 +12,9 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.example.inr_management_md3.presentation.screens.calendar
+@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+
+package com.example.inr_management_md3.presentation.calendar
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons

@@ -27,7 +27,7 @@ import androidx.compose.animation.shrinkOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.inr_management_md3.presentation.screens.about.AboutScreen
-import com.example.inr_management_md3.presentation.screens.calendar.CalendarScreen
+import com.example.inr_management_md3.presentation.calendar.CalendarScreen
 import com.example.inr_management_md3.presentation.screens.dose.DoseScreen
 import com.example.inr_management_md3.presentation.screens.home.HomeScreen
 import com.example.inr_management_md3.presentation.screens.measure.MeasureScreen

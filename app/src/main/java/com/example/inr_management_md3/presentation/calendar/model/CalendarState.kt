@@ -15,7 +15,7 @@
  * SOFTWARE.
  */
 
-package com.example.inr_management_md3.calendar.model
+package com.example.inr_management_md3.presentation.calendar.model
 
 import androidx.compose.runtime.mutableStateOf
 import com.example.inr_management_md3.util.getNumberWeeks

@@ -15,7 +15,7 @@
  * SOFTWARE.
  */
 
-package com.example.inr_management_md3.calendar.model
+package com.example.inr_management_md3.presentation.calendar.model
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -34,6 +34,15 @@ data class CalendarUiState(
             if (selectedDate == null) return ""
             return selectedDate.format(SHORT_DATE_FORMAT)
         }
+
+    fun isDateSelected(date: LocalDate): Boolean {
+        if (selectedDate == null) return false
+        if (selectedDate == date) return true
+        if (date.isBefore(selectedDate) ||
+            date.isAfter(selectedDate)
+        ) return false
+        return true
+    }
 
     fun setDates(new: LocalDate?): CalendarUiState {
         return copy(selectedDate = new)

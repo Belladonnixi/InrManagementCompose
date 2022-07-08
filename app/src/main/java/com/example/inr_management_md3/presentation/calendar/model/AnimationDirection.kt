@@ -15,11 +15,12 @@
  * SOFTWARE.
  */
 
-package com.example.inr_management_md3.calendar.model
+package com.example.inr_management_md3.presentation.calendar.model
 
-import java.time.YearMonth
+enum class AnimationDirection {
+    FORWARDS,
+    BACKWARDS;
 
-data class Month(
-    val yearMonth: YearMonth,
-    val weeks: List<Week>
-)
+    fun isBackwards() = this == BACKWARDS
+    fun isForwards() = this == FORWARDS
+}
