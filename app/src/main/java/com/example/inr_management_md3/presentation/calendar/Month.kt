@@ -35,7 +35,7 @@ internal fun MonthHeader(
         Text(
             modifier = Modifier.weight(1f),
             text = month,
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleMedium
         )
         Text(
             modifier = Modifier.align(Alignment.CenterVertically),

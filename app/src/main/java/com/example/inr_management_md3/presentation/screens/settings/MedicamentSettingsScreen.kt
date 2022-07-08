@@ -15,8 +15,6 @@
  * SOFTWARE.
  */
 
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
-
 package com.example.inr_management_md3.presentation.screens.settings
 
 import androidx.compose.material.icons.Icons

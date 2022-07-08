@@ -15,8 +15,6 @@
  * SOFTWARE.
  */
 
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
-
 package com.example.inr_management_md3.presentation.screens.measure
 
 import android.content.res.Configuration
@@ -103,7 +101,8 @@ fun MeasureResultExposedDropDown() {
                 .width(110.dp)
         )
         ExposedDropdownMenu(
-            expanded = expanded, onDismissRequest = { expanded = false }
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
@@ -127,7 +126,7 @@ fun MeasureResultContent() {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
         ) {
             Row(
                 modifier = Modifier

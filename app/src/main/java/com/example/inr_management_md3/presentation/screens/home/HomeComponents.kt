@@ -68,7 +68,6 @@ fun TomorrowDoseInrCard() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StatisticCard() {
-
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()

@@ -47,7 +47,7 @@ internal fun DayOfWeekHeading(day: String) {
                 .wrapContentHeight(Alignment.CenterVertically),
             textAlign = TextAlign.Center,
             text = day,
-            style = MaterialTheme.typography.labelSmall.copy(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f))
+            style = MaterialTheme.typography.labelSmall.copy(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f))
         )
     }
 }
@@ -118,7 +118,7 @@ internal fun Day(
                 // Parent will handle semantics
                 .clearAndSetSemantics {},
             text = day.dayOfMonth.toString(),
-            style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onPrimary)
+            style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurface)
         )
     }
 }
