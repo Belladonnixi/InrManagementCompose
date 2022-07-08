@@ -18,7 +18,76 @@
 package com.example.inr_management_md3.calendar.model
 
 import androidx.compose.runtime.mutableStateOf
+import com.example.inr_management_md3.util.getNumberWeeks
+import java.time.LocalDate
+import java.time.Period
+import java.time.YearMonth
 
 class CalendarState {
     val calendarUiState = mutableStateOf(CalendarUiState())
+    val listMonths: List<Month>
+
+    // Defaulting to start at 01/01 of current year
+    private val calendarStartDate: LocalDate = LocalDate.now()
+        .withMonth(1).withDayOfMonth(1)
+
+    // Defaulting to 2 years from current date.
+    private val calendarEndDate: LocalDate = LocalDate.now().plusYears(2)
+        .withMonth(12).withDayOfMonth(31)
+
+    private val periodBetweenCalendarStartEnd: Period = Period.between(
+        calendarStartDate,
+        calendarEndDate
+    )
+
+    init {
+        val tempListMonths = mutableListOf<Month>()
+        var startYearMonth = YearMonth.from(calendarStartDate)
+        for (numberMonth in 0..periodBetweenCalendarStartEnd.toTotalMonths()) {
+            val numberWeeks = startYearMonth.getNumberWeeks()
+            val listWeekItems = mutableListOf<Week>()
+            for (week in 0 until numberWeeks) {
+                listWeekItems.add(
+                    Week(
+                        number = week,
+                        yearMonth = startYearMonth
+                    )
+                )
+            }
+            val month = Month(startYearMonth, listWeekItems)
+            tempListMonths.add(month)
+            startYearMonth = startYearMonth.plusMonths(1)
+        }
+        listMonths = tempListMonths.toList()
+    }
+
+    fun setSelectedDay(newDate: LocalDate) {
+        calendarUiState.value = updateSelectedDay(newDate)
+    }
+
+    private fun updateSelectedDay(newDate: LocalDate): CalendarUiState {
+        val currentState = calendarUiState.value
+
+        return when (val selectedDate = currentState.selectedDate) {
+            null -> {
+                currentState.setDates(newDate)
+            }
+            else -> {
+                val animationDirection = if (newDate.isBefore(selectedDate)) {
+                    AnimationDirection.BACKWARDS
+                } else {
+                    AnimationDirection.FORWARDS
+                }
+                this.calendarUiState.value = currentState.copy(
+                    selectedDate = null,
+                    animateDirection = animationDirection
+                )
+                updateSelectedDay(newDate = newDate)
+            }
+        }
+    }
+
+    companion object {
+        const val DAYS_IN_WEEK = 7
+    }
 }

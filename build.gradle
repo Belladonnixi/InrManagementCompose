@@ -19,24 +19,14 @@ plugins {
 }
 
 subprojects {
-
-    apply plugin: 'com.diffplug.spotless'
+    apply(plugin: 'com.diffplug.spotless')
     spotless {
         kotlin {
-            target '**/*.kt'
-            targetExclude("$buildDir/**/*.kt")
-            targetExclude('bin/**/*.kt')
-            ktlint(Versions.ktlint)
-            licenseHeaderFile rootProject.file('spotless/copyright.kt')
+            target("**/*.kt")
+            licenseHeaderFile(
+                    rootProject.file("${project.rootDir}/spotless/copyright.kt"),
+                    "^(package|object|import|interface)"
+            )
         }
     }
-
-
-//     Use experimental APIs
-//    freeCompilerArgs += '-opt-in=kotlin.RequiresOptIn'
 }
-
-
-//task clean(type: Delete) {
-//    delete rootProject.buildDir
-//}

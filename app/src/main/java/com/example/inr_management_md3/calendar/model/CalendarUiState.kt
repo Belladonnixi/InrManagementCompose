@@ -22,8 +22,22 @@ import java.time.format.DateTimeFormatter
 
 data class CalendarUiState(
     val selectedDate: LocalDate? = null,
-    val animationDirection: AnimationDirection? = null
+    val animateDirection: AnimationDirection? = null
 ) {
+    val isDateSelected: Boolean
+        get() {
+            return selectedDate != null
+        }
+
+    val selectedDateFormatted: String
+        get() {
+            if (selectedDate == null) return ""
+            return selectedDate.format(SHORT_DATE_FORMAT)
+        }
+
+    fun setDates(new: LocalDate?): CalendarUiState {
+        return copy(selectedDate = new)
+    }
 
     companion object {
         private val SHORT_DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd")

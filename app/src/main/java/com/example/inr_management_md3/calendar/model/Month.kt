@@ -15,8 +15,11 @@
  * SOFTWARE.
  */
 
-package com.example.inr_management_md3.calendar
+package com.example.inr_management_md3.calendar.model
 
-import java.time.temporal.WeekFields
+import java.time.YearMonth
 
-internal val CALENDAR_STARTS_ON = WeekFields.ISO
+data class Month(
+    val yearMonth: YearMonth,
+    val weeks: List<Week>
+)
