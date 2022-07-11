@@ -15,6 +15,8 @@ package com.example.inr_management_md3.presentation.calendar.model
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
+import kotlin.math.abs
 
 data class CalendarUiState(
     val selectedDate: LocalDate? = null,
@@ -42,6 +44,18 @@ data class CalendarUiState(
 
     fun setDates(new: LocalDate?): CalendarUiState {
         return copy(selectedDate = new)
+    }
+
+    fun dayDelay(currentWeekStartDate: LocalDate): Int {
+        if (selectedDate == null) return 0
+        // if selected week contains start date, don't have any delay
+        val endWeek = currentWeekStartDate.plusDays(6)
+        return if (selectedDate.isBefore(currentWeekStartDate) || selectedDate.isAfter(endWeek)
+        ) {
+            abs(ChronoUnit.DAYS.between(currentWeekStartDate, selectedDate)).toInt()
+        } else {
+            0
+        }
     }
 
     companion object {
