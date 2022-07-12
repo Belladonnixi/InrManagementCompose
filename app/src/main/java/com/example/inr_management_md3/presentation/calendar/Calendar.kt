@@ -1,18 +1,15 @@
 /**
  * Copyright © 2022 Jessica Ernst
  *
- * This project and source code may use libraries or frameworks that are
- * released under various Open-Source licenses. Use of those libraries
- * and frameworks are governed by their own individual licenses.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * This project and source code may use libraries or frameworks that are released under various
+ * Open-Source licenses. Use of those libraries and frameworks are governed by their own individual
+ * licenses.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
+ * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package com.example.inr_management_md3.presentation.calendar
 
@@ -21,6 +18,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -32,6 +30,7 @@ import com.example.inr_management_md3.presentation.calendar.model.CalendarState
 import com.example.inr_management_md3.presentation.calendar.model.CalendarUiState
 import com.example.inr_management_md3.presentation.calendar.model.Month
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
@@ -48,7 +47,8 @@ fun Calendar(
     val calendarUiState = calendarState.calendarUiState.value
 
     Surface(
-        color = MaterialTheme.colorScheme.primary
+        color = MaterialTheme.colorScheme.primary,
+        shape = RoundedCornerShape(10.dp)
     ) {
         LazyColumn(
             modifier = modifier.consumedWindowInsets(contentPadding),
@@ -103,15 +103,6 @@ private fun LazyListScope.itemsCalendarMonth(
         val beginningWeek = week.yearMonth.atDay(1).plusWeeks(week.number.toLong())
         val currentDay = beginningWeek.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
 
-//        if (calendarUiState.hasSelectedPeriodOverlap(currentDay, currentDay.plusDays(6))) {
-//            WeekSelectionPill(
-//                state = calendarUiState,
-//                currentWeekStart = currentDay,
-//                widthPerDay = CELL_SIZE,
-//                week = week,
-//                selectedPercentageTotalProvider = selectedPercentageProvider
-//            )
-//        }
         Week(
             calendarUiState = calendarUiState,
             modifier = contentModifier,

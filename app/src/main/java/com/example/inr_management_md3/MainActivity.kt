@@ -23,7 +23,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.inr_management_md3.presentation.navigation.AppNavigation
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import org.koin.androidx.compose.inject
 
 @ExperimentalAnimationApi
 class MainActivity : ComponentActivity() {

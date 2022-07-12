@@ -82,7 +82,8 @@ fun DosageExposedDropdown() {
                 .width(110.dp)
         )
         ExposedDropdownMenu(
-            expanded = expanded, onDismissRequest = { expanded = false }
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
@@ -98,7 +99,10 @@ fun DosageExposedDropdown() {
 }
 
 @Composable
-fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}, week: List<Weekdays>) {
+fun BaseMedicationWeek(
+    onScreenChange: (DoseScreens) -> Unit = {},
+    week: List<Weekdays>
+) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -106,7 +110,7 @@ fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}, week: List<We
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier
@@ -209,7 +213,7 @@ fun BaseMedicationInterval() {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier
@@ -280,7 +284,7 @@ fun TrimDose() {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier

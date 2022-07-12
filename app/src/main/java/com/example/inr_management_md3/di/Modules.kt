@@ -18,6 +18,7 @@ import com.example.inr_management_md3.data.AppDataBase
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 import com.example.inr_management_md3.data.repository.InrManagementRepositoryImpl
 import org.koin.android.ext.koin.androidApplication
+import org.koin.core.annotation.KoinReflectAPI
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -34,7 +35,9 @@ val repositoryModule = module {
     single<InrManagementRepository> { InrManagementRepositoryImpl(get()) }
 }
 
-val viewModelModule = module { }
+@OptIn(KoinReflectAPI::class)
+val viewModelModule = module {
+}
 
 val appModules = listOf(
     dataModule,
