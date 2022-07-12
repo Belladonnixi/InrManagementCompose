@@ -26,7 +26,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -55,7 +54,6 @@ fun DatePickerDialog() {
             }
         }
     )
-
     Box {
         val popUpWidth = 380.dp
         val popUpHeight = 700.dp
@@ -68,8 +66,12 @@ fun DatePickerDialog() {
                 Box(
                     modifier = Modifier
                         .size(popUpWidth, popUpHeight)
-                        .padding(16.dp)
-                        .border(1.dp, color = Color.Black, RoundedCornerShape(10.dp))
+                        .padding(top = 16.dp, end = 32.dp, bottom = 16.dp)
+                        .border(
+                            1.dp,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            RoundedCornerShape(10.dp)
+                        )
                         .background(
                             MaterialTheme.colorScheme.primaryContainer,
                             RoundedCornerShape(10.dp)
@@ -89,8 +91,7 @@ fun DatePickerDialog() {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             TextButton(
                                 onClick = { openPopUp.value = !openPopUp.value }
@@ -100,7 +101,13 @@ fun DatePickerDialog() {
                                     style = MaterialTheme.typography.titleMedium
                                 )
                             }
-                            Column {
+                            Column(
+                                modifier = Modifier
+                                    .padding(start = 32.dp)
+                                    .fillMaxWidth(),
+                                horizontalAlignment = Alignment.End,
+                                verticalArrangement = Arrangement.Center
+                            ) {
                                 TextButton(
                                     onClick = { /*TODO*/ }
                                 ) {

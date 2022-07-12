@@ -43,7 +43,6 @@ import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.data.datamodels.Weekdays
 import com.example.inr_management_md3.presentation.calendar.DatePickerDialog
-import com.example.inr_management_md3.presentation.components.DatePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.navigation.DoseScreens
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import java.util.*
@@ -147,8 +146,8 @@ fun BaseMedicationWeek(
                 BoxWithConstraints(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(450.dp)
                         .padding(16.dp)
+                        .weight(4.5f)
                 ) {
                     LazyColumn {
                         items(week) { weekdays ->
@@ -158,7 +157,8 @@ fun BaseMedicationWeek(
                 }
                 BoxWithConstraints(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .weight(1f),
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     Button(
