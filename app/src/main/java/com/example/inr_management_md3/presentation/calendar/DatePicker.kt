@@ -14,15 +14,13 @@
 package com.example.inr_management_md3.presentation.calendar
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditCalendar
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -60,7 +58,7 @@ fun DatePickerDialog() {
 
     Box {
         val popUpWidth = 380.dp
-        val popUpHeight = 600.dp
+        val popUpHeight = 700.dp
 
         if (openPopUp.value) {
             Popup(
@@ -72,9 +70,47 @@ fun DatePickerDialog() {
                         .size(popUpWidth, popUpHeight)
                         .padding(16.dp)
                         .border(1.dp, color = Color.Black, RoundedCornerShape(10.dp))
+                        .background(
+                            MaterialTheme.colorScheme.primaryContainer,
+                            RoundedCornerShape(10.dp)
+                        )
                 ) {
-                    Column {
-                        Calendar(CalendarState(), onDayClicked = { })
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .height(600.dp)
+                        ) {
+                            Calendar(CalendarState(), onDayClicked = { })
+                        }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            TextButton(
+                                onClick = { openPopUp.value = !openPopUp.value }
+                            ) {
+                                Text(
+                                    text = "Cancel",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
+                            Column {
+                                TextButton(
+                                    onClick = { /*TODO*/ }
+                                ) {
+                                    Text(
+                                        text = "Save",
+                                        style = MaterialTheme.typography.titleMedium
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }
