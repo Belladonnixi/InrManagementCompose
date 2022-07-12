@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.inr_management_md3.presentation.calendar.DatePickerDialog
 import com.example.inr_management_md3.presentation.components.DatePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
@@ -76,7 +77,8 @@ fun MeasureTimeRangeExposedDropdownTo() {
             modifier = Modifier.width(110.dp)
         )
         ExposedDropdownMenu(
-            expanded = expanded, onDismissRequest = { expanded = false }
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
@@ -125,7 +127,7 @@ fun SetMeasur() {
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                DatePickerTextFieldDropdown()
+                DatePickerDialog()
             }
             Text(text = "Start from date:")
             Row(

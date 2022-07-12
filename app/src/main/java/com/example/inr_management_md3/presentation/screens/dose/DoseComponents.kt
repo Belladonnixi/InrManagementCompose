@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.data.datamodels.Weekdays
+import com.example.inr_management_md3.presentation.calendar.DatePickerDialog
 import com.example.inr_management_md3.presentation.components.DatePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.navigation.DoseScreens
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
@@ -317,7 +318,7 @@ fun TrimDose() {
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                DatePickerTextFieldDropdown()
+                DatePickerDialog()
             }
             Text(text = "Set dose:")
             Row(
