@@ -19,6 +19,7 @@ import com.example.inr_management_md3.data.datamodels.LoadWeekdays
 import com.example.inr_management_md3.presentation.screens.dose.BaseMedicationInterval
 import com.example.inr_management_md3.presentation.screens.dose.BaseMedicationWeek
 import com.example.inr_management_md3.presentation.screens.dose.TrimDose
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 
 enum class DoseScreens(
     val icon: Int,
@@ -34,7 +35,7 @@ enum class DoseScreens(
     ),
     Dose(
         icon = R.drawable.pill,
-        body = { TrimDose(calendarViewModel = com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel()) }
+        body = { TrimDose(calendarViewModel = CalendarViewModel()) }
     );
 
     @Composable
