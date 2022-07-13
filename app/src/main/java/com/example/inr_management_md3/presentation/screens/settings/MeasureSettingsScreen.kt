@@ -22,10 +22,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.BottomNavBar
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeasureSettingsScreen(navController: NavHostController) {
+fun MeasureSettingsScreen(navController: NavHostController, calendarViewModel: CalendarViewModel) {
     Scaffold(
         topBar = {
             SmallTopAppBar(
@@ -48,7 +49,7 @@ fun MeasureSettingsScreen(navController: NavHostController) {
             )
         },
         content = {
-            SetMeasur()
+            SetMeasur(calendarViewModel)
         },
         bottomBar = {
             BottomNavBar(navController = navController)

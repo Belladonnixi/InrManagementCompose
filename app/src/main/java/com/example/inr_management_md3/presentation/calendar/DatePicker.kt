@@ -1,18 +1,22 @@
 /**
  * Copyright © 2022 Jessica Ernst
  *
- * This project and source code may use libraries or frameworks that are released under various
- * Open-Source licenses. Use of those libraries and frameworks are governed by their own individual
- * licenses.
-
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
- * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * This project and source code may use libraries or frameworks that are
+ * released under various Open-Source licenses. Use of those libraries
+ * and frameworks are governed by their own individual licenses.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+ * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 package com.example.inr_management_md3.presentation.calendar
 
+import android.app.DatePickerDialog
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,13 +35,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import com.example.inr_management_md3.presentation.calendar.model.CalendarState
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import org.koin.androidx.compose.inject
 
 @Composable
-fun DatePickerDialog() {
+fun DatePickerDialog(
+    calendarViewModel: CalendarViewModel
+) {
     val openPopUp = remember { mutableStateOf(false) }
     val textState = remember { mutableStateOf(TextFieldValue()) }
+    val calendarState = remember {
+        calendarViewModel.calendarState
+    }
 
     TextField(
         modifier = Modifier
@@ -85,7 +95,12 @@ fun DatePickerDialog() {
                             modifier = Modifier
                                 .height(600.dp)
                         ) {
-                            Calendar(CalendarState(), onDayClicked = { })
+                            Calendar(
+                                calendarState = calendarState,
+                                onDayClicked = { dateClicked ->
+                                    calendarViewModel.onDaySelected(dateClicked)
+                                }
+                            )
                         }
                         Row(
                             modifier = Modifier
@@ -134,6 +149,7 @@ fun DatePickerDialog() {
 @Composable
 fun PreviewDatePicker() {
     INR_Management_Theme {
-        DatePickerDialog()
+        val calendarViewModel: CalendarViewModel by inject()
+        DatePickerDialog(calendarViewModel)
     }
 }

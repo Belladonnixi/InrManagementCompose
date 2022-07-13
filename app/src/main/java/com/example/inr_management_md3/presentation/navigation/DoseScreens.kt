@@ -34,7 +34,7 @@ enum class DoseScreens(
     ),
     Dose(
         icon = R.drawable.pill,
-        body = { TrimDose() }
+        body = { TrimDose(calendarViewModel = com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel()) }
     );
 
     @Composable
