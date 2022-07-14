@@ -219,6 +219,6 @@ data class CalendarUiState(
     }
 
     companion object {
-        private val SHORT_DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd")
+        private val SHORT_DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd. yyyy")
     }
 }

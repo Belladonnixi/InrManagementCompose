@@ -18,10 +18,13 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -32,6 +35,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
@@ -55,7 +59,16 @@ fun MonthViewCalendar(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp)
+            .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
+//            .border(
+//                1.dp,
+//                color = MaterialTheme.colorScheme.onSurface,
+//                RoundedCornerShape(10.dp)
+//            )
+            .shadow(
+                elevation = 10.dp,
+                ambientColor = MaterialTheme.colorScheme.onSurface
+            )
     ) {
         Calendar(
             calendarState = calendarState,
@@ -70,6 +83,23 @@ fun MonthViewCalendar(
 fun ListViewCalendar(
     calendarViewModel: CalendarViewModel
 ) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 16.dp, end = 16.dp)
+            .border(
+                1.dp,
+                color = MaterialTheme.colorScheme.onSurface,
+                RoundedCornerShape(10.dp)
+            )
+            .shadow(
+                elevation = 10.dp,
+                ambientColor = MaterialTheme.colorScheme.onSurface
+            )
+    ) {
+        LazyColumn {
+        }
+    }
 }
 
 @Composable
