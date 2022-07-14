@@ -36,9 +36,7 @@ import androidx.navigation.NavController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.BottomNavBar
 import com.example.inr_management_md3.presentation.navigation.CalendarScreens
-import com.example.inr_management_md3.presentation.navigation.DoseScreens
 import com.example.inr_management_md3.presentation.navigation.Screens
-import com.example.inr_management_md3.presentation.screens.dose.DoseTabBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
