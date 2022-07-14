@@ -13,7 +13,6 @@
  */
 package com.example.inr_management_md3.presentation.calendar
 
-import android.app.DatePickerDialog
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -43,6 +42,7 @@ fun DatePickerDialog(
     val openPopUp = remember { mutableStateOf(false) }
     val textState = remember { mutableStateOf(TextFieldValue()) }
     val calendarState = remember { calendarViewModel.calendarState }
+    val calendarUiState = calendarViewModel.calendarState.calendarUiState.value
 
     TextField(
         modifier = Modifier
@@ -119,7 +119,11 @@ fun DatePickerDialog(
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 TextButton(
-                                    onClick = { /*TODO*/ }
+                                    onClick = {
+                                        textState.value =
+                                            TextFieldValue(calendarUiState.selectedDatesFormatted)
+                                        openPopUp.value = !openPopUp.value
+                                    }
                                 ) {
                                     Text(
                                         text = "Save",

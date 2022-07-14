@@ -20,10 +20,11 @@ import java.time.Period
 import java.time.YearMonth
 
 class CalendarState {
+
     val calendarUiState = mutableStateOf(CalendarUiState())
     val listMonths: List<Month>
 
-    // Defaulting to start at 01/01 of current year
+    // Defaulting to starting at 1/01 of current year
     private val calendarStartDate: LocalDate = LocalDate.now()
         .withMonth(1).withDayOfMonth(1)
 
@@ -63,11 +64,48 @@ class CalendarState {
 
     private fun updateSelectedDay(newDate: LocalDate): CalendarUiState {
         val currentState = calendarUiState.value
+        val selectedStartDate = currentState.selectedStartDate
+        val selectedEndDate = currentState.selectedEndDate
 
-        return if (currentState.selectedDate == null) {
-            currentState.setDates(newDate)
-        } else {
-            updateSelectedDay(newDate = newDate)
+        return when {
+            selectedStartDate == null && selectedEndDate == null -> {
+                currentState.setDates(newDate, null)
+            }
+            selectedStartDate != null && selectedEndDate != null -> {
+                val animationDirection = if (newDate.isBefore(selectedStartDate)) {
+                    AnimationDirection.BACKWARDS
+                } else {
+                    AnimationDirection.FORWARDS
+                }
+                this.calendarUiState.value = currentState.copy(
+                    selectedStartDate = null,
+                    selectedEndDate = null,
+                    animateDirection = animationDirection
+                )
+                updateSelectedDay(newDate = newDate)
+            }
+            selectedStartDate == null -> {
+                if (newDate.isBefore(selectedEndDate)) {
+                    currentState.copy(animateDirection = AnimationDirection.BACKWARDS)
+                        .setDates(newDate, selectedEndDate)
+                } else if (newDate.isAfter(selectedEndDate)) {
+                    currentState.copy(animateDirection = AnimationDirection.FORWARDS)
+                        .setDates(selectedEndDate, newDate)
+                } else {
+                    currentState
+                }
+            }
+            else -> {
+                if (newDate.isBefore(selectedStartDate)) {
+                    currentState.copy(animateDirection = AnimationDirection.BACKWARDS)
+                        .setDates(newDate, selectedStartDate)
+                } else if (newDate.isAfter(selectedStartDate)) {
+                    currentState.copy(animateDirection = AnimationDirection.FORWARDS)
+                        .setDates(selectedStartDate, newDate)
+                } else {
+                    currentState
+                }
+            }
         }
     }
 

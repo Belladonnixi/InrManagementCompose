@@ -1,19 +1,26 @@
 /**
  * Copyright © 2022 Jessica Ernst
  *
- * This project and source code may use libraries or frameworks that are released under various
- * Open-Source licenses. Use of those libraries and frameworks are governed by their own individual
- * licenses.
-
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
- * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * This project and source code may use libraries or frameworks that are
+ * released under various Open-Source licenses. Use of those libraries
+ * and frameworks are governed by their own individual licenses.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+ * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 package com.example.inr_management_md3.presentation.calendar
 
 import android.content.res.Configuration
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.EaseOutQuart
+import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -22,6 +29,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,6 +53,27 @@ fun Calendar(
     contentPadding: PaddingValues = PaddingValues()
 ) {
     val calendarUiState = calendarState.calendarUiState.value
+    val numberSelectedDays = calendarUiState.numberSelectedDays.toInt()
+
+    val selectedAnimationPercentage = remember(numberSelectedDays) {
+        Animatable(0f)
+    }
+    // Start a Launch Effect when the number of selected days change.
+    // using .animateTo() we animate the percentage selection from 0f - 1f
+    LaunchedEffect(numberSelectedDays) {
+        if (calendarUiState.hasSelectedDates) {
+            val animationSpec: TweenSpec<Float> = tween(
+                durationMillis =
+                (numberSelectedDays.coerceAtLeast(0) * DURATION_MILLIS_PER_DAY)
+                    .coerceAtMost(2000),
+                easing = EaseOutQuart
+            )
+            selectedAnimationPercentage.animateTo(
+                targetValue = 1f,
+                animationSpec = animationSpec
+            )
+        }
+    }
 
     Surface(
         color = MaterialTheme.colorScheme.primary,
@@ -57,6 +87,7 @@ fun Calendar(
                 itemsCalendarMonth(
                     calendarUiState,
                     onDayClicked,
+                    { selectedAnimationPercentage.value },
                     month
                 )
             }
@@ -75,6 +106,7 @@ fun Calendar(
 private fun LazyListScope.itemsCalendarMonth(
     calendarUiState: CalendarUiState,
     onDayClicked: (LocalDate) -> Unit,
+    selectedPercentageProvider: () -> Float,
     month: Month
 ) {
     item(month.yearMonth.month.name + month.yearMonth.year + "header") {
@@ -102,6 +134,15 @@ private fun LazyListScope.itemsCalendarMonth(
         val beginningWeek = week.yearMonth.atDay(1).plusWeeks(week.number.toLong())
         val currentDay = beginningWeek.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
 
+        if (calendarUiState.hasSelectedPeriodOverlap(currentDay, currentDay.plusDays(6))) {
+            WeekSelectionPill(
+                state = calendarUiState,
+                currentWeekStart = currentDay,
+                widthPerDay = CELL_SIZE,
+                week = week,
+                selectedPercentageTotalProvider = selectedPercentageProvider
+            )
+        }
         Week(
             calendarUiState = calendarUiState,
             modifier = contentModifier,
