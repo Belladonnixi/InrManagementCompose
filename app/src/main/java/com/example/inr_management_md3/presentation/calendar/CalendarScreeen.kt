@@ -13,12 +13,21 @@
  */
 package com.example.inr_management_md3.presentation.calendar
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,7 +35,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.BottomNavBar
+import com.example.inr_management_md3.presentation.navigation.CalendarScreens
+import com.example.inr_management_md3.presentation.navigation.DoseScreens
 import com.example.inr_management_md3.presentation.navigation.Screens
+import com.example.inr_management_md3.presentation.screens.dose.DoseTabBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,7 +76,26 @@ fun CalendarScreen(navController: NavController) {
                 }
             )
         },
-        content = {},
+        content = { innerPadding ->
+            val scrollState = rememberScrollState()
+            Column(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .scrollable(
+                        state = scrollState,
+                        orientation = Orientation.Vertical
+                    )
+            ) {
+                val allScreens = CalendarScreens.values().toList()
+                var currentScreen by rememberSaveable { mutableStateOf(CalendarScreens.Month) }
+                CalendarTabBar(
+                    allScreens = allScreens,
+                    onTabSelected = { screen -> currentScreen = screen },
+                    currentScreen = currentScreen
+                )
+                currentScreen.content(onScreenChange = { screen -> currentScreen = screen })
+            }
+        },
         bottomBar = {
             BottomNavBar(navController = navController)
         }
