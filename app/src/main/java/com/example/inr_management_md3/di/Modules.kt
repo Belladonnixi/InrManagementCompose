@@ -18,6 +18,8 @@ import com.example.inr_management_md3.data.AppDataBase
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 import com.example.inr_management_md3.data.repository.InrManagementRepositoryImpl
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
+import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.annotation.KoinReflectAPI
@@ -40,6 +42,8 @@ val repositoryModule = module {
 @OptIn(KoinReflectAPI::class)
 val viewModelModule = module {
     viewModel { CalendarViewModel() }
+    viewModel { SettingsViewModel(get()) }
+    viewModel { DoseViewModel() }
 }
 
 val appModules = listOf(
