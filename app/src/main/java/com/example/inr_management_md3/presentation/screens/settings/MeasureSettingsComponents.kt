@@ -22,11 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.presentation.calendar.DatePickerDialog
-import com.example.inr_management_md3.presentation.components.DatePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
-import org.koin.android.ext.android.inject
 import org.koin.androidx.compose.inject
 
 @OptIn(ExperimentalMaterial3Api::class)

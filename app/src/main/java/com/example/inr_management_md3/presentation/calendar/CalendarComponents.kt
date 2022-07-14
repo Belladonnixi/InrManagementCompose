@@ -48,9 +48,22 @@ import java.util.*
 
 @Composable
 fun MonthViewCalendar(
-
     calendarViewModel: CalendarViewModel
 ) {
+    val calendarState = remember { calendarViewModel.calendarState }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 16.dp, end = 16.dp)
+    ) {
+        Calendar(
+            calendarState = calendarState,
+            onDayClicked = { dateClicked ->
+                calendarViewModel.onDaySelected(dateClicked)
+            }
+        )
+    }
 }
 
 @Composable
@@ -142,7 +155,7 @@ private const val TabFadeOutAnimationDuration = 100
 
 @Preview(name = "Light Mode")
 @Preview(
-    name = "Dark Mde",
+    name = "Dark Mode",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
@@ -156,7 +169,7 @@ fun PreviewMonthViewCalendar() {
 
 @Preview(name = "Light Mode")
 @Preview(
-    name = "Dark Mde",
+    name = "Dark Mode",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
