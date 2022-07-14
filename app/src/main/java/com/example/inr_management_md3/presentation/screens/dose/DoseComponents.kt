@@ -102,7 +102,6 @@ fun DosageExposedDropdown() {
 
 @Composable
 fun BaseMedicationWeek(
-    onScreenChange: (DoseScreens) -> Unit = {},
     week: List<Weekdays>
 ) {
     Surface(

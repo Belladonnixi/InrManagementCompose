@@ -42,11 +42,20 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.presentation.navigation.CalendarScreens
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import org.koin.androidx.compose.inject
 import java.util.*
 
 @Composable
 fun MonthViewCalendar(
-    onScreenChange: (CalendarScreens) -> Unit = {}
+
+    calendarViewModel: CalendarViewModel
+) {
+}
+
+@Composable
+fun ListViewCalendar(
+    calendarViewModel: CalendarViewModel
 ) {
 }
 
@@ -138,8 +147,23 @@ private const val TabFadeOutAnimationDuration = 100
     showBackground = true
 )
 @Composable
-fun PreviewTrimDose() {
+fun PreviewMonthViewCalendar() {
     INR_Management_Theme {
-        MonthViewCalendar()
+        val calendarViewModel: CalendarViewModel by inject()
+        MonthViewCalendar(calendarViewModel)
+    }
+}
+
+@Preview(name = "Light Mode")
+@Preview(
+    name = "Dark Mde",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+fun PreviewListViewCalendar() {
+    INR_Management_Theme {
+        val calendarViewModel: CalendarViewModel by inject()
+        ListViewCalendar(calendarViewModel)
     }
 }

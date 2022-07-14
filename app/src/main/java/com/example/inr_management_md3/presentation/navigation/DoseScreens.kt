@@ -27,7 +27,7 @@ enum class DoseScreens(
 ) {
     Week(
         icon = R.drawable.ic_baseline_calendar_view_week_24,
-        body = { onScreenChange -> BaseMedicationWeek(onScreenChange, LoadWeekdays.weekdays) }
+        body = { BaseMedicationWeek(LoadWeekdays.weekdays) }
     ),
     Interval(
         icon = R.drawable.ic_baseline_timelapse_24,

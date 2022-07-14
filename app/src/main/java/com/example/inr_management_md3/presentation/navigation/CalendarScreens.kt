@@ -18,6 +18,9 @@ import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.inr_management_md3.presentation.calendar.ListViewCalendar
+import com.example.inr_management_md3.presentation.calendar.MonthViewCalendar
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 
 enum class CalendarScreens(
     val icon: ImageVector,
@@ -25,13 +28,17 @@ enum class CalendarScreens(
 ) {
     Month(
         icon = Icons.Filled.CalendarMonth,
-        body = { onScreenChange ->
-            com.example.inr_management_md3.presentation.calendar.MonthViewCalendar(onScreenChange)
+        body = {
+            MonthViewCalendar(CalendarViewModel())
         }
     ),
     List(
         icon = Icons.Filled.List,
-        body = {}
+        body = {
+            ListViewCalendar(
+                calendarViewModel = CalendarViewModel()
+            )
+        }
     );
 
     @Composable
