@@ -22,6 +22,9 @@ import com.example.inr_management_md3.presentation.calendar.ListViewCalendar
 import com.example.inr_management_md3.presentation.calendar.MonthViewCalendar
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 
+/**
+ * Calendar screens navigation for TabBar to keep the Composable testable
+ */
 enum class CalendarScreens(
     val icon: ImageVector,
     private val body: @Composable ((CalendarScreens) -> Unit) -> Unit

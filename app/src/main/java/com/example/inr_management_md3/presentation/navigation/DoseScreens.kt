@@ -21,6 +21,9 @@ import com.example.inr_management_md3.presentation.screens.dose.BaseMedicationWe
 import com.example.inr_management_md3.presentation.screens.dose.TrimDose
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 
+/**
+ * Dose screens navigation for TabBar to keep the Composable testable
+ */
 enum class DoseScreens(
     val icon: Int,
     private val body: @Composable ((DoseScreens) -> Unit) -> Unit

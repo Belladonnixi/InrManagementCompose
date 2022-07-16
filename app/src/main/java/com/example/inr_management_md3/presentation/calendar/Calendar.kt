@@ -1,15 +1,18 @@
 /**
  * Copyright © 2022 Jessica Ernst
  *
- * This project and source code may use libraries or frameworks that are released under various
- * Open-Source licenses. Use of those libraries and frameworks are governed by their own individual
- * licenses.
-
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
- * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * This project and source code may use libraries or frameworks that are
+ * released under various Open-Source licenses. Use of those libraries
+ * and frameworks are governed by their own individual licenses.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+ * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 package com.example.inr_management_md3.presentation.calendar
 
@@ -18,6 +21,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.EaseOutQuart
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -25,6 +29,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -150,7 +155,77 @@ private fun LazyListScope.itemsCalendarMonth(
     }
 }
 
+@Composable
+fun ListCalendar(
+    calendarState: CalendarState,
+    onDayClicked: (date: LocalDate) -> Unit,
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues()
+) {
+    val calendarUiState = calendarState.calendarUiState.value
+    val numberSelectedDays = calendarUiState.numberSelectedDays.toInt()
+
+    val selectedAnimationPercentage = remember(numberSelectedDays) {
+        Animatable(0f)
+    }
+}
+
+@Composable
+fun ListItem(
+    month: String,
+    day: String,
+    year: String,
+    onDayClicked: (date: LocalDate) -> Unit,
+    calendarUiState: CalendarUiState
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(
+                1.dp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            ),
+        color = MaterialTheme.colorScheme.surfaceVariant
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = month,
+                modifier = Modifier
+                    .padding(start = 16.dp, top = 16.dp, bottom = 16.dp, end = 8.dp)
+            )
+            Text(
+                text = day,
+                modifier = Modifier
+                    .padding(top = 16.dp, bottom = 16.dp)
+            )
+            Column {
+                Text(
+                    text = year,
+                    modifier = Modifier
+                        .padding(start = 8.dp, top = 16.dp, bottom = 16.dp, end = 16.dp)
+                )
+            }
+        }
+    }
+}
+
 internal val CALENDAR_STARTS_ON = WeekFields.ISO
+
+@Preview(name = "Light Mode")
+@Preview(
+    name = "Dark Mde",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+fun PreviewListItem() {
+    INR_Management_Theme {
+        ListItem("July", "15.", "2022", onDayClicked = { }, CalendarUiState())
+    }
+}
 
 @Preview(name = "Light Mode")
 @Preview(
@@ -162,5 +237,18 @@ internal val CALENDAR_STARTS_ON = WeekFields.ISO
 fun PreviewCalendar() {
     INR_Management_Theme {
         Calendar(CalendarState(), onDayClicked = { })
+    }
+}
+
+@Preview(name = "Light Mode")
+@Preview(
+    name = "Dark Mde",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+fun PreviewListCalendar() {
+    INR_Management_Theme {
+        ListCalendar(CalendarState(), onDayClicked = { })
     }
 }

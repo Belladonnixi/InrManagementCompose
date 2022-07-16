@@ -86,7 +86,7 @@ fun ListViewCalendar(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp)
+            .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
             .border(
                 1.dp,
                 color = MaterialTheme.colorScheme.onSurface,

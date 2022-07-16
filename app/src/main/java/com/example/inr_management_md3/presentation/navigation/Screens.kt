@@ -17,6 +17,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.inr_management_md3.R
 
+/**
+ * class for keeping navigation simple and for running bottomNavBar
+ */
 sealed class Screens(val route: String, @StringRes val resourceId: Int, @DrawableRes val iconId: Int) {
     object Home : Screens("home", R.string.home, R.drawable.ic_outline_home_28)
     object Settings : Screens("settings", R.string.settings, R.drawable.ic_launcher_foreground)

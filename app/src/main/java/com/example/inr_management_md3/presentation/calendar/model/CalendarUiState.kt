@@ -40,9 +40,9 @@ data class CalendarUiState(
     val selectedDatesFormatted: String
         get() {
             if (selectedStartDate == null) return ""
-            var output = selectedStartDate.format(SHORT_DATE_FORMAT)
+            var output = selectedStartDate.format(DATE_FORMAT)
             if (selectedEndDate != null) {
-                output += " - ${selectedEndDate.format(SHORT_DATE_FORMAT)}"
+                output += " - ${selectedEndDate.format(DATE_FORMAT)}"
             }
             return output
         }
@@ -219,6 +219,6 @@ data class CalendarUiState(
     }
 
     companion object {
-        private val SHORT_DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd. yyyy")
+        private val DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd. yyyy")
     }
 }
