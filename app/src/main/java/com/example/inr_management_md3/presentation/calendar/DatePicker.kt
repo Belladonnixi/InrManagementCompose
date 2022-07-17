@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,6 +34,10 @@ import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.himanshoe.kalendar.common.KalendarSelector
+import com.himanshoe.kalendar.common.KalendarStyle
+import com.himanshoe.kalendar.ui.Kalendar
+import com.himanshoe.kalendar.ui.KalendarType
 import org.koin.androidx.compose.inject
 
 @Composable
@@ -41,8 +46,6 @@ fun DatePickerDialog(
 ) {
     val openPopUp = remember { mutableStateOf(false) }
     val textState = remember { mutableStateOf(TextFieldValue()) }
-    val calendarState = remember { calendarViewModel.calendarState }
-    val calendarUiState = calendarViewModel.calendarState.calendarUiState.value
 
     TextField(
         modifier = Modifier
@@ -61,7 +64,7 @@ fun DatePickerDialog(
     )
     Box {
         val popUpWidth = 380.dp
-        val popUpHeight = 700.dp
+        val popUpHeight = 600.dp
 
         if (openPopUp.value) {
             Popup(
@@ -78,7 +81,7 @@ fun DatePickerDialog(
                             RoundedCornerShape(10.dp)
                         )
                         .background(
-                            MaterialTheme.colorScheme.primaryContainer,
+                            MaterialTheme.colorScheme.tertiaryContainer,
                             RoundedCornerShape(10.dp)
                         )
                 ) {
@@ -88,12 +91,30 @@ fun DatePickerDialog(
                     ) {
                         Box(
                             modifier = Modifier
-                                .height(600.dp)
+                                .height(500.dp)
+                                .wrapContentSize()
                         ) {
-                            Calendar(
-                                calendarState = calendarState,
-                                onDayClicked = { dateClicked ->
-                                    calendarViewModel.onDaySelected(dateClicked)
+                            Kalendar(
+                                kalendarType = KalendarType.Firey(),
+                                kalendarStyle = KalendarStyle(
+                                    kalendarBackgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                    kalendarColor = MaterialTheme.colorScheme.primary,
+                                    kalendarSelector = KalendarSelector.Circle(
+                                        selectedColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                        todayColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                        defaultTextColor = MaterialTheme.colorScheme.onPrimary,
+                                        selectedTextColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                                        defaultColor = Color.Transparent,
+                                        eventTextColor = MaterialTheme.colorScheme.primaryContainer
+                                    ),
+                                    hasRadius = true,
+                                    shape = RoundedCornerShape(10.dp)
+                                ),
+                                onCurrentDayClick = { day, event ->
+                                    // handle the date click listener
+                                },
+                                errorMessage = {
+                                    // Handle the error if any
                                 }
                             )
                         }
@@ -121,7 +142,7 @@ fun DatePickerDialog(
                                 TextButton(
                                     onClick = {
                                         textState.value =
-                                            TextFieldValue(calendarUiState.selectedDatesFormatted)
+                                            TextFieldValue()
                                         openPopUp.value = !openPopUp.value
                                     }
                                 ) {

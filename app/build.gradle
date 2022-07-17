@@ -123,4 +123,8 @@ dependencies {
 
     // Date and Time Picker
     implementation 'io.github.vanpra.compose-material-dialogs:datetime:0.7.1'
+
+    //Kalendar
+    implementation("com.himanshoe:kalendar:1.0.0-RC5")
+    implementation("com.himanshoe:kalendar-endlos:1.0.0-RC5")
 }
