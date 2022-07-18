@@ -22,7 +22,8 @@ import com.example.inr_management_md3.presentation.screens.dose.TrimDose
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 
 /**
- * Dose screens navigation for TabBar to keep the Composable testable
+ * Dose screens navigation for TabBar to keep the Composable testable and navigation out of
+ * the Composable
  */
 enum class DoseScreens(
     val icon: Int,
