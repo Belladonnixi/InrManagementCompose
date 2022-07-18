@@ -51,7 +51,8 @@ fun TargetRangeExposedDropdownFrom() {
             modifier = Modifier.width(100.dp)
         )
         ExposedDropdownMenu(
-            expanded = expanded, onDismissRequest = { expanded = false }
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
@@ -92,7 +93,8 @@ fun TargetRangeExposedDropdownTo() {
             modifier = Modifier.width(100.dp)
         )
         ExposedDropdownMenu(
-            expanded = expanded, onDismissRequest = { expanded = false }
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
@@ -120,7 +122,7 @@ fun TargetRange() {
                 .padding(top = 50.dp, bottom = 30.dp)
         ) {
             Text(
-                text = "Please set your target range:",
+                text = "Please set your target range:"
             )
             Row(
                 modifier = Modifier

@@ -98,7 +98,7 @@ fun MedicamentTypeExposedDropdown() {
 
     ExposedDropdownMenuBox(
         expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
+        onExpandedChange = { expanded = !expanded }
     ) {
         TextField(
             value = selectedOptionText,
@@ -109,7 +109,8 @@ fun MedicamentTypeExposedDropdown() {
             modifier = Modifier.fillMaxWidth()
         )
         ExposedDropdownMenu(
-            expanded = expanded, onDismissRequest = { expanded = false }
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(

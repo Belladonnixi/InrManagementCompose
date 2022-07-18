@@ -15,4 +15,4 @@ package com.example.inr_management_md3.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 
-class DoseViewModel() : ViewModel()
+class DoseViewModel : ViewModel()

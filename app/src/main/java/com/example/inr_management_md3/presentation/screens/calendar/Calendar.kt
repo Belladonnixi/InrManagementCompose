@@ -11,14 +11,13 @@
  * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.example.inr_management_md3.presentation.calendar
+package com.example.inr_management_md3.presentation.screens.calendar
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,17 +55,18 @@ fun CalendarMonthView() {
                         kalendarBackgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
                         kalendarColor = MaterialTheme.colorScheme.primary,
                         kalendarSelector = com.himanshoe.kalendar.common.KalendarSelector.Circle(
-                            selectedColor = MaterialTheme.colorScheme.tertiaryContainer,
-                            todayColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            selectedColor = Color.White,
+                            todayColor = Color.White,
                             defaultTextColor = MaterialTheme.colorScheme.onPrimary,
-                            selectedTextColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                            selectedTextColor = Color.Black,
                             defaultColor = Color.Transparent,
                             eventTextColor = MaterialTheme.colorScheme.primaryContainer
                         ),
-                        shape = RoundedCornerShape(10.dp)
+                        hasRadius = true,
+                        shape = RoundedCornerShape(10.dp),
+                        elevation = 10.dp
                     ),
                     onCurrentDayClick = { day, event ->
-                        // handle the date click listener
                     },
                     errorMessage = {
                         // Handle the error if any

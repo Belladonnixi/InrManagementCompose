@@ -42,8 +42,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.data.datamodels.Weekdays
-import com.example.inr_management_md3.presentation.calendar.DatePickerDialog
 import com.example.inr_management_md3.presentation.navigation.DoseScreens
+import com.example.inr_management_md3.presentation.screens.calendar.DatePickerDialog
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import org.koin.androidx.compose.inject

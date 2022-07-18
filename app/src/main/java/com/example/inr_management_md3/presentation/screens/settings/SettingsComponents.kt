@@ -54,7 +54,7 @@ fun SettingsMenu(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 IconButton(
-                    onClick = { navController.navigate(Screens.SetMedicament.route) },
+                    onClick = { navController.navigate(Screens.SetMedicament.route) }
                 ) {
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -63,7 +63,7 @@ fun SettingsMenu(navController: NavController) {
                 }
             }
         }
-        Divider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 2.dp)
+        Divider()
 
         Row(
             modifier = Modifier
@@ -84,7 +84,7 @@ fun SettingsMenu(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 IconButton(
-                    onClick = { navController.navigate(Screens.SetTargetRange.route) },
+                    onClick = { navController.navigate(Screens.SetTargetRange.route) }
                 ) {
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -93,7 +93,7 @@ fun SettingsMenu(navController: NavController) {
                 }
             }
         }
-        Divider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 2.dp)
+        Divider()
 
         Row(
             modifier = Modifier
@@ -114,7 +114,7 @@ fun SettingsMenu(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 IconButton(
-                    onClick = { navController.navigate(Screens.SetMeasure.route) },
+                    onClick = { navController.navigate(Screens.SetMeasure.route) }
                 ) {
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -123,7 +123,7 @@ fun SettingsMenu(navController: NavController) {
                 }
             }
         }
-        Divider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 2.dp)
+        Divider()
 
         Row(
             modifier = Modifier
@@ -144,7 +144,7 @@ fun SettingsMenu(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 IconButton(
-                    onClick = { navController.navigate(Screens.About.route) },
+                    onClick = { navController.navigate(Screens.About.route) }
                 ) {
                     Icon(
                         Icons.Filled.ChevronRight,
