@@ -1,15 +1,18 @@
 /**
  * Copyright © 2022 Jessica Ernst
  *
- * This project and source code may use libraries or frameworks that are released under various
- * Open-Source licenses. Use of those libraries and frameworks are governed by their own individual
- * licenses.
-
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
- * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * This project and source code may use libraries or frameworks that are
+ * released under various Open-Source licenses. Use of those libraries
+ * and frameworks are governed by their own individual licenses.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+ * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 package com.example.inr_management_md3.presentation.calendar
 
@@ -39,6 +42,7 @@ import com.himanshoe.kalendar.common.KalendarStyle
 import com.himanshoe.kalendar.ui.Kalendar
 import com.himanshoe.kalendar.ui.KalendarType
 import org.koin.androidx.compose.inject
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun DatePickerDialog(
@@ -111,7 +115,9 @@ fun DatePickerDialog(
                                     shape = RoundedCornerShape(10.dp)
                                 ),
                                 onCurrentDayClick = { day, event ->
-                                    // handle the date click listener
+                                    val formattedDate =
+                                        day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
+                                    textState.value = TextFieldValue(formattedDate)
                                 },
                                 errorMessage = {
                                     // Handle the error if any
@@ -141,8 +147,7 @@ fun DatePickerDialog(
                             ) {
                                 TextButton(
                                     onClick = {
-                                        textState.value =
-                                            TextFieldValue()
+                                        textState.value
                                         openPopUp.value = !openPopUp.value
                                     }
                                 ) {
@@ -159,6 +164,7 @@ fun DatePickerDialog(
         }
     }
 }
+
 
 @Preview(name = "Light Mode")
 @Preview(

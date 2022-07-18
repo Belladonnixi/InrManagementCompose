@@ -14,6 +14,7 @@
 package com.example.inr_management_md3.presentation.calendar
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -35,39 +36,24 @@ fun CalendarMonthView() {
             .padding(bottom = 8.dp)
             .fillMaxSize()
     ) {
-//        Kalendar(
-//            kalendarStyle = KalendarStyle(
-//                kalendarColor = MaterialTheme.colorScheme.surfaceVariant,
-//                kalendarSelector = KalendarSelector.Circle(
-//                    selectedColor = MaterialTheme.colorScheme.primary,
-//                    selectedTextColor = MaterialTheme.colorScheme.onPrimary,
-//                    defaultColor = Color.Transparent,
-//                    defaultTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-//                    eventTextColor = MaterialTheme.colorScheme.primary,
-//                    todayColor = MaterialTheme.colorScheme.primary
-//                )
-//            ),
-//            onCurrentDayClick = { day, event ->
-//                // handle the date click listener
-//            },
-//            errorMessage = {
-//                // Handle the error if any
-//            }
-//        )
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Surface(
-                color = MaterialTheme.colorScheme.surface,
+            Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .background(
+                        MaterialTheme.colorScheme.tertiaryContainer,
+                        RoundedCornerShape(10.dp)
+                    )
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
                 Kalendar(
                     kalendarType = KalendarType.Firey(),
                     kalendarStyle = com.himanshoe.kalendar.common.KalendarStyle(
-                        kalendarBackgroundColor = MaterialTheme.colorScheme.surface,
+                        kalendarBackgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
                         kalendarColor = MaterialTheme.colorScheme.primary,
                         kalendarSelector = com.himanshoe.kalendar.common.KalendarSelector.Circle(
                             selectedColor = MaterialTheme.colorScheme.tertiaryContainer,
