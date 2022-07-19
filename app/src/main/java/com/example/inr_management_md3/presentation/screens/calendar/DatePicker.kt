@@ -33,18 +33,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
-import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.himanshoe.kalendar.common.KalendarSelector
 import com.himanshoe.kalendar.common.KalendarStyle
 import com.himanshoe.kalendar.ui.Kalendar
 import com.himanshoe.kalendar.ui.KalendarType
-import org.koin.androidx.compose.inject
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun DatePickerDialog(
-    calendarViewModel: CalendarViewModel
-) {
+fun DatePickerDialog() {
     val openPopUp = remember { mutableStateOf(false) }
     val textState = remember { mutableStateOf(TextFieldValue()) }
 
@@ -101,8 +97,8 @@ fun DatePickerDialog(
                                     kalendarBackgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
                                     kalendarColor = MaterialTheme.colorScheme.primary,
                                     kalendarSelector = KalendarSelector.Circle(
-                                        selectedColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                        todayColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                        selectedColor = Color.White,
+                                        todayColor = Color.White,
                                         defaultTextColor = MaterialTheme.colorScheme.onPrimary,
                                         selectedTextColor = MaterialTheme.colorScheme.onTertiaryContainer,
                                         defaultColor = Color.Transparent,
@@ -171,7 +167,6 @@ fun DatePickerDialog(
 @Composable
 fun PreviewDatePicker() {
     INR_Management_Theme {
-        val calendarViewModel: CalendarViewModel by inject()
-        DatePickerDialog(calendarViewModel)
+        DatePickerDialog()
     }
 }
