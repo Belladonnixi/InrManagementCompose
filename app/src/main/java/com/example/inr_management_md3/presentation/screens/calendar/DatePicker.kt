@@ -107,7 +107,7 @@ fun DatePickerDialog() {
                                     hasRadius = true,
                                     shape = RoundedCornerShape(10.dp)
                                 ),
-                                onCurrentDayClick = { day, event ->
+                                onCurrentDayClick = { day, _ ->
                                     val formattedDate =
                                         day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
                                     textState.value = TextFieldValue(formattedDate)
