@@ -14,5 +14,14 @@
 package com.example.inr_management_md3.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
-class CalendarViewModel : ViewModel()
+class CalendarViewModel : ViewModel() {
+    private val _date = MutableStateFlow("")
+    val date: StateFlow<String> get() = _date
+
+    fun setDate(setDate: String) {
+        _date.value = setDate
+    }
+}

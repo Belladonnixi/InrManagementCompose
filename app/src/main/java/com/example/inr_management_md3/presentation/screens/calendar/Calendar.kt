@@ -24,12 +24,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.inr_management_md3.presentation.navigation.Screens
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.himanshoe.kalendar.ui.Kalendar
 import com.himanshoe.kalendar.ui.KalendarType
+import java.time.format.DateTimeFormatter
 
 @Composable
-fun CalendarMonthView() {
+fun CalendarMonthView(calendarViewModel: CalendarViewModel, navController: NavController) {
     BoxWithConstraints(
         modifier = Modifier
             .padding(bottom = 8.dp)
@@ -66,7 +70,11 @@ fun CalendarMonthView() {
                         shape = RoundedCornerShape(10.dp),
                         elevation = 10.dp
                     ),
-                    onCurrentDayClick = { day, event ->
+                    onCurrentDayClick = { day, _ ->
+                        val formattedDate =
+                            day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
+                        calendarViewModel.setDate(formattedDate).toString()
+                        navController.navigate(Screens.CalendarDay.route)
                     },
                     errorMessage = {
                         // Handle the error if any

@@ -18,19 +18,23 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import org.koin.androidx.compose.inject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalendarDayView(textState: TextFieldValue) {
+fun CalendarDayView(calendarViewModel: CalendarViewModel) {
+    val date by calendarViewModel.date.collectAsState()
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -44,7 +48,7 @@ fun CalendarDayView(textState: TextFieldValue) {
             elevation = CardDefaults.cardElevation(10.dp)
         ) {
             Text(
-                text = textState.text,
+                text = date,
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth(),
@@ -133,7 +137,7 @@ fun CalendarDayView(textState: TextFieldValue) {
 @Composable
 fun PreviewMonthViewCalendar() {
     INR_Management_Theme {
-        val textState = TextFieldValue("Jul 18. 2022")
-        CalendarDayView(textState)
+        val calendarViewModel: CalendarViewModel by inject()
+        CalendarDayView(calendarViewModel)
     }
 }

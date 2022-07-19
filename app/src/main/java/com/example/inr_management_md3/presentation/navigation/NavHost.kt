@@ -21,6 +21,7 @@ import androidx.compose.animation.shrinkOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.inr_management_md3.presentation.screens.about.AboutScreen
+import com.example.inr_management_md3.presentation.screens.calendar.CalendarDayScreen
 import com.example.inr_management_md3.presentation.screens.calendar.CalendarScreen
 import com.example.inr_management_md3.presentation.screens.dose.DoseScreen
 import com.example.inr_management_md3.presentation.screens.home.HomeScreen
@@ -120,7 +121,7 @@ fun AppNavigation(navController: NavHostController, calendarViewModel: CalendarV
                 else null
             }
         ) {
-            MeasureScreen(navController, calendarViewModel)
+            MeasureScreen(navController)
         }
 
         composable(
@@ -140,7 +141,26 @@ fun AppNavigation(navController: NavHostController, calendarViewModel: CalendarV
                 else null
             }
         ) {
-            CalendarScreen(navController)
+            CalendarScreen(navController, calendarViewModel)
+        }
+        composable(
+            Screens.CalendarDay.route,
+            enterTransition = {
+                if (initialState.destination.route == Screens.Home.route) slideIntoContainer(
+                    AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(600)
+                )
+                else null
+            },
+            exitTransition = {
+                if (targetState.destination.route == Screens.Home.route) slideOutOfContainer(
+                    AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(600)
+                )
+                else null
+            }
+        ) {
+            CalendarDayScreen(navController, calendarViewModel)
         }
 
         composable(
