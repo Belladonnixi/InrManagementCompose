@@ -14,17 +14,16 @@
 package com.example.inr_management_md3.presentation.screens.calendar
 
 import android.content.res.Configuration
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -42,9 +41,9 @@ import org.koin.androidx.compose.inject
 @Composable
 fun CalendarDayView(calendarViewModel: CalendarViewModel) {
     val date by calendarViewModel.date.collectAsState()
-    val openPopUp = remember { mutableStateOf(false) }
-    val text = remember { mutableStateOf("Comment the day") }
-    var textState by rememberSaveable { mutableStateOf("") }
+    val openPopUp by calendarViewModel.openPopUp.collectAsState()
+    val text by calendarViewModel.comment.collectAsState()
+    val scroll = rememberScrollState(0)
 
     Surface(
         modifier = Modifier
@@ -76,7 +75,8 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
                 Text(
                     text = "Medicament taken",
                     modifier = Modifier
-                        .padding(end = 8.dp),
+                        .padding(end = 8.dp)
+                        .verticalScroll(scroll),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Start
                 )
@@ -147,7 +147,9 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
                         horizontalArrangement = Arrangement.End
                     ) {
                         IconButton(
-                            onClick = { openPopUp.value = !openPopUp.value }
+                            onClick = {
+                                calendarViewModel.setUpPopUpState(openPopUp)
+                            }
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.Add,
@@ -157,7 +159,9 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
                         }
 
                         IconButton(
-                            onClick = { openPopUp.value = !openPopUp.value }
+                            onClick = {
+                                calendarViewModel.setUpPopUpState(openPopUp)
+                            }
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.Edit,
@@ -169,97 +173,17 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
                 }
             }
 
-            if (openPopUp.value) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = 250.dp)
-                ) {
-                    val popupWidth = 360.dp
-                    val popupHeight = 500.dp
-                    val cornerSize = 16.dp
-
-                    Popup(
-                        alignment = Alignment.Center,
-                        properties = PopupProperties(
-                            focusable = true
-                        )
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(
-                                    width = popupWidth,
-                                    height = popupHeight
-                                )
-                                .background(
-                                    color = MaterialTheme.colorScheme.surface,
-                                    shape = RoundedCornerShape(cornerSize)
-                                )
-                                .border(
-                                    1.dp,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                    shape = RoundedCornerShape(10.dp)
-                                )
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                            ) {
-                                TextField(
-                                    value = textState,
-                                    onValueChange = { textState = it },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(16.dp),
-                                    maxLines = 13
-                                )
-                                BoxWithConstraints(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.BottomCenter
-                                ) {
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(8.dp),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        TextButton(
-                                            onClick = {
-                                                textState = ""
-                                                openPopUp.value = !openPopUp.value
-                                            }
-                                        ) {
-                                            Text(
-                                                text = "Cancel",
-                                                style = MaterialTheme.typography.titleMedium
-                                            )
-                                        }
-                                        Column(
-                                            modifier = Modifier
-                                                .padding(start = 32.dp)
-                                                .fillMaxWidth(),
-                                            horizontalAlignment = Alignment.End,
-                                            verticalArrangement = Arrangement.Center
-                                        ) {
-                                            TextButton(
-                                                onClick = {
-                                                    openPopUp.value = !openPopUp.value
-                                                }
-                                            ) {
-                                                Text(
-                                                    text = "Save",
-                                                    style = MaterialTheme.typography.titleMedium
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            if (openPopUp) {
+                CommentPopUp(calendarViewModel = calendarViewModel)
             }
+            Text(
+                text = text,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .padding(16.dp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
 
             BoxWithConstraints(
                 modifier = Modifier
@@ -274,6 +198,101 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
                         .height(60.dp),
                     enabled = false
                 ) { Text("Save") }
+            }
+        }
+    }
+}
+
+@Composable
+fun CommentPopUp(calendarViewModel: CalendarViewModel) {
+    val openPopUp by calendarViewModel.openPopUp.collectAsState()
+    val text by calendarViewModel.comment.collectAsState()
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 250.dp)
+    ) {
+        val popupWidth = 360.dp
+        val popupHeight = 500.dp
+        val cornerSize = 16.dp
+
+        Popup(
+            alignment = Alignment.Center,
+            properties = PopupProperties(
+                focusable = true
+            )
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(
+                        width = popupWidth,
+                        height = popupHeight
+                    )
+                    .background(
+                        color = MaterialTheme.colorScheme.surface,
+                        shape = RoundedCornerShape(cornerSize)
+                    )
+                    .border(
+                        1.dp,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        shape = RoundedCornerShape(10.dp)
+                    )
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    TextField(
+                        value = text,
+                        onValueChange = { calendarViewModel.setComment(it) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        maxLines = 13
+                    )
+                    BoxWithConstraints(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentAlignment = Alignment.BottomCenter
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            TextButton(
+                                onClick = {
+                                    calendarViewModel.setComment("")
+                                    calendarViewModel.setUpPopUpState(openPopUp)
+                                }
+                            ) {
+                                Text(
+                                    text = "Cancel",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
+                            Column(
+                                modifier = Modifier
+                                    .padding(start = 32.dp)
+                                    .fillMaxWidth(),
+                                horizontalAlignment = Alignment.End,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                TextButton(
+                                    onClick = {
+                                        calendarViewModel.setUpPopUpState(openPopUp)
+                                    }
+                                ) {
+                                    Text(
+                                        text = "Save",
+                                        style = MaterialTheme.typography.titleMedium
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
