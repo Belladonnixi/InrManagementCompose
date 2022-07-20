@@ -59,8 +59,10 @@ fun DatePickerDialog() {
             }
         }
     )
-    Box {
-        val popUpWidth = 380.dp
+    Box(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        val popUpWidth = 360.dp
         val popUpHeight = 600.dp
 
         if (openPopUp.value) {
@@ -71,7 +73,7 @@ fun DatePickerDialog() {
                 Box(
                     modifier = Modifier
                         .size(popUpWidth, popUpHeight)
-                        .padding(top = 16.dp, end = 32.dp, bottom = 16.dp)
+                        .padding(top = 40.dp, start = 8.dp, end = 48.dp)
                         .border(
                             1.dp,
                             color = MaterialTheme.colorScheme.onSurface,

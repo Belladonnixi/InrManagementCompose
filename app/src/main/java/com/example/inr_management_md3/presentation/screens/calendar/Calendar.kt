@@ -14,6 +14,7 @@
 package com.example.inr_management_md3.presentation.screens.calendar
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,6 +32,8 @@ import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.himanshoe.kalendar.ui.Kalendar
 import com.himanshoe.kalendar.ui.KalendarType
 import java.time.format.DateTimeFormatter
+
+const val TAG = "Calendar"
 
 @Composable
 fun CalendarMonthView(calendarViewModel: CalendarViewModel, navController: NavController) {
@@ -74,10 +77,11 @@ fun CalendarMonthView(calendarViewModel: CalendarViewModel, navController: NavCo
                         val formattedDate =
                             day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
                         calendarViewModel.setDate(formattedDate).toString()
+                        calendarViewModel.setRealDate(day)
                         navController.navigate(Screens.CalendarDay.route)
                     },
-                    errorMessage = {
-                        // Handle the error if any
+                    errorMessage = { exception ->
+                        Log.e(TAG, "Error with CalendarMonthView $exception")
                     }
                 )
             }

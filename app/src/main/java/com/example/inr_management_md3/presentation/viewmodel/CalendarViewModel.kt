@@ -16,12 +16,20 @@ package com.example.inr_management_md3.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.time.LocalDate
 
 class CalendarViewModel : ViewModel() {
     private val _date = MutableStateFlow("")
     val date: StateFlow<String> get() = _date
 
+    private val _realDate = MutableStateFlow<LocalDate?>(null)
+    val realDate: StateFlow<LocalDate?> get() = _realDate
+
     fun setDate(setDate: String) {
         _date.value = setDate
+    }
+
+    fun setRealDate(setRealDate: LocalDate) {
+        _realDate.value = setRealDate
     }
 }
