@@ -15,7 +15,9 @@ package com.example.inr_management_md3.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.inr_management_md3.data.datamodels.*
+import com.example.inr_management_md3.data.local.Converters
 import com.example.inr_management_md3.data.local.InrManagementDao
 
 @Database(
@@ -33,6 +35,7 @@ import com.example.inr_management_md3.data.local.InrManagementDao
     ],
     version = 1
 )
+@TypeConverters(Converters::class)
 abstract class AppDataBase : RoomDatabase() {
     abstract fun inrManagementDao(): InrManagementDao
 }
