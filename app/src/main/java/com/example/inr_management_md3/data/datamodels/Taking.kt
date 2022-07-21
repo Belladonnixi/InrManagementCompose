@@ -13,6 +13,7 @@
  */
 package com.example.inr_management_md3.data.datamodels
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -45,12 +46,20 @@ import androidx.room.PrimaryKey
 )
 data class Taking(
     @PrimaryKey(autoGenerate = true)
-    val id_taking: Long = 0,
-    val base_medication_weekdays_id: Long = 0,
-    val base_medication_interval_id: Long = 0,
-    val patient_id: Long = 0,
-    val time_specified: String = "",
-    val taking_time: String = "",
-    val taking_date: String = "",
-    val comment_day: String = ""
+    @ColumnInfo(name = "id_taking")
+    val idTaking: Long = 0,
+    @ColumnInfo(name = "base_medication_weekdays_id")
+    val baseMedicationWeekdaysId: Long = 0,
+    @ColumnInfo(name = "base_medication_interval_id")
+    val baseMedicationIntervalId: Long = 0,
+    @ColumnInfo(name = "patient_id")
+    val patientId: Long = 0,
+    @ColumnInfo(name = "time_specified")
+    val timeSpecified: String = "",
+    @ColumnInfo(name = "taking_time")
+    val takingTime: String = "",
+    @ColumnInfo(name = "taking_date")
+    val takingDate: String = "",
+    @ColumnInfo(name = "comment_day")
+    val commentDay: String = ""
 )

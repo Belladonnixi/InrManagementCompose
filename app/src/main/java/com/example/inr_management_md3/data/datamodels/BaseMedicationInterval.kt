@@ -13,6 +13,7 @@
  */
 package com.example.inr_management_md3.data.datamodels
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -38,10 +39,16 @@ import androidx.room.PrimaryKey
 )
 data class BaseMedicationInterval(
     @PrimaryKey(autoGenerate = true)
-    val id_base_medication_interval: Long = 0,
-    val dosage_on_taking_days: Float = 0f,
-    val taking_days_row: Int = 0,
-    val taking_break_days_row: Int = 0,
-    val patient_id: Long = 0,
-    val medicament_dosage_id: Long = 0
+    @ColumnInfo(name = "id_base_medication_interval")
+    val idBaseMedicationInterval: Long = 0,
+    @ColumnInfo(name = "dosage_on_taking_days")
+    val dosageOnTakingDays: Float = 0f,
+    @ColumnInfo(name = "taking_days_row")
+    val takingDaysRow: Int = 0,
+    @ColumnInfo(name = "taking_break_days_row")
+    val takingBreakDaysRow: Int = 0,
+    @ColumnInfo(name = "patient_id")
+    val patientId: Long = 0,
+    @ColumnInfo(name = "medicament_dosage_id")
+    val medicamentDosageId: Long = 0
 )

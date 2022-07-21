@@ -29,7 +29,7 @@ import com.example.inr_management_md3.data.local.InrManagementDao
         InrMeasuringResult::class,
         Patient::class,
         Taking::class,
-        TemoraryMedicationAdjustment::class
+        TemporaryMedicationAdjustment::class
     ],
     version = 1
 )

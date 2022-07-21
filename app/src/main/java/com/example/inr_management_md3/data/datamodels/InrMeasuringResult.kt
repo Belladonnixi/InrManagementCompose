@@ -13,6 +13,7 @@
  */
 package com.example.inr_management_md3.data.datamodels
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -45,11 +46,18 @@ import androidx.room.PrimaryKey
 )
 data class InrMeasuringResult(
     @PrimaryKey(autoGenerate = true)
-    val id_inr_measuring_result: Long = 0,
+    @ColumnInfo(name = "id_inr_measuring_result")
+    val idInrMeasuringResult: Long = 0,
+    @ColumnInfo(name = "timestamp")
     val timestamp: String = "null",
-    val time_specified: Long = 0,
-    val measuring_result: Float = 0f,
-    val base_medication_weekdays_id: Long = 0,
-    val base_medication_interval_id: Long = 0,
-    val patient_id: Long = 0
+    @ColumnInfo(name = "time_specified")
+    val timeSpecified: Long = 0,
+    @ColumnInfo(name = "measuring_result")
+    val measuringResult: Float = 0f,
+    @ColumnInfo(name = "base_medication_weekdays_id")
+    val baseMedicationWeekdaysId: Long = 0,
+    @ColumnInfo(name = "base_medication_interval_id")
+    val baseMedicationIntervalId: Long = 0,
+    @ColumnInfo(name = "patient_id")
+    val patientId: Long = 0
 )

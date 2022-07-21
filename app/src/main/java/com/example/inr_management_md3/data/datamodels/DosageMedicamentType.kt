@@ -13,13 +13,17 @@
  */
 package com.example.inr_management_md3.data.datamodels
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "dosage_medicament_type")
 data class DosageMedicamentType(
     @PrimaryKey(autoGenerate = true)
-    val id_dosage_medicament_type: Long = 0,
+    @ColumnInfo(name = "id_dosage_medicament_type")
+    val idDosageMedicamentType: Long = 0,
+    @ColumnInfo(name = "divisibility")
     val divisibility: Float = 0f,
+    @ColumnInfo(name = "type")
     val type: String = ""
 )

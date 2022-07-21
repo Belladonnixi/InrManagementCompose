@@ -13,13 +13,17 @@
  */
 package com.example.inr_management_md3.data.datamodels
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "medicament")
 data class Medicament(
     @PrimaryKey(autoGenerate = true)
-    val id_medicament: Long = 0,
+    @ColumnInfo(name = "id_medicament")
+    val idMedicament: Long = 0,
+    @ColumnInfo(name = "name")
     val name: String = "",
+    @ColumnInfo(name = "type")
     val type: String = ""
 )
