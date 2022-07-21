@@ -19,24 +19,25 @@ plugins {
 }
 
 subprojects {
-
-    apply plugin: 'com.diffplug.spotless'
+    apply(plugin: 'com.diffplug.spotless')
     spotless {
         kotlin {
-            target '**/*.kt'
-            targetExclude("$buildDir/**/*.kt")
-            targetExclude('bin/**/*.kt')
-            ktlint("0.45.2")
-            licenseHeaderFile rootProject.file('spotless/copyright.kt')
+            target("**/*.kt")
+            licenseHeaderFile(
+                    rootProject.file("${project.rootDir}/spotless/copyright.kt"),
+                    "^(package|object|import|interface)"
+            )
         }
     }
-
-
-//     Use experimental APIs
-//    freeCompilerArgs += '-opt-in=kotlin.RequiresOptIn'
 }
 
-
-//task clean(type: Delete) {
-//    delete rootProject.buildDir
-//}
+task createSpotlessPreCommitHook() {
+    def gitHooksDirectory = new File("$project.rootDir/.git/hooks/")
+    if (!gitHooksDirectory.exists()) gitHooksDirectory.mkdirs()
+    new File("$project.rootDir/.git/hooks", "pre-commit").text = """
+    #!/bin/bash
+    echo "Running spotless check"
+    ./gradlew spotlessApply
+"""
+    "chmod +x .git/hooks/pre-commit".execute()
+}

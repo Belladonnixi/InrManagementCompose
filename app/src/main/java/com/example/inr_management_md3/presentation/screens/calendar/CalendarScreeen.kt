@@ -11,9 +11,11 @@
  * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 package com.example.inr_management_md3.presentation.screens.calendar
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -28,10 +30,11 @@ import androidx.navigation.NavController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.BottomNavBar
 import com.example.inr_management_md3.presentation.navigation.Screens
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalendarScreen(navController: NavController) {
+fun CalendarScreen(navController: NavController, calendarViewModel: CalendarViewModel) {
     Scaffold(
         topBar = {
             SmallTopAppBar(
@@ -65,7 +68,66 @@ fun CalendarScreen(navController: NavController) {
                 }
             )
         },
-        content = {},
+        content = { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                CalendarMonthView(calendarViewModel, navController)
+            }
+        },
+        bottomBar = {
+            BottomNavBar(navController = navController)
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CalendarDayScreen(navController: NavController, calendarViewModel: CalendarViewModel) {
+    Scaffold(
+        topBar = {
+            SmallTopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(
+                            id = R.string.calendar
+                        ),
+                        fontWeight = FontWeight.SemiBold
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigate(Screens.CalendarMonthView.route) }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Localized description"
+                        )
+                    }
+                },
+                actions = {
+                    IconButton(
+                        onClick = { navController.navigate(Screens.Settings.route) }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Settings,
+                            contentDescription = "Settings",
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(30.dp)
+                        )
+                    }
+                }
+            )
+        },
+        content = { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                CalendarDayView(calendarViewModel = calendarViewModel)
+            }
+        },
         bottomBar = {
             BottomNavBar(navController = navController)
         }

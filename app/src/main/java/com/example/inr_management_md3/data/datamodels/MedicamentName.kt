@@ -15,15 +15,27 @@ package com.example.inr_management_md3.data.datamodels
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "medicament")
-data class Medicament(
+@Entity(
+    tableName = "medicament_name",
+    foreignKeys = [
+        ForeignKey(
+            entity = Medicament::class,
+            parentColumns = ["id_medicament"],
+            childColumns = ["medicament_id"],
+            onUpdate = ForeignKey.RESTRICT,
+            onDelete = ForeignKey.RESTRICT
+        )
+    ]
+)
+data class MedicamentName(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_medicament")
-    val idMedicament: Long = 0,
+    val idMedicamentName: Long = 0,
+    @ColumnInfo(name = "medicament_id")
+    val medicamentId: Long = 0,
     @ColumnInfo(name = "name")
-    val name: String = "",
-    @ColumnInfo(name = "type")
-    val type: String = ""
+    val name: String = ""
 )

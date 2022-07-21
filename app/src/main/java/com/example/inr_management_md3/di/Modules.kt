@@ -11,14 +11,18 @@
  * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 package com.example.inr_management_md3.di
 
 import androidx.room.Room
 import com.example.inr_management_md3.data.AppDataBase
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 import com.example.inr_management_md3.data.repository.InrManagementRepositoryImpl
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
+import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.annotation.KoinReflectAPI
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -35,7 +39,12 @@ val repositoryModule = module {
     single<InrManagementRepository> { InrManagementRepositoryImpl(get()) }
 }
 
-val viewModelModule = module { }
+@OptIn(KoinReflectAPI::class)
+val viewModelModule = module {
+    viewModel { CalendarViewModel(get()) }
+    viewModel { SettingsViewModel(get()) }
+    viewModel { DoseViewModel() }
+}
 
 val appModules = listOf(
     dataModule,

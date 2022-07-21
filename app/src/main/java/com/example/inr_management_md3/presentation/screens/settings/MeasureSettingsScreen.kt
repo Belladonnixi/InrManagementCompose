@@ -11,9 +11,6 @@
  * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
-
 package com.example.inr_management_md3.presentation.screens.settings
 
 import androidx.compose.material.icons.Icons
@@ -25,10 +22,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.BottomNavBar
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeasureSettingsScreen(navController: NavHostController) {
+fun MeasureSettingsScreen(navController: NavHostController, calendarViewModel: CalendarViewModel) {
     Scaffold(
         topBar = {
             SmallTopAppBar(
@@ -51,7 +49,7 @@ fun MeasureSettingsScreen(navController: NavHostController) {
             )
         },
         content = {
-            SetMeasur()
+            SetMeasur(calendarViewModel)
         },
         bottomBar = {
             BottomNavBar(navController = navController)

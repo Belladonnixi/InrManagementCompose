@@ -1,22 +1,16 @@
 /**
  * Copyright © 2022 Jessica Ernst
  *
- * This project and source code may use libraries or frameworks that are
- * released under various Open-Source licenses. Use of those libraries
- * and frameworks are governed by their own individual licenses.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * This project and source code may use libraries or frameworks that are released under various
+ * Open-Source licenses. Use of those libraries and frameworks are governed by their own individual
+ * licenses.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
+ * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
-
 package com.example.inr_management_md3.presentation.navigation
 
 import androidx.compose.animation.AnimatedContentScope
@@ -27,6 +21,7 @@ import androidx.compose.animation.shrinkOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.inr_management_md3.presentation.screens.about.AboutScreen
+import com.example.inr_management_md3.presentation.screens.calendar.CalendarDayScreen
 import com.example.inr_management_md3.presentation.screens.calendar.CalendarScreen
 import com.example.inr_management_md3.presentation.screens.dose.DoseScreen
 import com.example.inr_management_md3.presentation.screens.home.HomeScreen
@@ -36,12 +31,13 @@ import com.example.inr_management_md3.presentation.screens.settings.MedicamentSe
 import com.example.inr_management_md3.presentation.screens.settings.SettingsScreen
 import com.example.inr_management_md3.presentation.screens.settings.TargetRangeSettingsScreen
 import com.example.inr_management_md3.presentation.screens.statistics.StatisticsScreen
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AppNavigation(navController: NavHostController) {
+fun AppNavigation(navController: NavHostController, calendarViewModel: CalendarViewModel) {
     AnimatedNavHost(
         navController = navController,
         startDestination = Screens.Home.route,
@@ -125,7 +121,7 @@ fun AppNavigation(navController: NavHostController) {
                 else null
             }
         ) {
-            MeasureScreen(navController)
+            MeasureScreen(navController, calendarViewModel)
         }
 
         composable(
@@ -145,7 +141,26 @@ fun AppNavigation(navController: NavHostController) {
                 else null
             }
         ) {
-            CalendarScreen(navController)
+            CalendarScreen(navController, calendarViewModel)
+        }
+        composable(
+            Screens.CalendarDay.route,
+            enterTransition = {
+                if (initialState.destination.route == Screens.Home.route) slideIntoContainer(
+                    AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(600)
+                )
+                else null
+            },
+            exitTransition = {
+                if (targetState.destination.route == Screens.Home.route) slideOutOfContainer(
+                    AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(600)
+                )
+                else null
+            }
+        ) {
+            CalendarDayScreen(navController, calendarViewModel)
         }
 
         composable(
@@ -225,7 +240,7 @@ fun AppNavigation(navController: NavHostController) {
                 else null
             }
         ) {
-            MeasureSettingsScreen(navController)
+            MeasureSettingsScreen(navController, calendarViewModel)
         }
 
         composable(

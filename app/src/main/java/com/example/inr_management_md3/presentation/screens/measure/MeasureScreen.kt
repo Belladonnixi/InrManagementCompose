@@ -11,7 +11,6 @@
  * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 package com.example.inr_management_md3.presentation.screens.measure
 
 import androidx.compose.foundation.layout.size
@@ -28,10 +27,11 @@ import androidx.navigation.NavHostController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.BottomNavBar
 import com.example.inr_management_md3.presentation.navigation.Screens
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeasureScreen(navController: NavHostController) {
+fun MeasureScreen(navController: NavHostController, calendarViewModel: CalendarViewModel) {
     Scaffold(
         topBar = {
             SmallTopAppBar(
@@ -66,7 +66,7 @@ fun MeasureScreen(navController: NavHostController) {
             )
         },
         content = {
-            MeasureResultContent()
+            MeasureResultContent(calendarViewModel)
         },
         bottomBar = {
             BottomNavBar(navController = navController)

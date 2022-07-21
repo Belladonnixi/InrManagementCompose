@@ -11,9 +11,9 @@
  * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 package com.example.inr_management_md3.data.datamodels
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -39,8 +39,12 @@ import androidx.room.PrimaryKey
 )
 data class BaseMedicationWeekdays(
     @PrimaryKey(autoGenerate = true)
-    val id_base_medication_weekdays: Long = 0,
-    val weekdays_dosage: Float = 0f,
-    val patient_id: Long = 0,
-    val medicament_dosage_id: Long = 0
+    @ColumnInfo(name = "id_base_medication_weekdays")
+    val idBaseMedicationWeekdays: Long = 0,
+    @ColumnInfo(name = "weekdays_dosage")
+    val weekdaysDosage: Float = 0f,
+    @ColumnInfo(name = "patient_id")
+    val patientId: Long = 0,
+    @ColumnInfo(name = "medicament_dosage_id")
+    val medicamentDosageId: Long = 0
 )

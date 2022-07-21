@@ -1,22 +1,16 @@
 /**
  * Copyright © 2022 Jessica Ernst
  *
- * This project and source code may use libraries or frameworks that are
- * released under various Open-Source licenses. Use of those libraries
- * and frameworks are governed by their own individual licenses.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * This project and source code may use libraries or frameworks that are released under various
+ * Open-Source licenses. Use of those libraries and frameworks are governed by their own individual
+ * licenses.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
+ * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
-
 package com.example.inr_management_md3.presentation.screens.settings
 
 import android.content.res.Configuration
@@ -27,9 +21,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.inr_management_md3.presentation.components.DatePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
+import com.example.inr_management_md3.presentation.screens.calendar.DatePickerDialog
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import org.koin.androidx.compose.inject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -82,7 +78,8 @@ fun MeasureTimeRangeExposedDropdownTo() {
             modifier = Modifier.width(110.dp)
         )
         ExposedDropdownMenu(
-            expanded = expanded, onDismissRequest = { expanded = false }
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
@@ -98,7 +95,7 @@ fun MeasureTimeRangeExposedDropdownTo() {
 }
 
 @Composable
-fun SetMeasur() {
+fun SetMeasur(calendarViewModel: CalendarViewModel) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -131,7 +128,7 @@ fun SetMeasur() {
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                DatePickerTextFieldDropdown()
+                DatePickerDialog(calendarViewModel)
             }
             Text(text = "Start from date:")
             Row(
@@ -180,6 +177,7 @@ fun PreviewMeasureTimeRangeExposedDropdownFrom() {
 @Composable
 fun PreviewSetMeasureExposedDropdownFrom() {
     INR_Management_Theme {
-        SetMeasur()
+        val calendarViewModel: CalendarViewModel by inject()
+        SetMeasur(calendarViewModel)
     }
 }

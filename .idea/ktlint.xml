@@ -4,6 +4,8 @@
     <disabledRules>
       <list>
         <option value="no-wildcard-imports" />
+        <option value="package-name" />
+        <option value="filename" />
       </list>
     </disabledRules>
   </component>

@@ -1,22 +1,16 @@
 /**
  * Copyright © 2022 Jessica Ernst
  *
- * This project and source code may use libraries or frameworks that are
- * released under various Open-Source licenses. Use of those libraries
- * and frameworks are governed by their own individual licenses.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * This project and source code may use libraries or frameworks that are released under various
+ * Open-Source licenses. Use of those libraries and frameworks are governed by their own individual
+ * licenses.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
+ * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
-
 package com.example.inr_management_md3.presentation.screens.dose
 
 import android.content.res.Configuration
@@ -47,10 +41,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
-import com.example.inr_management_md3.data.Weekdays
-import com.example.inr_management_md3.presentation.components.DatePickerTextFieldDropdown
+import com.example.inr_management_md3.data.datamodels.Weekdays
 import com.example.inr_management_md3.presentation.navigation.DoseScreens
+import com.example.inr_management_md3.presentation.screens.calendar.DatePickerDialog
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import org.koin.androidx.compose.inject
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -88,7 +84,8 @@ fun DosageExposedDropdown() {
                 .width(110.dp)
         )
         ExposedDropdownMenu(
-            expanded = expanded, onDismissRequest = { expanded = false }
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
@@ -104,7 +101,9 @@ fun DosageExposedDropdown() {
 }
 
 @Composable
-fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}, week: List<Weekdays>) {
+fun BaseMedicationWeek(
+    week: List<Weekdays>
+) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -112,7 +111,7 @@ fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}, week: List<We
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier
@@ -148,8 +147,8 @@ fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}, week: List<We
                 BoxWithConstraints(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(450.dp)
                         .padding(16.dp)
+                        .weight(4.5f)
                 ) {
                     LazyColumn {
                         items(week) { weekdays ->
@@ -159,7 +158,8 @@ fun BaseMedicationWeek(onScreenChange: (DoseScreens) -> Unit = {}, week: List<We
                 }
                 BoxWithConstraints(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .weight(1f),
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     Button(
@@ -215,7 +215,7 @@ fun BaseMedicationInterval() {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier
@@ -278,7 +278,7 @@ fun BaseMedicationInterval() {
 }
 
 @Composable
-fun TrimDose() {
+fun TrimDose(calendarViewModel: CalendarViewModel) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -286,7 +286,7 @@ fun TrimDose() {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier
@@ -319,7 +319,7 @@ fun TrimDose() {
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                DatePickerTextFieldDropdown()
+                DatePickerDialog(calendarViewModel)
             }
             Text(text = "Set dose:")
             Row(
@@ -464,6 +464,7 @@ fun PreviewBaseMedicationInterval() {
 @Composable
 fun PreviewTrimDose() {
     INR_Management_Theme {
-        TrimDose()
+        val calendarViewModel: CalendarViewModel by inject()
+        TrimDose(calendarViewModel)
     }
 }

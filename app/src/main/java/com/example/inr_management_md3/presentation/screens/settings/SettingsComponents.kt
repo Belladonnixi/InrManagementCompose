@@ -1,22 +1,16 @@
 /**
  * Copyright © 2022 Jessica Ernst
  *
- * This project and source code may use libraries or frameworks that are
- * released under various Open-Source licenses. Use of those libraries
- * and frameworks are governed by their own individual licenses.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * This project and source code may use libraries or frameworks that are released under various
+ * Open-Source licenses. Use of those libraries and frameworks are governed by their own individual
+ * licenses.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
+ * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
-
 package com.example.inr_management_md3.presentation.screens.settings
 
 import androidx.compose.foundation.layout.*
@@ -60,7 +54,7 @@ fun SettingsMenu(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 IconButton(
-                    onClick = { navController.navigate(Screens.SetMedicament.route) },
+                    onClick = { navController.navigate(Screens.SetMedicament.route) }
                 ) {
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -69,7 +63,7 @@ fun SettingsMenu(navController: NavController) {
                 }
             }
         }
-        Divider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 2.dp)
+        Divider()
 
         Row(
             modifier = Modifier
@@ -90,7 +84,7 @@ fun SettingsMenu(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 IconButton(
-                    onClick = { navController.navigate(Screens.SetTargetRange.route) },
+                    onClick = { navController.navigate(Screens.SetTargetRange.route) }
                 ) {
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -99,7 +93,7 @@ fun SettingsMenu(navController: NavController) {
                 }
             }
         }
-        Divider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 2.dp)
+        Divider()
 
         Row(
             modifier = Modifier
@@ -120,7 +114,7 @@ fun SettingsMenu(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 IconButton(
-                    onClick = { navController.navigate(Screens.SetMeasure.route) },
+                    onClick = { navController.navigate(Screens.SetMeasure.route) }
                 ) {
                     Icon(
                         Icons.Filled.ChevronRight,
@@ -129,7 +123,7 @@ fun SettingsMenu(navController: NavController) {
                 }
             }
         }
-        Divider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 2.dp)
+        Divider()
 
         Row(
             modifier = Modifier
@@ -150,7 +144,7 @@ fun SettingsMenu(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 IconButton(
-                    onClick = { navController.navigate(Screens.About.route) },
+                    onClick = { navController.navigate(Screens.About.route) }
                 ) {
                     Icon(
                         Icons.Filled.ChevronRight,

@@ -29,4 +29,8 @@
     <string name="friday">"Fri   "</string>
     <string name="saturday">"Sat  "</string>
     <string name="sunday">"Sun "</string>
+    <string name="state_descr_selected">Selected</string>
+    <string name="state_descr_not_selected">Not selected</string>
+    <string name="click_label_select">select</string>
+    <string name="calendar_select_date">Select Date</string>
 </resources>
