@@ -44,6 +44,7 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
     val openPopUp by calendarViewModel.openPopUp.collectAsState()
     val text by calendarViewModel.comment.collectAsState()
     val scrollState = rememberScrollState()
+    val iconButtonColor = MaterialTheme.colorScheme.primary
 
     Surface(
         modifier = Modifier
@@ -148,24 +149,34 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
                         IconButton(
                             onClick = {
                                 calendarViewModel.setUpPopUpState(openPopUp)
-                            }
+                            },
+                            enabled = text.isEmpty()
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.Add,
                                 contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary
+                                tint = if (text.isEmpty()) {
+                                    iconButtonColor
+                                } else {
+                                    iconButtonColor.copy(alpha = 0.3f)
+                                }
                             )
                         }
 
                         IconButton(
                             onClick = {
                                 calendarViewModel.setUpPopUpState(openPopUp)
-                            }
+                            },
+                            enabled = text.isNotEmpty()
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.Edit,
                                 contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary
+                                tint = if (text.isNotEmpty()) {
+                                    iconButtonColor
+                                } else {
+                                    iconButtonColor.copy(alpha = 0.3f)
+                                }
                             )
                         }
                     }

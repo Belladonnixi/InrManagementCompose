@@ -19,6 +19,9 @@ import com.example.inr_management_md3.data.datamodels.LoadWeekdays
 import com.example.inr_management_md3.presentation.screens.dose.BaseMedicationInterval
 import com.example.inr_management_md3.presentation.screens.dose.BaseMedicationWeek
 import com.example.inr_management_md3.presentation.screens.dose.TrimDose
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.example.inr_management_md3.data.repository.InrManagementRepositoryImpl
+import com.example.inr_management_md3.data.AppDataBase_Impl
 
 /**
  * Dose screens navigation for TabBar to keep the Composable testable and navigation out of
@@ -38,7 +41,7 @@ enum class DoseScreens(
     ),
     Dose(
         icon = R.drawable.pill,
-        body = { TrimDose() }
+        body = { TrimDose(CalendarViewModel(InrManagementRepositoryImpl(AppDataBase_Impl()))) }
     );
 
     @Composable

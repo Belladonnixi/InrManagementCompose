@@ -16,4 +16,5 @@ package com.example.inr_management_md3.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 
-class SettingsViewModel(private val inrManagementRepository: InrManagementRepository) : ViewModel()
+class SettingsViewModel(private val inrManagementRepository: InrManagementRepository) :
+    ViewModel()

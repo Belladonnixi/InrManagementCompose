@@ -128,7 +128,7 @@ fun SetMeasur(calendarViewModel: CalendarViewModel) {
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                DatePickerDialog()
+                DatePickerDialog(calendarViewModel)
             }
             Text(text = "Start from date:")
             Row(

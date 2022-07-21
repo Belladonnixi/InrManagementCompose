@@ -21,39 +21,38 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditCalendar
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.himanshoe.kalendar.common.KalendarSelector
 import com.himanshoe.kalendar.common.KalendarStyle
 import com.himanshoe.kalendar.ui.Kalendar
 import com.himanshoe.kalendar.ui.KalendarType
+import org.koin.androidx.compose.inject
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun DatePickerDialog() {
-    val openPopUp = remember { mutableStateOf(false) }
-    val textState = remember { mutableStateOf(TextFieldValue()) }
+fun DatePickerDialog(calendarViewModel: CalendarViewModel) {
+    val openPopUp by calendarViewModel.openPopUp.collectAsState()
+    val date by calendarViewModel.date.collectAsState()
 
     TextField(
         modifier = Modifier
             .fillMaxWidth(),
-        value = textState.value,
-        onValueChange = { textState.value = it },
+        value = date,
+        onValueChange = { calendarViewModel.setDate(it) },
         readOnly = true,
         label = { Text(text = "Pick date") },
         trailingIcon = {
             IconButton(
-                onClick = { openPopUp.value = !openPopUp.value }
+                onClick = { calendarViewModel.setUpPopUpState(openPopUp) }
             ) {
                 Icon(Icons.Default.EditCalendar, contentDescription = null)
             }
@@ -65,7 +64,7 @@ fun DatePickerDialog() {
         val popUpWidth = 360.dp
         val popUpHeight = 600.dp
 
-        if (openPopUp.value) {
+        if (openPopUp) {
             Popup(
                 alignment = Alignment.Center,
                 properties = PopupProperties()
@@ -112,7 +111,8 @@ fun DatePickerDialog() {
                                 onCurrentDayClick = { day, _ ->
                                     val formattedDate =
                                         day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
-                                    textState.value = TextFieldValue(formattedDate)
+                                    calendarViewModel.setDate(formattedDate).toString()
+                                    calendarViewModel.setRealDate(day)
                                 },
                                 errorMessage = {
                                     // Handle the error if any
@@ -126,7 +126,7 @@ fun DatePickerDialog() {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             TextButton(
-                                onClick = { openPopUp.value = !openPopUp.value }
+                                onClick = { calendarViewModel.setUpPopUpState(openPopUp) }
                             ) {
                                 Text(
                                     text = "Cancel",
@@ -142,8 +142,8 @@ fun DatePickerDialog() {
                             ) {
                                 TextButton(
                                     onClick = {
-                                        textState.value
-                                        openPopUp.value = !openPopUp.value
+                                        calendarViewModel.setDate(date)
+                                        calendarViewModel.setUpPopUpState(openPopUp)
                                     }
                                 ) {
                                     Text(
@@ -169,6 +169,7 @@ fun DatePickerDialog() {
 @Composable
 fun PreviewDatePicker() {
     INR_Management_Theme {
-        DatePickerDialog()
+        val calendarViewModel: CalendarViewModel by inject()
+        DatePickerDialog(calendarViewModel)
     }
 }

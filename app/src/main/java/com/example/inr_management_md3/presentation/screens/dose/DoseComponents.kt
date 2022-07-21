@@ -45,6 +45,8 @@ import com.example.inr_management_md3.data.datamodels.Weekdays
 import com.example.inr_management_md3.presentation.navigation.DoseScreens
 import com.example.inr_management_md3.presentation.screens.calendar.DatePickerDialog
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import org.koin.androidx.compose.inject
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -276,7 +278,7 @@ fun BaseMedicationInterval() {
 }
 
 @Composable
-fun TrimDose() {
+fun TrimDose(calendarViewModel: CalendarViewModel) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -317,7 +319,7 @@ fun TrimDose() {
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                DatePickerDialog()
+                DatePickerDialog(calendarViewModel)
             }
             Text(text = "Set dose:")
             Row(
@@ -462,6 +464,7 @@ fun PreviewBaseMedicationInterval() {
 @Composable
 fun PreviewTrimDose() {
     INR_Management_Theme {
-        TrimDose()
+        val calendarViewModel: CalendarViewModel by inject()
+        TrimDose(calendarViewModel)
     }
 }
