@@ -43,7 +43,7 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
     val date by calendarViewModel.date.collectAsState()
     val openPopUp by calendarViewModel.openPopUp.collectAsState()
     val text by calendarViewModel.comment.collectAsState()
-    val scroll = rememberScrollState(0)
+    val scrollState = rememberScrollState()
 
     Surface(
         modifier = Modifier
@@ -75,8 +75,7 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
                 Text(
                     text = "Medicament taken",
                     modifier = Modifier
-                        .padding(end = 8.dp)
-                        .verticalScroll(scroll),
+                        .padding(end = 8.dp),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Start
                 )
@@ -176,14 +175,26 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
             if (openPopUp) {
                 CommentPopUp(calendarViewModel = calendarViewModel)
             }
-            Text(
-                text = text,
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(250.dp)
-                    .padding(16.dp),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+                    .height(260.dp)
+                    .padding(16.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.surface,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+            ) {
+                Text(
+                    text = text,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(256.dp)
+                        .padding(16.dp)
+                        .verticalScroll(scrollState),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
 
             BoxWithConstraints(
                 modifier = Modifier
