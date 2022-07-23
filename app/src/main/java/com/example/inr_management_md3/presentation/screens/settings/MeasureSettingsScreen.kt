@@ -23,10 +23,11 @@ import androidx.navigation.NavHostController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.BottomNavBar
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeasureSettingsScreen(navController: NavHostController, calendarViewModel: CalendarViewModel) {
+fun MeasureSettingsScreen(navController: NavHostController, calendarViewModel: CalendarViewModel, settingsViewModel: SettingsViewModel) {
     Scaffold(
         topBar = {
             SmallTopAppBar(
@@ -49,7 +50,7 @@ fun MeasureSettingsScreen(navController: NavHostController, calendarViewModel: C
             )
         },
         content = {
-            SetMeasur(calendarViewModel)
+            SetMeasur(calendarViewModel, settingsViewModel)
         },
         bottomBar = {
             BottomNavBar(navController = navController)
