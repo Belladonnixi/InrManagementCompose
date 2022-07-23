@@ -26,7 +26,6 @@ import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
-import org.koin.androidx.compose.inject
 
 @Composable
 fun MedicamentSettings(settingsViewModel: SettingsViewModel) {
@@ -124,20 +123,6 @@ fun MedicamentTypeExposedDropdown() {
                 )
             }
         }
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewMedicamentSettings() {
-    INR_Management_Theme {
-        val settingsViewModel: SettingsViewModel by inject()
-        MedicamentSettings(settingsViewModel)
     }
 }
 
