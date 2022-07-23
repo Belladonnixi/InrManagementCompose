@@ -19,6 +19,7 @@ import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.example.inr_management_md3.data.datamodels.DosageMedicamentType
 import com.example.inr_management_md3.data.datamodels.Medicament
+import com.example.inr_management_md3.data.datamodels.TargetRange
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -29,6 +30,9 @@ interface InrManagementDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType)
+
+    @Insert(onConflict = REPLACE)
+    suspend fun addTargetRange(targetRange: TargetRange)
 
     @Query("SELECT * FROM medicament")
     fun getAllMedicaments(): Flow<List<Medicament>>

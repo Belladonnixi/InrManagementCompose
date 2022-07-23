@@ -26,7 +26,13 @@ import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MedicamentSettingsScreen(navController: NavHostController, settingsViewModel: SettingsViewModel) {
+fun MedicamentSettingsScreen(
+    navController: NavHostController,
+    settingsViewModel: SettingsViewModel
+) {
+//    LaunchedEffect(Unit) {
+//        settingsViewModel.getMedicaments()
+//    }
     Scaffold(
         topBar = {
             SmallTopAppBar(

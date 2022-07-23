@@ -32,7 +32,7 @@ val dataModule = module {
             AppDataBase::class.java,
             "InrManagement.db"
         )
-            .createFromAsset("inr_management.db")
+            .createFromAsset("database/inr_management.db")
             .build()
     }
 }

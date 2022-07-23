@@ -23,9 +23,7 @@ import androidx.room.PrimaryKey
         androidx.room.ForeignKey(
             entity = com.example.inr_management_md3.data.datamodels.Medicament::class,
             parentColumns = ["id_medicament"],
-            childColumns = ["medicament_id"],
-            onUpdate = androidx.room.ForeignKey.RESTRICT,
-            onDelete = androidx.room.ForeignKey.RESTRICT
+            childColumns = ["medicament_id"]
         )
     ]
 )

@@ -24,16 +24,12 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = Patient::class,
             parentColumns = ["id_patient"],
-            childColumns = ["patient_id"],
-            onUpdate = ForeignKey.RESTRICT,
-            onDelete = ForeignKey.RESTRICT
+            childColumns = ["patient_id"]
         ),
         ForeignKey(
             entity = MedicamentDosage::class,
             parentColumns = ["id_medicament_dosage"],
-            childColumns = ["medicament_dosage_id"],
-            onUpdate = ForeignKey.RESTRICT,
-            onDelete = ForeignKey.RESTRICT
+            childColumns = ["medicament_dosage_id"]
         )
     ]
 )

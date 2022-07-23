@@ -24,23 +24,17 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = BaseMedicationWeekdays::class,
             parentColumns = ["id_base_medication_weekdays"],
-            childColumns = ["base_medication_weekdays_id"],
-            onUpdate = ForeignKey.RESTRICT,
-            onDelete = ForeignKey.RESTRICT
+            childColumns = ["base_medication_weekdays_id"]
         ),
         ForeignKey(
             entity = BaseMedicationInterval::class,
             parentColumns = ["id_base_medication_interval"],
-            childColumns = ["base_medication_interval_id"],
-            onUpdate = ForeignKey.RESTRICT,
-            onDelete = ForeignKey.RESTRICT
+            childColumns = ["base_medication_interval_id"]
         ),
         ForeignKey(
             entity = Patient::class,
             parentColumns = ["id_patient"],
-            childColumns = ["patient_id"],
-            onUpdate = ForeignKey.RESTRICT,
-            onDelete = ForeignKey.RESTRICT
+            childColumns = ["patient_id"]
         )
     ]
 )

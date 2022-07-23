@@ -13,18 +13,16 @@
  */
 package com.example.inr_management_md3.presentation.screens.settings
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
+import com.example.inr_management_md3.data.datamodels.Medicament
 import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
-import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 
 @Composable
@@ -41,7 +39,7 @@ fun MedicamentSettings(settingsViewModel: SettingsViewModel) {
                 .fillMaxWidth()
                 .padding(top = 50.dp, bottom = 30.dp)
         ) {
-            MedicamentTypeExposedDropdown()
+            MedicamentTypeExposedDropdown(settingsViewModel)
 
             Row(
                 modifier = Modifier
@@ -85,7 +83,8 @@ fun MedicamentSettings(settingsViewModel: SettingsViewModel) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MedicamentTypeExposedDropdown() {
+fun MedicamentTypeExposedDropdown(settingsViewModel: SettingsViewModel) {
+//    val options = settingsViewModel.medicamentList
     val options = listOf(
         "Please choose",
         "Warfarin",
@@ -102,7 +101,7 @@ fun MedicamentTypeExposedDropdown() {
         onExpandedChange = { expanded = !expanded }
     ) {
         TextField(
-            value = selectedOptionText,
+            value = selectedOptionText.toString(),
             onValueChange = {},
             readOnly = true,
             label = { Text(stringResource(R.string.choose_medicament_type)) },
@@ -115,7 +114,7 @@ fun MedicamentTypeExposedDropdown() {
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
-                    text = { Text(text = selectionOption) },
+                    text = { Text(text = selectionOption.toString()) },
                     onClick = {
                         selectedOptionText = selectionOption
                         expanded = false
@@ -123,18 +122,5 @@ fun MedicamentTypeExposedDropdown() {
                 )
             }
         }
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewMedicamentTypeExposedDropdown() {
-    INR_Management_Theme {
-        MedicamentTypeExposedDropdown()
     }
 }

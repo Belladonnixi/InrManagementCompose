@@ -24,9 +24,12 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = MedicamentDosage::class,
             parentColumns = ["id_medicament_dosage"],
-            childColumns = ["medicament_dosage_id"],
-            onDelete = ForeignKey.RESTRICT,
-            onUpdate = ForeignKey.RESTRICT
+            childColumns = ["medicament_dosage_id"]
+        ),
+        ForeignKey(
+            entity = TargetRange::class,
+            parentColumns = ["id_target_range"],
+            childColumns = ["target_range_id"]
         )
     ]
 )
@@ -36,10 +39,8 @@ data class Patient(
     val id_patient: Long = 0,
     @ColumnInfo(name = "account_Id")
     val accountId: Long = 0,
-    @ColumnInfo(name = "target_range_from")
-    val targetRangeFrom: Int = 0,
-    @ColumnInfo(name = "target_range_to")
-    val targetRangeTo: Int = 0,
+    @ColumnInfo(name = "target_range_id")
+    val targetRangeId: Long = 0,
     @ColumnInfo(name = "medicament_dosage_id")
     val medicamentDosageId: Long = 0
 )
