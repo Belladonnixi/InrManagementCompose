@@ -189,7 +189,7 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(260.dp)
+                    .height(240.dp)
                     .padding(16.dp)
                     .background(
                         color = MaterialTheme.colorScheme.surface,
@@ -200,7 +200,7 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
                     text = text,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(256.dp)
+                        .height(240.dp)
                         .padding(16.dp)
                         .verticalScroll(scrollState),
                     color = MaterialTheme.colorScheme.onSurface

@@ -49,7 +49,7 @@ data class InrMeasuringResult(
     @ColumnInfo(name = "id_inr_measuring_result")
     val idInrMeasuringResult: Long = 0,
     @ColumnInfo(name = "timestamp")
-    val timestamp: String = "null",
+    val timestamp: Long = 0,
     @ColumnInfo(name = "time_specified")
     val timeSpecified: Long = 0,
     @ColumnInfo(name = "measuring_result")

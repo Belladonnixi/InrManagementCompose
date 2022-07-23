@@ -37,7 +37,7 @@ data class TemporaryMedicationAdjustment(
     @ColumnInfo(name = "inr_measuring_result_id")
     val inrMeasuringResultId: Long = 0,
     @ColumnInfo(name = "date")
-    val date: String = "",
+    val date: Long = 0,
     @ColumnInfo(name = "dosage")
     val dosage: Float = 0f
 )

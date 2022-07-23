@@ -14,7 +14,24 @@
 package com.example.inr_management_md3.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.inr_management_md3.data.datamodels.Medicament
 import com.example.inr_management_md3.data.repository.InrManagementRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
-class SettingsViewModel(private val inrManagementRepository: InrManagementRepository) :
-    ViewModel()
+class SettingsViewModel(
+    private val inrManagementRepository: InrManagementRepository
+) : ViewModel() {
+
+    private val preMedicamentList: List<String> = listOf(
+        "Please choose",
+        "Warfarin",
+        "Phenprocoumon",
+        "Acenorcoumarol",
+        "Other (pills based dosing)",
+        "Other (milligram based dosing"
+    )
+
+    private val _medicament = MutableStateFlow(emptyList<Medicament>())
+    val medicament: StateFlow<List<Medicament>> get() = _medicament
+}

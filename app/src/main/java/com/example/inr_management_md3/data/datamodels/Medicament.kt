@@ -22,8 +22,6 @@ data class Medicament(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_medicament")
     val idMedicament: Long = 0,
-    @ColumnInfo(name = "name")
-    val name: String = "",
     @ColumnInfo(name = "type")
     val type: String = ""
 )

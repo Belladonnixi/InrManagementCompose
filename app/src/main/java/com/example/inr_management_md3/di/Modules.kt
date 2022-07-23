@@ -31,7 +31,9 @@ val dataModule = module {
             androidApplication(),
             AppDataBase::class.java,
             "InrManagement.db"
-        ).fallbackToDestructiveMigration().build()
+        )
+            .createFromAsset("inr_management.db")
+            .build()
     }
 }
 
