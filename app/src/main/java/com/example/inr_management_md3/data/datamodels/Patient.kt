@@ -37,9 +37,9 @@ data class Patient(
     @ColumnInfo(name = "account_Id")
     val accountId: Long = 0,
     @ColumnInfo(name = "target_range_from")
-    val targetRangeFrom: Float = 0f,
+    val targetRangeFrom: Int = 0,
     @ColumnInfo(name = "target_range_to")
-    val targetRangeTo: Float = 0f,
+    val targetRangeTo: Int = 0,
     @ColumnInfo(name = "medicament_dosage_id")
     val medicamentDosageId: Long = 0
 )

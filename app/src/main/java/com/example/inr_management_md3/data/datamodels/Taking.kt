@@ -55,11 +55,13 @@ data class Taking(
     @ColumnInfo(name = "patient_id")
     val patientId: Long = 0,
     @ColumnInfo(name = "time_specified")
-    val timeSpecified: String = "",
+    val timeSpecified: Long = 0,
     @ColumnInfo(name = "taking_time")
-    val takingTime: String = "",
+    val takingTime: Long = 0,
     @ColumnInfo(name = "taking_date")
-    val takingDate: String = "",
+    val takingDate: Long = 0,
+    @ColumnInfo(name = "comment_date")
+    val commentDate: Long = 0,
     @ColumnInfo(name = "comment_day")
     val commentDay: String = ""
 )

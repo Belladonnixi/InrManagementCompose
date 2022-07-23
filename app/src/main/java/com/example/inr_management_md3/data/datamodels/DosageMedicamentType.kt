@@ -17,13 +17,24 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "dosage_medicament_type")
+@Entity(
+    tableName = "dosage_medicament_type",
+    foreignKeys = [
+        androidx.room.ForeignKey(
+            entity = com.example.inr_management_md3.data.datamodels.Medicament::class,
+            parentColumns = ["id_medicament"],
+            childColumns = ["medicament_id"],
+            onUpdate = androidx.room.ForeignKey.RESTRICT,
+            onDelete = androidx.room.ForeignKey.RESTRICT
+        )
+    ]
+)
 data class DosageMedicamentType(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_dosage_medicament_type")
     val idDosageMedicamentType: Long = 0,
     @ColumnInfo(name = "divisibility")
     val divisibility: Float = 0f,
-    @ColumnInfo(name = "type")
-    val type: String = ""
+    @ColumnInfo(name = "medicament_id")
+    val medicamentId: String = ""
 )
