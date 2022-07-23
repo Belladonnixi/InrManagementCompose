@@ -96,7 +96,7 @@ fun MeasureTimeRangeExposedDropdownTo() {
 }
 
 @Composable
-fun SetMeasur(calendarViewModel: CalendarViewModel, settingsViewModel: SettingsViewModel) {
+fun SetMeasure(calendarViewModel: CalendarViewModel, settingsViewModel: SettingsViewModel) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -180,6 +180,6 @@ fun PreviewSetMeasureExposedDropdownFrom() {
     INR_Management_Theme {
         val calendarViewModel: CalendarViewModel by inject()
         val settingsViewModel: SettingsViewModel by inject()
-        SetMeasur(calendarViewModel, settingsViewModel)
+        SetMeasure(calendarViewModel, settingsViewModel)
     }
 }

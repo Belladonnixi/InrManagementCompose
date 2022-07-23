@@ -38,7 +38,11 @@ import com.google.accompanist.navigation.animation.composable
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AppNavigation(navController: NavHostController, calendarViewModel: CalendarViewModel, settingsViewModel: SettingsViewModel) {
+fun AppNavigation(
+    navController: NavHostController,
+    calendarViewModel: CalendarViewModel,
+    settingsViewModel: SettingsViewModel
+) {
     AnimatedNavHost(
         navController = navController,
         startDestination = Screens.Home.route,
@@ -201,7 +205,7 @@ fun AppNavigation(navController: NavHostController, calendarViewModel: CalendarV
                 else null
             }
         ) {
-            MedicamentSettingsScreen(navController)
+            MedicamentSettingsScreen(navController, settingsViewModel)
         }
 
         composable(
@@ -221,7 +225,7 @@ fun AppNavigation(navController: NavHostController, calendarViewModel: CalendarV
                 else null
             }
         ) {
-            TargetRangeSettingsScreen(navController)
+            TargetRangeSettingsScreen(navController, settingsViewModel)
         }
 
         composable(

@@ -25,9 +25,11 @@ import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
+import org.koin.androidx.compose.inject
 
 @Composable
-fun MedicamentSettings() {
+fun MedicamentSettings(settingsViewModel: SettingsViewModel) {
     var checked by remember { mutableStateOf(false) }
 
     Surface(
@@ -134,7 +136,8 @@ fun MedicamentTypeExposedDropdown() {
 @Composable
 fun PreviewMedicamentSettings() {
     INR_Management_Theme {
-        MedicamentSettings()
+        val settingsViewModel: SettingsViewModel by inject()
+        MedicamentSettings(settingsViewModel)
     }
 }
 

@@ -22,10 +22,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.BottomNavBar
+import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TargetRangeSettingsScreen(navController: NavHostController) {
+fun TargetRangeSettingsScreen(navController: NavHostController, settingsViewModel: SettingsViewModel) {
     Scaffold(
         topBar = {
             SmallTopAppBar(
@@ -48,7 +49,7 @@ fun TargetRangeSettingsScreen(navController: NavHostController) {
             )
         },
         content = {
-            TargetRange()
+            TargetRange(settingsViewModel)
         },
         bottomBar = {
             BottomNavBar(navController = navController)

@@ -24,6 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
+import org.koin.androidx.compose.inject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -110,7 +112,7 @@ fun TargetRangeExposedDropdownTo() {
 }
 
 @Composable
-fun TargetRange() {
+fun TargetRange(settingsViewModel: SettingsViewModel) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -193,6 +195,7 @@ fun PreviewTargetRangeExposedDropdownTo() {
 @Composable
 fun PreviewTargetRange() {
     INR_Management_Theme {
-        TargetRange()
+        val settingsViewModel: SettingsViewModel by inject()
+        TargetRange(settingsViewModel)
     }
 }

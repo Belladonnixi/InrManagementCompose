@@ -23,15 +23,6 @@ class SettingsViewModel(
     private val inrManagementRepository: InrManagementRepository
 ) : ViewModel() {
 
-    private val preMedicamentList: List<String> = listOf(
-        "Please choose",
-        "Warfarin",
-        "Phenprocoumon",
-        "Acenorcoumarol",
-        "Other (pills based dosing)",
-        "Other (milligram based dosing"
-    )
-
     private val _medicament = MutableStateFlow(emptyList<Medicament>())
     val medicament: StateFlow<List<Medicament>> get() = _medicament
 }
