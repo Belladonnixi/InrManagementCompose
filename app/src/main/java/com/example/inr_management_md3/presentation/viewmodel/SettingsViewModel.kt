@@ -37,7 +37,7 @@ class SettingsViewModel(
     private var _selectedMedicament = MutableStateFlow(0)
     val selectedMedicament: StateFlow<Int> get() = _selectedMedicament
 
-    var targetRange by mutableStateOf(TargetRange(0, 0, 0, 0))
+    var targetRange by mutableStateOf(TargetRange(0, 0, 0))
 
     val targetRangeFrom = listOf(
         "",

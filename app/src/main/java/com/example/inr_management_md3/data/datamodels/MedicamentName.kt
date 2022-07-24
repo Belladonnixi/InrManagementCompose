@@ -29,7 +29,7 @@ import androidx.room.PrimaryKey
     ]
 )
 data class MedicamentName(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id_medicament_name")
     val idMedicamentName: Long = 0,
     @ColumnInfo(name = "medicament_id")

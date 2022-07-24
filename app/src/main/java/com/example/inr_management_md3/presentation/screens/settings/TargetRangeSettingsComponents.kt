@@ -142,7 +142,6 @@ fun TargetRange(
                         val targetRange =
                             TargetRange(
                                 0,
-                                0,
                                 selectedRangeFrom.toInt(),
                                 selectedRangeTo.toInt()
                             )
