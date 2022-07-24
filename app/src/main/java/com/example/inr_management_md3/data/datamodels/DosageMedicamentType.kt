@@ -15,13 +15,14 @@ package com.example.inr_management_md3.data.datamodels
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "dosage_medicament_type",
     foreignKeys = [
-        androidx.room.ForeignKey(
-            entity = com.example.inr_management_md3.data.datamodels.Medicament::class,
+        ForeignKey(
+            entity = Medicament::class,
             parentColumns = ["id_medicament"],
             childColumns = ["medicament_id"]
         )
@@ -34,5 +35,7 @@ data class DosageMedicamentType(
     @ColumnInfo(name = "divisibility")
     val divisibility: Float = 0f,
     @ColumnInfo(name = "medicament_id")
-    val medicamentId: String = ""
+    val medicamentId: Long = 0,
+    @ColumnInfo(name = "max_dosage")
+    val maxDosage: Int = 0
 )

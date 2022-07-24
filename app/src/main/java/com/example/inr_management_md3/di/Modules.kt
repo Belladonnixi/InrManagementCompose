@@ -32,7 +32,7 @@ val dataModule = module {
             AppDataBase::class.java,
             "InrManagement.db"
         )
-//            .createFromAsset("database/inr_management_dbb.db")
+            .createFromAsset("database/inr_management.db")
             .fallbackToDestructiveMigration().build()
     }
 }

@@ -15,10 +15,18 @@ package com.example.inr_management_md3.data.datamodels
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "target_range"
+    tableName = "target_range",
+    foreignKeys = [
+        ForeignKey(
+            entity = Patient::class,
+            parentColumns = ["id_patient"],
+            childColumns = ["patient_id"]
+        )
+    ]
 )
 data class TargetRange(
     @PrimaryKey(autoGenerate = true)
@@ -27,5 +35,7 @@ data class TargetRange(
     @ColumnInfo(name = "target_range_from")
     val targetRangeFrom: Int = 0,
     @ColumnInfo(name = "target_range_to")
-    val targetRangeTo: Int = 0
+    val targetRangeTo: Int = 0,
+    @ColumnInfo(name = "patient_id")
+    val patientId: Long = 0
 )

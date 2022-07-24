@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
-import com.example.inr_management_md3.data.datamodels.Medicament
 import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 
@@ -84,24 +83,16 @@ fun MedicamentSettings(settingsViewModel: SettingsViewModel) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MedicamentTypeExposedDropdown(settingsViewModel: SettingsViewModel) {
-//    val options = settingsViewModel.medicamentList
-    val options = listOf(
-        "Please choose",
-        "Warfarin",
-        "Phenprocoumon",
-        "Acenorcoumarol",
-        "Other (pills based dosing)",
-        "Other (milligram based dosing"
-    )
+    val options by settingsViewModel.medicamentList.collectAsState()
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options[0]) }
+    val selectedMedicament by settingsViewModel.selectedMedicament.collectAsState()
 
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded }
     ) {
         TextField(
-            value = selectedOptionText.toString(),
+            value = selectedMedicament.type,
             onValueChange = {},
             readOnly = true,
             label = { Text(stringResource(R.string.choose_medicament_type)) },
@@ -114,9 +105,9 @@ fun MedicamentTypeExposedDropdown(settingsViewModel: SettingsViewModel) {
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
-                    text = { Text(text = selectionOption.toString()) },
+                    text = { Text(text = selectionOption.type) },
                     onClick = {
-                        selectedOptionText = selectionOption
+                        settingsViewModel.selectedMedicament(selectionOption)
                         expanded = false
                     }
                 )

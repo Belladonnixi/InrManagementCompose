@@ -30,9 +30,6 @@ fun MedicamentSettingsScreen(
     navController: NavHostController,
     settingsViewModel: SettingsViewModel
 ) {
-//    LaunchedEffect(Unit) {
-//        settingsViewModel.getMedicaments()
-//    }
     Scaffold(
         topBar = {
             SmallTopAppBar(

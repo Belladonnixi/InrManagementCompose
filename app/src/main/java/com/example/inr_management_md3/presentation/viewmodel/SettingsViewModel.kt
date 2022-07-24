@@ -30,12 +30,11 @@ class SettingsViewModel(
     private val repository: InrManagementRepository
 ) : ViewModel() {
 
-    var medicamentList by mutableStateOf(emptyList<Medicament>())
+    private val _medicamentList = MutableStateFlow(emptyList<Medicament>())
+    val medicamentList: StateFlow<List<Medicament>> get() = _medicamentList
 
-    var medicament by mutableStateOf(Medicament(0, ""))
-
-    private var _selectedMedicament = MutableStateFlow(0)
-    val selectedMedicament: StateFlow<Int> get() = _selectedMedicament
+    private var _selectedMedicament = MutableStateFlow(Medicament())
+    val selectedMedicament: StateFlow<Medicament> get() = _selectedMedicament
 
     var targetRange by mutableStateOf(TargetRange(0, 0, 0))
 
@@ -60,15 +59,21 @@ class SettingsViewModel(
     var selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
     var selectedRangeTo = mutableStateOf(targetRangeTo[0])
 
-//    fun getMedicaments() {
-//        viewModelScope.launch {
-//            repository.getAllMedicaments().collect() { response ->
-//                medicamentList = response
-//            }
-//        }
-//    }
+    init {
+        viewModelScope.launch {
+            getMedicaments()
+        }
+    }
 
-    fun selectedMedicament(getMedicament: Int) {
+    private fun getMedicaments() {
+        viewModelScope.launch {
+            repository.getAllMedicaments().collect { response ->
+                _medicamentList.value = response
+            }
+        }
+    }
+
+    fun selectedMedicament(getMedicament: Medicament) {
         _selectedMedicament.value = getMedicament
     }
 

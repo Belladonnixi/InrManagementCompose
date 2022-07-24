@@ -23,5 +23,5 @@ data class Medicament(
     @ColumnInfo(name = "id_medicament")
     val idMedicament: Long = 0,
     @ColumnInfo(name = "type")
-    val type: String = ""
+    var type: String = ""
 )
