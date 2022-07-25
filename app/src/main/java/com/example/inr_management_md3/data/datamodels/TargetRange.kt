@@ -34,7 +34,9 @@ data class TargetRange(
     @ColumnInfo(name = "target_range_from")
     val targetRangeFrom: Int = 0,
     @ColumnInfo(name = "target_range_to")
-    val targetRangeTo: Int = 0
+    val targetRangeTo: Int = 0,
+    @ColumnInfo(name = "timestamp")
+    val timestamp: Long = 0
 //    @ColumnInfo(name = "patient_id")
 //    val patientId: Long = 0
 )
