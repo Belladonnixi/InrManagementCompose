@@ -13,6 +13,7 @@
  */
 package com.example.inr_management_md3.presentation.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,9 +22,12 @@ import com.example.inr_management_md3.data.datamodels.TargetRange
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 import com.example.inr_management_md3.util.DateTimeConverters
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.*
+
+private const val TAG = "SettingsViewModel"
 
 class SettingsViewModel(
     private val repository: InrManagementRepository
@@ -37,10 +41,8 @@ class SettingsViewModel(
 
     val timestamp: Date = DateTimeConverters().zonedDateTimeToDate()
 
-    private var _targetRange = MutableSharedFlow<TargetRange>(replay = 0)
-    val targetRange: SharedFlow<TargetRange> get() = _targetRange
-
-//    val existsTargetRange = repository.checkIfTargetRangeExists()
+    private var _targetRange = MutableStateFlow(TargetRange(0, 0, 0, timestamp))
+    val targetRange: StateFlow<TargetRange> get() = _targetRange
 
     val targetRangeFrom = listOf(
         "",
@@ -65,8 +67,16 @@ class SettingsViewModel(
 
     init {
         viewModelScope.launch {
-            targetRange.collect()
-            getMedicaments()
+            if (checkIfTrExists().equals(true)) {
+                try {
+                    getTargetRange()
+                } catch (e: Error) {
+                    Log.e(TAG, "No data available $e")
+                }
+                getMedicaments()
+            } else {
+                getMedicaments()
+            }
         }
     }
 
@@ -78,9 +88,17 @@ class SettingsViewModel(
         }
     }
 
-    fun getTargetRange() {
-        viewModelScope.launch {
-            targetRange.collect()
+    private fun getTargetRange() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getLastTargetRange().collect { response ->
+                _targetRange.value = response
+            }
+        }
+    }
+
+    private fun checkIfTrExists() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.checkIfTargetRangeExists()
         }
     }
 
@@ -91,6 +109,7 @@ class SettingsViewModel(
     fun addTargetRange(targetRange: TargetRange) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addTargetRange(targetRange)
+            getTargetRange()
         }
     }
 }

@@ -13,15 +13,15 @@
  */
 package com.example.inr_management_md3.presentation.screens.settings
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.data.datamodels.TargetRange
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
@@ -100,12 +100,16 @@ fun TargetRangeExposedDropdownTo(settingsViewModel: SettingsViewModel) {
 
 @Composable
 fun TargetRange(
-    settingsViewModel: SettingsViewModel
+    settingsViewModel: SettingsViewModel,
+    navController: NavController
 ) {
     val selectedRangeFrom by settingsViewModel.selectedRangeFrom
     val selectedRangeTo by settingsViewModel.selectedRangeTo
     val timestamp = settingsViewModel.timestamp
-    val targetRange = settingsViewModel.targetRange
+    val targetRange =
+        settingsViewModel.targetRange.collectAsState(
+            initial = TargetRange(0, 0, 0, timestamp)
+        )
 
     Surface(
         modifier = Modifier
@@ -121,17 +125,50 @@ fun TargetRange(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
-                    .background(MaterialTheme.colorScheme.surfaceVariant)
             ) {
-                settingsViewModel.getTargetRange()
-                Text(
-                    text = targetRange.toString(),
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall
-                )
+                if (targetRange.value.targetRangeFrom != 0 && targetRange.value.targetRangeTo != 0) {
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.surfaceVariant,
+                        shape = RoundedCornerShape(10.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "Your ideal target range value is",
+                                modifier = Modifier.padding(top = 16.dp)
+                            )
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = "From: " + targetRange.value.targetRangeFrom.toString(),
+                                    modifier = Modifier
+                                        .padding(16.dp)
+                                )
+                                Column(
+                                    modifier = Modifier,
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    Text(
+                                        text = "To: " + targetRange.value.targetRangeTo.toString(),
+                                        modifier = Modifier
+                                            .padding(16.dp)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
             }
             Text(
                 text = "Please set your target range:"
@@ -159,14 +196,15 @@ fun TargetRange(
             ) {
                 Button(
                     onClick = {
-                        val targetRange =
+                        val setTargetRange =
                             TargetRange(
                                 0,
                                 selectedRangeFrom.toInt(),
                                 selectedRangeTo.toInt(),
                                 timestamp
                             )
-                        settingsViewModel.addTargetRange(targetRange)
+                        settingsViewModel.addTargetRange(setTargetRange)
+                        navController.navigateUp()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
