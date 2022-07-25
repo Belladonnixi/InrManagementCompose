@@ -39,4 +39,10 @@ interface InrManagementDao {
 
     @Query("SELECT * FROM dosage_medicament_type")
     fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>
+
+    @Query("SELECT * FROM target_range ORDER BY id_target_range DESC LIMIT 1")
+    fun getLastTargetRange(): Flow<TargetRange>
+
+    @Query("SELECT EXISTS (SELECT id_target_range FROM target_range WHERE id_target_range= :id)")
+    fun checkIfTargetRangeExists(id: Long): Boolean
 }

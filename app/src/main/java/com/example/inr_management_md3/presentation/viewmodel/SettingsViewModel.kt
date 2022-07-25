@@ -13,18 +13,17 @@
  */
 package com.example.inr_management_md3.presentation.viewmodel
 
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.inr_management_md3.data.datamodels.Medicament
 import com.example.inr_management_md3.data.datamodels.TargetRange
 import com.example.inr_management_md3.data.repository.InrManagementRepository
+import com.example.inr_management_md3.util.DateTimeConverters
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.*
 
 class SettingsViewModel(
     private val repository: InrManagementRepository
@@ -36,7 +35,12 @@ class SettingsViewModel(
     private var _selectedMedicament = MutableStateFlow(Medicament())
     val selectedMedicament: StateFlow<Medicament> get() = _selectedMedicament
 
-    var targetRange by mutableStateOf(TargetRange(0, 0, 0))
+    val timestamp: Date = DateTimeConverters().zonedDateTimeToDate()
+
+    private var _targetRange = MutableSharedFlow<TargetRange>(replay = 0)
+    val targetRange: SharedFlow<TargetRange> get() = _targetRange
+
+//    val existsTargetRange = repository.checkIfTargetRangeExists()
 
     val targetRangeFrom = listOf(
         "",
@@ -61,15 +65,22 @@ class SettingsViewModel(
 
     init {
         viewModelScope.launch {
+            targetRange.collect()
             getMedicaments()
         }
     }
 
     private fun getMedicaments() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.getAllMedicaments().collect { response ->
                 _medicamentList.value = response
             }
+        }
+    }
+
+    fun getTargetRange() {
+        viewModelScope.launch {
+            targetRange.collect()
         }
     }
 

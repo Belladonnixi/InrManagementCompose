@@ -25,6 +25,8 @@ interface InrManagementRepository {
     suspend fun addTargetRange(targetRange: TargetRange)
     fun getAllMedicaments(): Flow<List<Medicament>>
     fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>
+    fun getLastTargetRange(): Flow<TargetRange>
+    fun checkIfTargetRangeExists(): Boolean
 }
 
 class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrManagementRepository {
@@ -45,4 +47,10 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>> =
         appDataBase.inrManagementDao().getAllDosageMedicamentTypes()
+
+    override fun getLastTargetRange(): Flow<TargetRange> =
+        appDataBase.inrManagementDao().getLastTargetRange()
+
+    override fun checkIfTargetRangeExists(): Boolean =
+        appDataBase.inrManagementDao().checkIfTargetRangeExists(1)
 }

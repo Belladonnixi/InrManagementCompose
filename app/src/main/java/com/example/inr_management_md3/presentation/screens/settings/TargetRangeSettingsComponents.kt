@@ -13,12 +13,14 @@
  */
 package com.example.inr_management_md3.presentation.screens.settings
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.data.datamodels.TargetRange
@@ -102,6 +104,8 @@ fun TargetRange(
 ) {
     val selectedRangeFrom by settingsViewModel.selectedRangeFrom
     val selectedRangeTo by settingsViewModel.selectedRangeTo
+    val timestamp = settingsViewModel.timestamp
+    val targetRange = settingsViewModel.targetRange
 
     Surface(
         modifier = Modifier
@@ -113,6 +117,22 @@ fun TargetRange(
                 .fillMaxWidth()
                 .padding(top = 50.dp, bottom = 30.dp)
         ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+            ) {
+                settingsViewModel.getTargetRange()
+                Text(
+                    text = targetRange.toString(),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            }
             Text(
                 text = "Please set your target range:"
             )
@@ -143,7 +163,8 @@ fun TargetRange(
                             TargetRange(
                                 0,
                                 selectedRangeFrom.toInt(),
-                                selectedRangeTo.toInt()
+                                selectedRangeTo.toInt(),
+                                timestamp
                             )
                         settingsViewModel.addTargetRange(targetRange)
                     },
