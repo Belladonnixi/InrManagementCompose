@@ -65,9 +65,15 @@ class SettingsViewModel(
 
     init {
         viewModelScope.launch {
+            loadData()
+        }
+    }
+
+    private fun loadData() {
+        viewModelScope.launch(Dispatchers.IO) {
             if (checkIfTrExists().equals(true)) {
                 try {
-                    targetRange.collect()
+                    getTargetRange()
                 } catch (e: Error) {
                     Log.e(TAG, "No data available $e")
                 }

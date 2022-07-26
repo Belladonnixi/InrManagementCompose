@@ -129,7 +129,8 @@ fun TargetRange(
                 if (targetRange.value.targetRangeFrom != 0 && targetRange.value.targetRangeTo != 0) {
                     Surface(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .padding(8.dp),
                         color = MaterialTheme.colorScheme.surfaceVariant,
                         shape = RoundedCornerShape(10.dp)
                     ) {
@@ -150,7 +151,9 @@ fun TargetRange(
                                 horizontalArrangement = Arrangement.Center
                             ) {
                                 Text(
-                                    text = stringResource(R.string.from) + targetRange.value.targetRangeFrom.toString(),
+                                    text = stringResource(
+                                        R.string.from
+                                    ) + targetRange.value.targetRangeFrom.toString(),
                                     modifier = Modifier
                                         .padding(16.dp)
                                 )
@@ -160,7 +163,9 @@ fun TargetRange(
                                     verticalArrangement = Arrangement.Center
                                 ) {
                                     Text(
-                                        text = stringResource(R.string.to) + targetRange.value.targetRangeTo.toString(),
+                                        text = stringResource(
+                                            R.string.to
+                                        ) + targetRange.value.targetRangeTo.toString(),
                                         modifier = Modifier
                                             .padding(16.dp)
                                     )

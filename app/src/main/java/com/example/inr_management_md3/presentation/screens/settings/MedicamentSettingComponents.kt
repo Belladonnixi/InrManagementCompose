@@ -77,7 +77,7 @@ fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavC
                         .padding(bottom = 60.dp)
                         .height(60.dp),
                     enabled = true
-                ) { Text("Save") }
+                ) { Text(stringResource(id = R.string.save)) }
             }
         }
     }
