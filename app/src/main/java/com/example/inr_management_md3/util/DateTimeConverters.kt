@@ -18,6 +18,11 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.util.*
 
+/**
+ *  Class for all date time converters between database and LocalDate, ZonedDate
+ *  and Time in UI
+ */
+
 class DateTimeConverters {
 
     fun zonedDateTimeToDate(): Date {

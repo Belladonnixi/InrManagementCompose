@@ -150,7 +150,7 @@ fun TargetRange(
                                 horizontalArrangement = Arrangement.Center
                             ) {
                                 Text(
-                                    text = "From: " + targetRange.value.targetRangeFrom.toString(),
+                                    text = "from   " + targetRange.value.targetRangeFrom.toString(),
                                     modifier = Modifier
                                         .padding(16.dp)
                                 )
@@ -160,7 +160,7 @@ fun TargetRange(
                                     verticalArrangement = Arrangement.Center
                                 ) {
                                     Text(
-                                        text = "To: " + targetRange.value.targetRangeTo.toString(),
+                                        text = "to  " + targetRange.value.targetRangeTo.toString(),
                                         modifier = Modifier
                                             .padding(16.dp)
                                     )

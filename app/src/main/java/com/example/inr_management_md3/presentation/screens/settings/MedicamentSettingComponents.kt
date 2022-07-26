@@ -20,12 +20,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 
 @Composable
-fun MedicamentSettings(settingsViewModel: SettingsViewModel) {
+fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavController) {
     var checked by remember { mutableStateOf(false) }
 
     Surface(
@@ -68,7 +69,9 @@ fun MedicamentSettings(settingsViewModel: SettingsViewModel) {
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
-                    onClick = { /* Do something! */ },
+                    onClick = {
+                        navController.navigateUp()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 60.dp)

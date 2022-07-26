@@ -91,17 +91,16 @@ fun DatePickerDialog(calendarViewModel: CalendarViewModel) {
                             modifier = Modifier
                                 .height(500.dp)
                                 .wrapContentSize()
+                                .padding(start = 4.dp, end = 4.dp)
                         ) {
                             Kalendar(
                                 kalendarType = KalendarType.Firey(),
                                 kalendarStyle = KalendarStyle(
                                     kalendarBackgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                    kalendarColor = MaterialTheme.colorScheme.primary,
                                     kalendarSelector = KalendarSelector.Circle(
-                                        selectedColor = Color.White,
-                                        todayColor = Color.White,
-                                        defaultTextColor = MaterialTheme.colorScheme.onPrimary,
-                                        selectedTextColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                                        selectedColor = MaterialTheme.colorScheme.primary,
+                                        todayColor = MaterialTheme.colorScheme.primary,
+                                        selectedTextColor = MaterialTheme.colorScheme.onPrimary,
                                         defaultColor = Color.Transparent,
                                         eventTextColor = MaterialTheme.colorScheme.primaryContainer
                                     ),

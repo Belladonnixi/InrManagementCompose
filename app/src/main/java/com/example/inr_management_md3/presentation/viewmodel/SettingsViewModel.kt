@@ -24,8 +24,13 @@ import com.example.inr_management_md3.util.DateTimeConverters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
+
+/**
+ *  Shared ViewModel for MeasureSettings-, TargetRangeSettings- and MedicamentSettings-Screens
+ */
 
 private const val TAG = "SettingsViewModel"
 
@@ -41,26 +46,19 @@ class SettingsViewModel(
 
     val timestamp: Date = DateTimeConverters().zonedDateTimeToDate()
 
-    private var _targetRange = MutableStateFlow(TargetRange(0, 0, 0, timestamp))
+    private var _targetRange = MutableStateFlow(
+        TargetRange(
+            0,
+            0,
+            0,
+            timestamp
+        )
+    )
     val targetRange: StateFlow<TargetRange> get() = _targetRange
 
-    val targetRangeFrom = listOf(
-        "",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-    )
+    val targetRangeFrom = listOf("", "1", "2", "3", "4", "5")
 
-    val targetRangeTo = listOf(
-        "",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-    )
+    val targetRangeTo = listOf("", "1", "2", "3", "4", "5")
 
     var selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
     var selectedRangeTo = mutableStateOf(targetRangeTo[0])
@@ -69,7 +67,7 @@ class SettingsViewModel(
         viewModelScope.launch {
             if (checkIfTrExists().equals(true)) {
                 try {
-                    getTargetRange()
+                    targetRange.collect()
                 } catch (e: Error) {
                     Log.e(TAG, "No data available $e")
                 }
@@ -96,6 +94,10 @@ class SettingsViewModel(
         }
     }
 
+    /**
+     * Checks through an sql query which responds with Boolean if there are data in target_range
+     * stored
+     */
     private fun checkIfTrExists() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.checkIfTargetRangeExists()
