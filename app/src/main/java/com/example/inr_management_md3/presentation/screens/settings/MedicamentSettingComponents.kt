@@ -47,7 +47,7 @@ fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavC
                     .padding(top = 40.dp, bottom = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Enable notification")
+                Text(stringResource(R.string.enable_alarm))
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.End,

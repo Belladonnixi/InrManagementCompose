@@ -139,7 +139,7 @@ fun TargetRange(
                             verticalArrangement = Arrangement.Center
                         ) {
                             Text(
-                                text = "Your ideal target range value is",
+                                text = stringResource(R.string.target_range_value),
                                 modifier = Modifier.padding(top = 16.dp)
                             )
                             Row(
@@ -150,7 +150,7 @@ fun TargetRange(
                                 horizontalArrangement = Arrangement.Center
                             ) {
                                 Text(
-                                    text = "from   " + targetRange.value.targetRangeFrom.toString(),
+                                    text = stringResource(R.string.from) + targetRange.value.targetRangeFrom.toString(),
                                     modifier = Modifier
                                         .padding(16.dp)
                                 )
@@ -160,7 +160,7 @@ fun TargetRange(
                                     verticalArrangement = Arrangement.Center
                                 ) {
                                     Text(
-                                        text = "to  " + targetRange.value.targetRangeTo.toString(),
+                                        text = stringResource(R.string.to) + targetRange.value.targetRangeTo.toString(),
                                         modifier = Modifier
                                             .padding(16.dp)
                                     )
@@ -171,7 +171,7 @@ fun TargetRange(
                 }
             }
             Text(
-                text = "Please set your target range:"
+                text = stringResource(R.string.please_set_target_range)
             )
             Row(
                 modifier = Modifier
@@ -211,7 +211,7 @@ fun TargetRange(
                         .padding(bottom = 60.dp)
                         .height(60.dp),
                     enabled = selectedRangeFrom.isNotEmpty() && selectedRangeTo.isNotEmpty()
-                ) { Text("Save") }
+                ) { Text(stringResource(R.string.save)) }
             }
         }
     }

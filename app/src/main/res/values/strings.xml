@@ -33,4 +33,10 @@
     <string name="state_descr_not_selected">Not selected</string>
     <string name="click_label_select">select</string>
     <string name="calendar_select_date">Select Date</string>
+    <string name="enable_alarm">Enable alarm</string>
+    <string name="target_range_value">Your ideal target range value is</string>
+    <string name="from">\"from   \"</string>
+    <string name="to">\"to  \"</string>
+    <string name="please_set_target_range">Please set your target range:</string>
+    <string name="save">Save</string>
 </resources>

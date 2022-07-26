@@ -95,8 +95,8 @@ class SettingsViewModel(
     }
 
     /**
-     * Checks through an sql query which responds with Boolean if there are data in target_range
-     * stored
+     * Checks through an sql query which responds with Boolean if there is data in target_range
+     * table stored
      */
     private fun checkIfTrExists() {
         viewModelScope.launch(Dispatchers.IO) {
