@@ -36,7 +36,7 @@ interface InrManagementDao {
     suspend fun addTargetRange(targetRange: TargetRange)
 
     @Insert(onConflict = REPLACE)
-    suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage): Flow<MedicamentDosage>
+    suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage)
 
     @Query("SELECT * FROM medicament")
     fun getAllMedicaments(): Flow<List<Medicament>>
