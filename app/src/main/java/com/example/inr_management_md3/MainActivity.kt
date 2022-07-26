@@ -38,12 +38,16 @@ class MainActivity : ComponentActivity() {
             val calendarViewModel: CalendarViewModel by inject()
             val settingsViewModel: SettingsViewModel by inject()
             val doseViewModel: DoseViewModel by inject()
-            INR_Management_Theme() {
+            INR_Management_Theme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.surface
                 ) {
-                    AppNavigation(navController, calendarViewModel)
+                    AppNavigation(
+                        navController,
+                        calendarViewModel,
+                        settingsViewModel
+                    )
                 }
             }
         }

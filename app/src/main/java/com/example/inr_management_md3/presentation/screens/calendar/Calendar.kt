@@ -53,19 +53,18 @@ fun CalendarMonthView(calendarViewModel: CalendarViewModel, navController: NavCo
                         MaterialTheme.colorScheme.tertiaryContainer,
                         RoundedCornerShape(10.dp)
                     )
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .padding(8.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Kalendar(
                     kalendarType = KalendarType.Firey(),
                     kalendarStyle = com.himanshoe.kalendar.common.KalendarStyle(
                         kalendarBackgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
-                        kalendarColor = MaterialTheme.colorScheme.primary,
                         kalendarSelector = com.himanshoe.kalendar.common.KalendarSelector.Circle(
-                            selectedColor = Color.White,
-                            todayColor = Color.White,
-                            defaultTextColor = MaterialTheme.colorScheme.onPrimary,
-                            selectedTextColor = Color.Black,
+                            selectedColor = MaterialTheme.colorScheme.primary,
+                            todayColor = MaterialTheme.colorScheme.primary,
+                            selectedTextColor = MaterialTheme.colorScheme.onPrimary,
                             defaultColor = Color.Transparent,
                             eventTextColor = MaterialTheme.colorScheme.primaryContainer
                         ),

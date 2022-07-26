@@ -21,7 +21,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditCalendar
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -91,17 +93,16 @@ fun DatePickerDialog(calendarViewModel: CalendarViewModel) {
                             modifier = Modifier
                                 .height(500.dp)
                                 .wrapContentSize()
+                                .padding(start = 4.dp, end = 4.dp)
                         ) {
                             Kalendar(
                                 kalendarType = KalendarType.Firey(),
                                 kalendarStyle = KalendarStyle(
                                     kalendarBackgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                    kalendarColor = MaterialTheme.colorScheme.primary,
                                     kalendarSelector = KalendarSelector.Circle(
-                                        selectedColor = Color.White,
-                                        todayColor = Color.White,
-                                        defaultTextColor = MaterialTheme.colorScheme.onPrimary,
-                                        selectedTextColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                                        selectedColor = MaterialTheme.colorScheme.primary,
+                                        todayColor = MaterialTheme.colorScheme.primary,
+                                        selectedTextColor = MaterialTheme.colorScheme.onPrimary,
                                         defaultColor = Color.Transparent,
                                         eventTextColor = MaterialTheme.colorScheme.primaryContainer
                                     ),
@@ -121,8 +122,7 @@ fun DatePickerDialog(calendarViewModel: CalendarViewModel) {
                         }
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp),
+                                .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             TextButton(

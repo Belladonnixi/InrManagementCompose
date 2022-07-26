@@ -13,21 +13,20 @@
  */
 package com.example.inr_management_md3.presentation.screens.settings
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
-import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 
 @Composable
-fun MedicamentSettings() {
+fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavController) {
     var checked by remember { mutableStateOf(false) }
 
     Surface(
@@ -40,7 +39,7 @@ fun MedicamentSettings() {
                 .fillMaxWidth()
                 .padding(top = 50.dp, bottom = 30.dp)
         ) {
-            MedicamentTypeExposedDropdown()
+            MedicamentTypeExposedDropdown(settingsViewModel)
 
             Row(
                 modifier = Modifier
@@ -48,7 +47,7 @@ fun MedicamentSettings() {
                     .padding(top = 40.dp, bottom = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Enable notification")
+                Text(stringResource(R.string.enable_alarm))
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.End,
@@ -70,13 +69,15 @@ fun MedicamentSettings() {
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
-                    onClick = { /* Do something! */ },
+                    onClick = {
+                        navController.navigateUp()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 60.dp)
                         .height(60.dp),
                     enabled = true
-                ) { Text("Save") }
+                ) { Text(stringResource(id = R.string.save)) }
             }
         }
     }
@@ -84,24 +85,17 @@ fun MedicamentSettings() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MedicamentTypeExposedDropdown() {
-    val options = listOf(
-        "Please choose",
-        "Warfarin",
-        "Phenprocoumon",
-        "Acenorcoumarol",
-        "Other (pills based dosing)",
-        "Other (milligram based dosing"
-    )
+fun MedicamentTypeExposedDropdown(settingsViewModel: SettingsViewModel) {
+    val options by settingsViewModel.medicamentList.collectAsState()
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options[0]) }
+    val selectedMedicament by settingsViewModel.selectedMedicament.collectAsState()
 
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded }
     ) {
         TextField(
-            value = selectedOptionText,
+            value = selectedMedicament.type,
             onValueChange = {},
             readOnly = true,
             label = { Text(stringResource(R.string.choose_medicament_type)) },
@@ -114,39 +108,13 @@ fun MedicamentTypeExposedDropdown() {
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
-                    text = { Text(text = selectionOption) },
+                    text = { Text(text = selectionOption.type) },
                     onClick = {
-                        selectedOptionText = selectionOption
+                        settingsViewModel.selectedMedicament(selectionOption)
                         expanded = false
                     }
                 )
             }
         }
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewMedicamentSettings() {
-    INR_Management_Theme {
-        MedicamentSettings()
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewMedicamentTypeExposedDropdown() {
-    INR_Management_Theme {
-        MedicamentTypeExposedDropdown()
     }
 }

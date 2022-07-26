@@ -19,6 +19,8 @@ import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.example.inr_management_md3.data.datamodels.DosageMedicamentType
 import com.example.inr_management_md3.data.datamodels.Medicament
+import com.example.inr_management_md3.data.datamodels.MedicamentDosage
+import com.example.inr_management_md3.data.datamodels.TargetRange
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -30,9 +32,21 @@ interface InrManagementDao {
     @Insert(onConflict = REPLACE)
     suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType)
 
+    @Insert(onConflict = REPLACE)
+    suspend fun addTargetRange(targetRange: TargetRange)
+
+    @Insert(onConflict = REPLACE)
+    suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage)
+
     @Query("SELECT * FROM medicament")
     fun getAllMedicaments(): Flow<List<Medicament>>
 
     @Query("SELECT * FROM dosage_medicament_type")
     fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>
+
+    @Query("SELECT * FROM target_range ORDER BY id_target_range DESC LIMIT 1")
+    fun getLastTargetRange(): Flow<TargetRange>
+
+    @Query("SELECT EXISTS (SELECT id_target_range FROM target_range WHERE id_target_range= :id)")
+    fun checkIfTargetRangeExists(id: Long): Boolean
 }

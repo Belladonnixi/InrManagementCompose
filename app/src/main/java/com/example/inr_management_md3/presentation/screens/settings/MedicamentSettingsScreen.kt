@@ -22,10 +22,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.BottomNavBar
+import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MedicamentSettingsScreen(navController: NavHostController) {
+fun MedicamentSettingsScreen(
+    navController: NavHostController,
+    settingsViewModel: SettingsViewModel
+) {
     Scaffold(
         topBar = {
             SmallTopAppBar(
@@ -48,7 +52,7 @@ fun MedicamentSettingsScreen(navController: NavHostController) {
             )
         },
         content = {
-            MedicamentSettings()
+            MedicamentSettings(settingsViewModel, navController)
         },
         bottomBar = {
             BottomNavBar(navController = navController)

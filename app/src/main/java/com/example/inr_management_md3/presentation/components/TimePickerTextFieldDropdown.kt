@@ -25,6 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,16 +50,16 @@ fun TimePickerTextFieldDropdown() {
                 textStyle = TextStyle(color = MaterialTheme.colorScheme.primary)
             )
         },
-        backgroundColor = MaterialTheme.colorScheme.surfaceVariant
+        backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
     ) {
         timepicker(
             initialTime = LocalTime.now(),
             colors = TimePickerDefaults.colors(
                 selectorColor = MaterialTheme.colorScheme.primary,
                 activeBackgroundColor = MaterialTheme.colorScheme.primary,
-                inactiveBackgroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                headerTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                inactiveTextColor = MaterialTheme.colorScheme.surfaceVariant
+                inactiveBackgroundColor = Color.White,
+                headerTextColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                inactiveTextColor = Color.Black
             )
         ) { time ->
             val formattedTime = time.format(
@@ -102,16 +103,16 @@ fun MeasureResultTimePickerTextFieldDropdown() {
                 textStyle = TextStyle(color = MaterialTheme.colorScheme.primary)
             )
         },
-        backgroundColor = MaterialTheme.colorScheme.surfaceVariant
+        backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
     ) {
         timepicker(
             initialTime = LocalTime.now(),
             colors = TimePickerDefaults.colors(
                 selectorColor = MaterialTheme.colorScheme.primary,
                 activeBackgroundColor = MaterialTheme.colorScheme.primary,
-                inactiveBackgroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                headerTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                inactiveTextColor = MaterialTheme.colorScheme.surfaceVariant
+                inactiveBackgroundColor = Color.White,
+                headerTextColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                inactiveTextColor = Color.Black
             )
         ) { time ->
             val formattedTime = time.format(

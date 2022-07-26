@@ -24,14 +24,12 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = Medicament::class,
             parentColumns = ["id_medicament"],
-            childColumns = ["medicament_id"],
-            onUpdate = ForeignKey.RESTRICT,
-            onDelete = ForeignKey.RESTRICT
+            childColumns = ["medicament_id"]
         )
     ]
 )
 data class MedicamentName(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id_medicament_name")
     val idMedicamentName: Long = 0,
     @ColumnInfo(name = "medicament_id")

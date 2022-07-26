@@ -17,7 +17,16 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "comment")
+@Entity(
+    tableName = "comment"
+//    foreignKeys = [
+//        ForeignKey(
+//            entity = Patient::class,
+//            parentColumns = ["id_patient"],
+//            childColumns = ["patient_id"]
+//        )
+//    ]
+)
 data class Comment(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_comment")
@@ -26,4 +35,6 @@ data class Comment(
     val commentDate: Long = 0,
     @ColumnInfo(name = "comment-day")
     val commentDay: String = ""
+//    @ColumnInfo(name = "patient_id")
+//    val patientId: Long = 0
 )

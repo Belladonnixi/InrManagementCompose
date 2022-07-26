@@ -15,32 +15,29 @@ package com.example.inr_management_md3.data.datamodels
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(
-    tableName = "patient",
-    foreignKeys = [
-        ForeignKey(
-            entity = MedicamentDosage::class,
-            parentColumns = ["id_medicament_dosage"],
-            childColumns = ["medicament_dosage_id"]
-        ),
-        ForeignKey(
-            entity = TargetRange::class,
-            parentColumns = ["id_target_range"],
-            childColumns = ["target_range_id"]
-        )
-    ]
+    tableName = "target_range"
+//    foreignKeys = [
+//        ForeignKey(
+//            entity = Patient::class,
+//            parentColumns = ["id_patient"],
+//            childColumns = ["patient_id"]
+//        )
+//    ]
 )
-data class Patient(
+data class TargetRange(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id_patient")
-    val id_patient: Long = 0,
-    @ColumnInfo(name = "account_Id")
-    val accountId: Long = 0,
-    @ColumnInfo(name = "target_range_id")
-    val targetRangeId: Long = 0,
-    @ColumnInfo(name = "medicament_dosage_id")
-    val medicamentDosageId: Long = 0
+    @ColumnInfo(name = "id_target_range")
+    val idTargetRange: Long = 0,
+    @ColumnInfo(name = "target_range_from")
+    val targetRangeFrom: Int = 0,
+    @ColumnInfo(name = "target_range_to")
+    val targetRangeTo: Int = 0,
+    @ColumnInfo(name = "timestamp")
+    val timestamp: Date?
+//    @ColumnInfo(name = "patient_id")
+//    val patientId: Long = 0
 )

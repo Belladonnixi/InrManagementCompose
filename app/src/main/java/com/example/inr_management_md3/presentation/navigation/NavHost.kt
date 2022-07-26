@@ -32,12 +32,17 @@ import com.example.inr_management_md3.presentation.screens.settings.SettingsScre
 import com.example.inr_management_md3.presentation.screens.settings.TargetRangeSettingsScreen
 import com.example.inr_management_md3.presentation.screens.statistics.StatisticsScreen
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AppNavigation(navController: NavHostController, calendarViewModel: CalendarViewModel) {
+fun AppNavigation(
+    navController: NavHostController,
+    calendarViewModel: CalendarViewModel,
+    settingsViewModel: SettingsViewModel
+) {
     AnimatedNavHost(
         navController = navController,
         startDestination = Screens.Home.route,
@@ -200,7 +205,7 @@ fun AppNavigation(navController: NavHostController, calendarViewModel: CalendarV
                 else null
             }
         ) {
-            MedicamentSettingsScreen(navController)
+            MedicamentSettingsScreen(navController, settingsViewModel)
         }
 
         composable(
@@ -220,7 +225,7 @@ fun AppNavigation(navController: NavHostController, calendarViewModel: CalendarV
                 else null
             }
         ) {
-            TargetRangeSettingsScreen(navController)
+            TargetRangeSettingsScreen(navController, settingsViewModel)
         }
 
         composable(
@@ -240,7 +245,7 @@ fun AppNavigation(navController: NavHostController, calendarViewModel: CalendarV
                 else null
             }
         ) {
-            MeasureSettingsScreen(navController, calendarViewModel)
+            MeasureSettingsScreen(navController, calendarViewModel, settingsViewModel)
         }
 
         composable(

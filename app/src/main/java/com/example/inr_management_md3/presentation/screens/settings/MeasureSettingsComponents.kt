@@ -25,6 +25,7 @@ import com.example.inr_management_md3.presentation.components.TimePickerTextFiel
 import com.example.inr_management_md3.presentation.screens.calendar.DatePickerDialog
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 import org.koin.androidx.compose.inject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -95,7 +96,7 @@ fun MeasureTimeRangeExposedDropdownTo() {
 }
 
 @Composable
-fun SetMeasur(calendarViewModel: CalendarViewModel) {
+fun SetMeasure(calendarViewModel: CalendarViewModel, settingsViewModel: SettingsViewModel) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -178,6 +179,7 @@ fun PreviewMeasureTimeRangeExposedDropdownFrom() {
 fun PreviewSetMeasureExposedDropdownFrom() {
     INR_Management_Theme {
         val calendarViewModel: CalendarViewModel by inject()
-        SetMeasur(calendarViewModel)
+        val settingsViewModel: SettingsViewModel by inject()
+        SetMeasure(calendarViewModel, settingsViewModel)
     }
 }

@@ -16,13 +16,19 @@ package com.example.inr_management_md3.data.repository
 import com.example.inr_management_md3.data.AppDataBase
 import com.example.inr_management_md3.data.datamodels.DosageMedicamentType
 import com.example.inr_management_md3.data.datamodels.Medicament
+import com.example.inr_management_md3.data.datamodels.MedicamentDosage
+import com.example.inr_management_md3.data.datamodels.TargetRange
 import kotlinx.coroutines.flow.Flow
 
 interface InrManagementRepository {
     suspend fun addMedicament(medicament: Medicament)
     suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType)
-    suspend fun getAllMedicaments(): Flow<List<Medicament>>
-    suspend fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>
+    suspend fun addTargetRange(targetRange: TargetRange)
+    suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage)
+    fun getAllMedicaments(): Flow<List<Medicament>>
+    fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>
+    fun getLastTargetRange(): Flow<TargetRange>
+    fun checkIfTargetRangeExists(): Boolean
 }
 
 class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrManagementRepository {
@@ -34,9 +40,23 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
         appDataBase.inrManagementDao().addDosageMedicamentType(dosageMedicamentType)
     }
 
-    override suspend fun getAllMedicaments(): Flow<List<Medicament>> =
+    override suspend fun addTargetRange(targetRange: TargetRange) {
+        appDataBase.inrManagementDao().addTargetRange(targetRange)
+    }
+
+    override suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage) {
+        appDataBase.inrManagementDao().addMedicamentDosage(medicamentDosage)
+    }
+
+    override fun getAllMedicaments(): Flow<List<Medicament>> =
         appDataBase.inrManagementDao().getAllMedicaments()
 
-    override suspend fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>> =
+    override fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>> =
         appDataBase.inrManagementDao().getAllDosageMedicamentTypes()
+
+    override fun getLastTargetRange(): Flow<TargetRange> =
+        appDataBase.inrManagementDao().getLastTargetRange()
+
+    override fun checkIfTargetRangeExists(): Boolean =
+        appDataBase.inrManagementDao().checkIfTargetRangeExists(1)
 }

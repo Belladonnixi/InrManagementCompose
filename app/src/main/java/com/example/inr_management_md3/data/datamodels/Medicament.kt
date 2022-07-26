@@ -19,9 +19,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "medicament")
 data class Medicament(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id_medicament")
     val idMedicament: Long = 0,
     @ColumnInfo(name = "type")
-    val type: String = ""
+    var type: String = ""
 )
