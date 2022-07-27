@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
-import com.example.inr_management_md3.presentation.screens.calendar.DatePickerDialogFirstTry
+import com.example.inr_management_md3.presentation.components.DatePickerDialogFirstTry
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
