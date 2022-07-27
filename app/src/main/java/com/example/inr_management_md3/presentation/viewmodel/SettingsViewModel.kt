@@ -51,8 +51,7 @@ class SettingsViewModel(
         TargetRange(
             0,
             0,
-            0,
-            timestamp
+            0
         )
     )
     val targetRange: StateFlow<TargetRange> get() = _targetRange
@@ -78,7 +77,7 @@ class SettingsViewModel(
 
     private fun loadData() {
         viewModelScope.launch(Dispatchers.IO) {
-            if (checkIfTrExists().equals(true)) {
+            if (repository.checkIfTargetRangeExists()) {
                 try {
                     getTargetRange()
                 } catch (e: Error) {
@@ -107,16 +106,6 @@ class SettingsViewModel(
         }
     }
 
-    /**
-     * Checks through an sql query which responds with Boolean if there is data in target_range
-     * table stored
-     */
-    private fun checkIfTrExists() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.checkIfTargetRangeExists()
-        }
-    }
-
     fun selectedMedicament(getMedicament: Medicament) {
         _selectedMedicament.value = getMedicament
     }
@@ -139,5 +128,10 @@ class SettingsViewModel(
 
     fun getFormattedTime(formattedTime: TextFieldValue) {
         _textState.value = formattedTime
+    }
+
+    fun resetTextState() {
+        val text = TextFieldValue("")
+        _textState.value = text
     }
 }

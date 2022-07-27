@@ -33,7 +33,7 @@ val dataModule = module {
             "InrManagement.db"
         )
             .createFromAsset("database/inr_management.db")
-            .fallbackToDestructiveMigration().build()
+            .build()
     }
 }
 

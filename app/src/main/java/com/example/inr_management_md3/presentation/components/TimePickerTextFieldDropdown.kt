@@ -67,6 +67,7 @@ fun TimePickerTextFieldDropdown(settingsViewModel: SettingsViewModel) {
                 DateTimeFormatter.ofPattern("hh:mm a")
             )
             settingsViewModel.getFormattedTime(TextFieldValue(formattedTime))
+            settingsViewModel.getTime(time)
         }
     }
     Box(

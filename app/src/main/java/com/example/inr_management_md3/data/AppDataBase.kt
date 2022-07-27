@@ -37,7 +37,8 @@ import com.example.inr_management_md3.data.local.InrManagementDao
         MeasureAlarm::class,
         TakingTime::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class AppDataBase : RoomDatabase() {
