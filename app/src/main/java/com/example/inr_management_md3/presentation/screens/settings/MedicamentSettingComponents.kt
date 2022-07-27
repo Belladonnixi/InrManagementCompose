@@ -28,7 +28,7 @@ import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 @Composable
 fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavController) {
     var checked by remember { mutableStateOf(false) }
-    val textState by settingsViewModel.textState.collectAsState()
+    val selectedMedicament by settingsViewModel.selectedMedicament.collectAsState()
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -77,7 +77,7 @@ fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavC
                         .fillMaxWidth()
                         .padding(bottom = 60.dp)
                         .height(60.dp),
-                    enabled = true
+                    enabled = selectedMedicament.type.isNotEmpty()
                 ) { Text(stringResource(id = R.string.save)) }
             }
         }

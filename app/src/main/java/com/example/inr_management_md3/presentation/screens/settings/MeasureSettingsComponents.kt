@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
-import com.example.inr_management_md3.presentation.screens.calendar.DatePickerDialog
+import com.example.inr_management_md3.presentation.screens.calendar.DatePickerDialogFirstTry
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
@@ -130,7 +130,7 @@ fun SetMeasure(calendarViewModel: CalendarViewModel, settingsViewModel: Settings
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                DatePickerDialog(calendarViewModel)
+                DatePickerDialogFirstTry(calendarViewModel)
             }
             Text(text = stringResource(id = R.string.alarm_time))
             Row(

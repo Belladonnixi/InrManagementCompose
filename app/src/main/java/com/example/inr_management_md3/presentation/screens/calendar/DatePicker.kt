@@ -13,163 +13,224 @@
  */
 package com.example.inr_management_md3.presentation.screens.calendar
 
-import android.content.res.Configuration
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditCalendar
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupProperties
-import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.himanshoe.kalendar.common.KalendarKonfig
 import com.himanshoe.kalendar.common.KalendarSelector
 import com.himanshoe.kalendar.common.KalendarStyle
+import com.himanshoe.kalendar.common.data.KalendarEvent
 import com.himanshoe.kalendar.ui.Kalendar
 import com.himanshoe.kalendar.ui.KalendarType
-import org.koin.androidx.compose.inject
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun DatePickerDialog(calendarViewModel: CalendarViewModel) {
+fun DatePickerDialogFirstTry(calendarViewModel: CalendarViewModel) {
     val openPopUp by calendarViewModel.openPopUp.collectAsState()
     val date by calendarViewModel.date.collectAsState()
+    // Dialog state Manager
+    val dialogState: MutableState<Boolean> = remember {
+        mutableStateOf(false)
+    }
 
-    TextField(
-        modifier = Modifier
-            .fillMaxWidth(),
-        value = date,
+    DatePickerTextField(
+        modifier = Modifier.fillMaxWidth(),
+        date = date,
         onValueChange = { calendarViewModel.setDate(it) },
+        onClick = { dialogState.value = true },
+        label = { Text(text = "Pick date") }
+    )
+    if (dialogState.value) {
+        DatePickerDialog(
+            title = "Pick date",
+            dialogState = dialogState,
+            onCurrentDayClicked = { day, _ ->
+                val formattedDate =
+                    day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
+                calendarViewModel.setDate(formattedDate).toString()
+                calendarViewModel.setRealDate(day)
+            },
+            errorMessage = {}
+        )
+    }
+}
+
+@Composable
+fun DatePickerTextField(
+    modifier: Modifier,
+    date: String,
+    onValueChange: (String) -> Unit,
+    onClick: () -> Unit,
+    label: @Composable (() -> Unit)? = null
+) {
+    TextField(
+        modifier = modifier,
+        value = date,
+        onValueChange = onValueChange,
         readOnly = true,
-        label = { Text(text = "Pick date") },
+        label = label,
         trailingIcon = {
             IconButton(
-                onClick = { calendarViewModel.setUpPopUpState(openPopUp) }
+                onClick = onClick
             ) {
                 Icon(Icons.Default.EditCalendar, contentDescription = null)
             }
         }
     )
-    Box(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        val popUpWidth = 360.dp
-        val popUpHeight = 600.dp
+}
 
-        if (openPopUp) {
-            Popup(
-                alignment = Alignment.Center,
-                properties = PopupProperties()
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(popUpWidth, popUpHeight)
-                        .padding(top = 40.dp, start = 8.dp, end = 48.dp)
-                        .border(
-                            1.dp,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            RoundedCornerShape(10.dp)
-                        )
-                        .background(
-                            MaterialTheme.colorScheme.tertiaryContainer,
-                            RoundedCornerShape(10.dp)
-                        )
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .height(500.dp)
-                                .wrapContentSize()
-                                .padding(start = 4.dp, end = 4.dp)
-                        ) {
-                            Kalendar(
-                                kalendarType = KalendarType.Firey(),
-                                kalendarStyle = KalendarStyle(
-                                    kalendarBackgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                    kalendarSelector = KalendarSelector.Circle(
-                                        selectedColor = MaterialTheme.colorScheme.primary,
-                                        todayColor = MaterialTheme.colorScheme.primary,
-                                        selectedTextColor = MaterialTheme.colorScheme.onPrimary,
-                                        defaultColor = Color.Transparent,
-                                        eventTextColor = MaterialTheme.colorScheme.primaryContainer
-                                    ),
-                                    hasRadius = true,
-                                    shape = RoundedCornerShape(10.dp)
-                                ),
-                                onCurrentDayClick = { day, _ ->
-                                    val formattedDate =
-                                        day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
-                                    calendarViewModel.setDate(formattedDate).toString()
-                                    calendarViewModel.setRealDate(day)
-                                },
-                                errorMessage = {
-                                    // Handle the error if any
-                                }
-                            )
-                        }
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            TextButton(
-                                onClick = { calendarViewModel.setUpPopUpState(openPopUp) }
-                            ) {
-                                Text(
-                                    text = "Cancel",
-                                    style = MaterialTheme.typography.titleMedium
-                                )
-                            }
-                            Column(
-                                modifier = Modifier
-                                    .padding(start = 32.dp)
-                                    .fillMaxWidth(),
-                                horizontalAlignment = Alignment.End,
-                                verticalArrangement = Arrangement.Center
-                            ) {
-                                TextButton(
-                                    onClick = {
-                                        calendarViewModel.setDate(date)
-                                        calendarViewModel.setUpPopUpState(openPopUp)
-                                    }
-                                ) {
-                                    Text(
-                                        text = "Save",
-                                        style = MaterialTheme.typography.titleMedium
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DatePickerDialogContent(
+    title: String,
+    dialogState: MutableState<Boolean>,
+    content: @Composable () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxHeight(0.9f)
+            .fillMaxWidth(1f),
+        shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight(1f)
+                .fillMaxWidth(1f),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            TitleAndButton(title)
+            AddBody(content)
+            BottomButtons(dialogState)
         }
     }
 }
 
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
 @Composable
-fun PreviewDatePicker() {
-    INR_Management_Theme {
-        val calendarViewModel: CalendarViewModel by inject()
-        DatePickerDialog(calendarViewModel)
+fun BottomButtons(dialogState: MutableState<Boolean>) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(1f)
+            .fillMaxWidth(1f)
+            .padding(20.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        TextButton(
+            onClick = { dialogState.value = false },
+            modifier = Modifier
+                .width(100.dp)
+                .padding(end = 5.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.cancel),
+                fontSize = 20.sp
+            )
+        }
+        TextButton(
+            onClick = {
+                dialogState.value = false
+            }
+        ) {
+            Text(
+                text = stringResource(id = R.string.save),
+                fontSize = 20.sp
+            )
+        }
     }
+}
+
+@Composable
+fun AddBody(content: @Composable () -> Unit) {
+    Box(modifier = Modifier.padding(20.dp)) {
+        content()
+    }
+}
+
+@Composable
+fun TitleAndButton(title: String) {
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(1f)
+                .padding(20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = title,
+                fontSize = 24.sp,
+                color = MaterialTheme.colorScheme.onTertiaryContainer
+            )
+        }
+        Divider(
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
+            thickness = 1.dp
+        )
+    }
+}
+
+@Composable
+fun BodyContent(
+    onCurrentDayClicked: (LocalDate, KalendarEvent?) -> Unit,
+    errorMessage: (String) -> Unit
+) {
+    Kalendar(
+        kalendarType = KalendarType.Firey(),
+        kalendarKonfig = KalendarKonfig(weekCharacters = 2),
+        kalendarStyle = KalendarStyle(
+            kalendarBackgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
+            kalendarSelector = KalendarSelector.Circle(
+                selectedColor = MaterialTheme.colorScheme.primary,
+                todayColor = MaterialTheme.colorScheme.primary,
+                selectedTextColor = MaterialTheme.colorScheme.onPrimary,
+                defaultColor = Color.Transparent,
+                eventTextColor = MaterialTheme.colorScheme.primaryContainer
+            ),
+            hasRadius = true,
+            shape = RoundedCornerShape(10.dp)
+        ),
+        onCurrentDayClick = onCurrentDayClicked,
+        errorMessage = errorMessage
+    )
+}
+
+@Composable
+fun DatePickerDialog(
+    title: String,
+    dialogState: MutableState<Boolean>,
+    onCurrentDayClicked: (LocalDate, KalendarEvent?) -> Unit,
+    errorMessage: (String) -> Unit
+) {
+    Dialog(
+        onDismissRequest = { dialogState.value = false },
+        content = {
+            DatePickerDialogContent(
+                title = title,
+                dialogState = dialogState
+            ) {
+                BodyContent(
+                    onCurrentDayClicked = onCurrentDayClicked,
+                    errorMessage = errorMessage
+                )
+            }
+        },
+        properties = DialogProperties(
+            dismissOnBackPress = false,
+            dismissOnClickOutside = false
+        )
+    )
 }
