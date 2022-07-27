@@ -40,7 +40,7 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun DatePickerDialogFirstTry(calendarViewModel: CalendarViewModel) {
-    val openPopUp by calendarViewModel.openPopUp.collectAsState()
+//    val openPopUp by calendarViewModel.openPopUp.collectAsState()
     val date by calendarViewModel.date.collectAsState()
     // Dialog state Manager
     val dialogState: MutableState<Boolean> = remember {
