@@ -15,6 +15,7 @@ package com.example.inr_management_md3.presentation.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.inr_management_md3.data.datamodels.Medicament
@@ -24,8 +25,8 @@ import com.example.inr_management_md3.util.DateTimeConverters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.time.LocalTime
 import java.util.*
 
 /**
@@ -62,6 +63,12 @@ class SettingsViewModel(
 
     var selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
     var selectedRangeTo = mutableStateOf(targetRangeTo[0])
+
+    private val _textState = MutableStateFlow(TextFieldValue())
+    val textState: StateFlow<TextFieldValue> get() = _textState
+
+    private val _timeState = MutableStateFlow(LocalTime.now())
+    val timeState: StateFlow<LocalTime> get() = _timeState
 
     init {
         viewModelScope.launch {
@@ -119,5 +126,18 @@ class SettingsViewModel(
             repository.addTargetRange(targetRange)
             getTargetRange()
         }
+    }
+
+    fun resetTargetRangeDropdowns() {
+        selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
+        selectedRangeTo = mutableStateOf(targetRangeTo[0])
+    }
+
+    fun getTime(time: LocalTime) {
+        _timeState.value = time
+    }
+
+    fun getFormattedTime(formattedTime: TextFieldValue) {
+        _textState.value = formattedTime
     }
 }

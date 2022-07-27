@@ -13,23 +13,21 @@
  */
 package com.example.inr_management_md3.presentation.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
+import com.example.inr_management_md3.R
+import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.time.TimePickerDefaults
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
@@ -38,15 +36,18 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun TimePickerTextFieldDropdown() {
+fun TimePickerTextFieldDropdown(settingsViewModel: SettingsViewModel) {
     val dialogState = rememberMaterialDialogState()
-    val textState = remember { mutableStateOf(TextFieldValue()) }
+    val textState by settingsViewModel.textState.collectAsState()
     MaterialDialog(
         dialogState = dialogState,
         buttons = {
-            positiveButton("Ok", textStyle = TextStyle(color = MaterialTheme.colorScheme.primary))
+            positiveButton(
+                stringResource(R.string.ok),
+                textStyle = TextStyle(color = MaterialTheme.colorScheme.primary)
+            )
             negativeButton(
-                "Cancel",
+                stringResource(R.string.cancel),
                 textStyle = TextStyle(color = MaterialTheme.colorScheme.primary)
             )
         },
@@ -65,7 +66,7 @@ fun TimePickerTextFieldDropdown() {
             val formattedTime = time.format(
                 DateTimeFormatter.ofPattern("hh:mm a")
             )
-            textState.value = TextFieldValue(formattedTime)
+            settingsViewModel.getFormattedTime(TextFieldValue(formattedTime))
         }
     }
     Box(
@@ -75,15 +76,15 @@ fun TimePickerTextFieldDropdown() {
         TextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = textState.value,
-            onValueChange = { textState.value = it },
+            value = textState,
+            onValueChange = { settingsViewModel.getFormattedTime(it) },
             readOnly = true,
-            label = { Text(text = "Set notification time") },
+            label = { Text(text = stringResource(R.string.measure_time)) },
             trailingIcon = {
                 IconButton(
                     onClick = { dialogState.show() }
                 ) {
-                    Icon(Icons.Default.Alarm, contentDescription = null)
+                    Icon(Icons.Default.Alarm, contentDescription = "Alarm")
                 }
             }
         )
@@ -97,9 +98,12 @@ fun MeasureResultTimePickerTextFieldDropdown() {
     MaterialDialog(
         dialogState = dialogState,
         buttons = {
-            positiveButton("Ok", textStyle = TextStyle(color = MaterialTheme.colorScheme.primary))
+            positiveButton(
+                stringResource(R.string.ok),
+                textStyle = TextStyle(color = MaterialTheme.colorScheme.primary)
+            )
             negativeButton(
-                "Cancel",
+                stringResource(R.string.cancel),
                 textStyle = TextStyle(color = MaterialTheme.colorScheme.primary)
             )
         },
@@ -131,27 +135,14 @@ fun MeasureResultTimePickerTextFieldDropdown() {
             value = textState.value,
             onValueChange = { textState.value = it },
             readOnly = true,
-            label = { Text(text = "Set measure time") },
+            label = { Text(text = stringResource(R.string.measure_time)) },
             trailingIcon = {
                 IconButton(
                     onClick = { dialogState.show() }
                 ) {
-                    Icon(Icons.Default.Alarm, contentDescription = null)
+                    Icon(Icons.Default.Alarm, contentDescription = "Alarm")
                 }
             }
         )
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewTimePickerTextFieldDropdown() {
-    INR_Management_Theme {
-        TimePickerTextFieldDropdown()
     }
 }

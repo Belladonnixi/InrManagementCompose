@@ -28,7 +28,6 @@ import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 @Composable
 fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavController) {
     var checked by remember { mutableStateOf(false) }
-
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +59,7 @@ fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavC
                 }
             }
             if (checked) {
-                TimePickerTextFieldDropdown()
+                TimePickerTextFieldDropdown(settingsViewModel)
             }
 
             BoxWithConstraints(
