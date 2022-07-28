@@ -47,4 +47,8 @@
     <string name="measure_interval">Set measure interval:</string>
     <string name="days">Days</string>
     <string name="start_date">Start from date:</string>
+    <string name="pick_date">Pick date</string>
+    <string name="pick_date_title">PICK DATE</string>
+    <string name="cancel_text_button">CANCEL</string>
+    <string name="ok_text_button">OK</string>
 </resources>
