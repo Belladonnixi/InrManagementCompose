@@ -42,11 +42,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.data.datamodels.Weekdays
+import com.example.inr_management_md3.presentation.components.DatePickerDialog
+import com.example.inr_management_md3.presentation.components.DatePickerTextField
 import com.example.inr_management_md3.presentation.navigation.DoseScreens
-import com.example.inr_management_md3.presentation.components.DatePickerDialogFirstTry
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import org.koin.androidx.compose.inject
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -278,7 +280,7 @@ fun BaseMedicationInterval() {
 }
 
 @Composable
-fun TrimDose(calendarViewModel: CalendarViewModel) {
+fun TrimDoseContent(calendarViewModel: CalendarViewModel) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -319,7 +321,7 @@ fun TrimDose(calendarViewModel: CalendarViewModel) {
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                DatePickerDialogFirstTry(calendarViewModel)
+                DoseDatePicker(calendarViewModel)
             }
             Text(text = "Set dose:")
             Row(
@@ -346,6 +348,40 @@ fun TrimDose(calendarViewModel: CalendarViewModel) {
             }
         }
     }
+}
+
+@Composable
+fun DoseDatePicker(calendarViewModel: CalendarViewModel) {
+    val date by calendarViewModel.date.collectAsState()
+    // Dialog state Manager
+    val dialogState: MutableState<Boolean> = remember {
+        mutableStateOf(false)
+    }
+    if (dialogState.value) {
+        DatePickerDialog(
+            title = stringResource(R.string.pick_date_title),
+            dialogState = dialogState,
+            onCurrentDayClicked = { day, _ ->
+                val formattedDate =
+                    day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
+                calendarViewModel.setDate(formattedDate).toString()
+                calendarViewModel.setRealDate(day)
+            },
+            errorMessage = {},
+            okButton = { dialogState.value = false },
+            cancelButton = {
+                calendarViewModel.setDate("")
+                dialogState.value = false
+            }
+        )
+    }
+    DatePickerTextField(
+        modifier = Modifier.fillMaxWidth(),
+        date = date,
+        onValueChange = { calendarViewModel.setDate(it) },
+        onClick = { dialogState.value = true },
+        label = { Text(text = stringResource(R.string.pick_date)) }
+    )
 }
 
 @Composable
@@ -465,6 +501,6 @@ fun PreviewBaseMedicationInterval() {
 fun PreviewTrimDose() {
     INR_Management_Theme {
         val calendarViewModel: CalendarViewModel by inject()
-        TrimDose(calendarViewModel)
+        TrimDoseContent(calendarViewModel)
     }
 }
