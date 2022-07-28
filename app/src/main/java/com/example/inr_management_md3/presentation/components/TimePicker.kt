@@ -13,25 +13,23 @@
  */
 package com.example.inr_management_md3.presentation.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Alarm
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.TextFieldValue
 import com.example.inr_management_md3.R
-import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.datetime.time.TimePickerDefaults
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
-import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 /**
  *  Reusable TimePicker components
@@ -92,51 +90,4 @@ fun TimePickerDialog(
             onTimeChange = timeOnClick
         )
     }
-}
-
-@Composable
-fun MedicamentSettingsTimePicker(settingsViewModel: SettingsViewModel) {
-    val dialogState = rememberMaterialDialogState()
-    val timeState by settingsViewModel.textState.collectAsState()
-
-    TimePickerDialog(
-        dialogState = dialogState,
-        timeOnClick = { time ->
-            val formattedTime = time.format(
-                DateTimeFormatter.ofPattern("hh:mm a")
-            )
-            settingsViewModel.getFormattedTime(TextFieldValue(formattedTime))
-            settingsViewModel.getTime(time)
-        }
-    )
-    TimePickerTextField(
-        modifier = Modifier.fillMaxWidth(),
-        time = timeState.text,
-        onValueChange = { settingsViewModel.getFormattedTime(timeState) },
-        onClick = { dialogState.show() },
-        label = { Text(text = stringResource(R.string.measure_time)) }
-    )
-}
-
-@Composable
-fun MeasureResultTimePicker() {
-    val dialogState = rememberMaterialDialogState()
-    val timeState = remember { mutableStateOf(TextFieldValue()) }
-
-    TimePickerDialog(
-        dialogState = dialogState,
-        timeOnClick = { time ->
-            val formattedTime = time.format(
-                DateTimeFormatter.ofPattern("hh:mm a")
-            )
-            timeState.value = TextFieldValue(formattedTime)
-        }
-    )
-    TimePickerTextField(
-        modifier = Modifier.fillMaxWidth(),
-        time = timeState.value.text,
-        onValueChange = { timeState.value = TextFieldValue(it) },
-        onClick = { dialogState.show() },
-        label = { Text(text = stringResource(R.string.measure_time)) }
-    )
 }

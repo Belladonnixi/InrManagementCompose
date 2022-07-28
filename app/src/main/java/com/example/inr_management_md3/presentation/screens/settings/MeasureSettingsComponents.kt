@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.DatePickerDialog
 import com.example.inr_management_md3.presentation.components.DatePickerTextField
-import com.example.inr_management_md3.presentation.components.MedicamentSettingsTimePicker
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel

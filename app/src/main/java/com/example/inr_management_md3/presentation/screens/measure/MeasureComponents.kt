@@ -19,12 +19,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
-import com.example.inr_management_md3.presentation.components.DatePickerDialog
-import com.example.inr_management_md3.presentation.components.DatePickerTextField
-import com.example.inr_management_md3.presentation.components.MeasureResultTimePicker
+import com.example.inr_management_md3.presentation.components.*
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -113,6 +113,29 @@ fun MeasureResultExposedDropDown() {
             }
         }
     }
+}
+
+@Composable
+fun MeasureResultTimePicker() {
+    val dialogState = rememberMaterialDialogState()
+    val timeState = remember { mutableStateOf(TextFieldValue()) }
+
+    TimePickerDialog(
+        dialogState = dialogState,
+        timeOnClick = { time ->
+            val formattedTime = time.format(
+                DateTimeFormatter.ofPattern("hh:mm a")
+            )
+            timeState.value = TextFieldValue(formattedTime)
+        }
+    )
+    TimePickerTextField(
+        modifier = Modifier.fillMaxWidth(),
+        time = timeState.value.text,
+        onValueChange = { timeState.value = TextFieldValue(it) },
+        onClick = { dialogState.show() },
+        label = { Text(text = stringResource(R.string.measure_time)) }
+    )
 }
 
 @Composable
