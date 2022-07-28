@@ -22,7 +22,6 @@ import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.annotation.KoinReflectAPI
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -33,7 +32,7 @@ val dataModule = module {
             "InrManagement.db"
         )
             .createFromAsset("database/inr_management.db")
-            .fallbackToDestructiveMigration().build()
+            .build()
     }
 }
 
@@ -41,9 +40,8 @@ val repositoryModule = module {
     single<InrManagementRepository> { InrManagementRepositoryImpl(get()) }
 }
 
-@OptIn(KoinReflectAPI::class)
 val viewModelModule = module {
-    viewModel { CalendarViewModel(get()) }
+    viewModel { CalendarViewModel() }
     viewModel { SettingsViewModel(get()) }
     viewModel { DoseViewModel() }
 }

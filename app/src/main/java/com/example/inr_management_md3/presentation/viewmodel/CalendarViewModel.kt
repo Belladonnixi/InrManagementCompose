@@ -14,12 +14,11 @@
 package com.example.inr_management_md3.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.inr_management_md3.data.repository.InrManagementRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.time.LocalDate
 
-class CalendarViewModel(private val repository: InrManagementRepository) :
+class CalendarViewModel :
     ViewModel() {
     private val _date = MutableStateFlow("")
     val date: StateFlow<String> get() = _date

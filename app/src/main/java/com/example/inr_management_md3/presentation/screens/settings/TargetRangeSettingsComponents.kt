@@ -105,10 +105,9 @@ fun TargetRange(
 ) {
     val selectedRangeFrom by settingsViewModel.selectedRangeFrom
     val selectedRangeTo by settingsViewModel.selectedRangeTo
-    val timestamp = settingsViewModel.timestamp
     val targetRange =
         settingsViewModel.targetRange.collectAsState(
-            initial = TargetRange(0, 0, 0, timestamp)
+            initial = TargetRange(0, 0, 0)
         )
 
     Surface(
@@ -205,11 +204,11 @@ fun TargetRange(
                             TargetRange(
                                 0,
                                 selectedRangeFrom.toInt(),
-                                selectedRangeTo.toInt(),
-                                timestamp
+                                selectedRangeTo.toInt()
                             )
                         settingsViewModel.addTargetRange(setTargetRange)
                         navController.navigateUp()
+                        settingsViewModel.resetTargetRangeDropdowns()
                     },
                     modifier = Modifier
                         .fillMaxWidth()

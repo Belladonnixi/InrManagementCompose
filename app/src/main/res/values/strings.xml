@@ -39,4 +39,16 @@
     <string name="to">"to  "</string>
     <string name="please_set_target_range">Please set your target range:</string>
     <string name="save">Save</string>
+    <string name="alarm_time">Set alarm time</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="measure_time">Set measure time</string>
+    <string name="every">every</string>
+    <string name="measure_interval">Set measure interval:</string>
+    <string name="days">Days</string>
+    <string name="start_date">Start from date:</string>
+    <string name="pick_date">Pick date</string>
+    <string name="pick_date_title">PICK DATE</string>
+    <string name="cancel_text_button">CANCEL</string>
+    <string name="ok_text_button">OK</string>
 </resources>

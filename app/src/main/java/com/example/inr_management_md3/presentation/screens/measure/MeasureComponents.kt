@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.presentation.components.MeasureResultTimePickerTextFieldDropdown
-import com.example.inr_management_md3.presentation.screens.calendar.DatePickerDialog
+import com.example.inr_management_md3.presentation.components.DatePickerDialogFirstTry
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import org.koin.androidx.compose.inject
@@ -142,7 +142,7 @@ fun MeasureResultContent(calendarViewModel: CalendarViewModel) {
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                DatePickerDialog(calendarViewModel)
+                DatePickerDialogFirstTry(calendarViewModel)
             }
             Row(
                 modifier = Modifier

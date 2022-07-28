@@ -19,14 +19,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.inr_management_md3.R
+import com.example.inr_management_md3.presentation.components.DatePickerDialogFirstTry
 import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
-import com.example.inr_management_md3.presentation.screens.calendar.DatePickerDialog
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
-import org.koin.androidx.compose.inject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +75,7 @@ fun MeasureTimeRangeExposedDropdownTo() {
             value = selectedOptionText,
             onValueChange = {},
             readOnly = true,
-            label = { Text(text = "every") },
+            label = { Text(text = stringResource(R.string.every)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             modifier = Modifier.width(110.dp)
         )
@@ -107,7 +108,7 @@ fun SetMeasure(calendarViewModel: CalendarViewModel, settingsViewModel: Settings
                 .fillMaxWidth()
                 .padding(top = 50.dp, bottom = 30.dp)
         ) {
-            Text(text = "Set measure interval:")
+            Text(text = stringResource(R.string.measure_interval))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -121,22 +122,22 @@ fun SetMeasure(calendarViewModel: CalendarViewModel, settingsViewModel: Settings
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "Days")
+                    Text(text = stringResource(R.string.days))
                 }
             }
-            Text(text = "Start from date:")
+            Text(text = stringResource(R.string.start_date))
             Row(
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                DatePickerDialog(calendarViewModel)
+                DatePickerDialogFirstTry(calendarViewModel)
             }
-            Text(text = "Start from date:")
+            Text(text = stringResource(id = R.string.alarm_time))
             Row(
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                TimePickerTextFieldDropdown()
+                TimePickerTextFieldDropdown(settingsViewModel)
             }
             BoxWithConstraints(
                 modifier = Modifier
@@ -150,7 +151,7 @@ fun SetMeasure(calendarViewModel: CalendarViewModel, settingsViewModel: Settings
                         .padding(bottom = 60.dp)
                         .height(60.dp),
                     enabled = true
-                ) { Text("Save") }
+                ) { Text(stringResource(id = R.string.save)) }
             }
         }
     }
@@ -166,20 +167,5 @@ fun SetMeasure(calendarViewModel: CalendarViewModel, settingsViewModel: Settings
 fun PreviewMeasureTimeRangeExposedDropdownFrom() {
     INR_Management_Theme {
         MeasureTimeRangeExposedDropdownTo()
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewSetMeasureExposedDropdownFrom() {
-    INR_Management_Theme {
-        val calendarViewModel: CalendarViewModel by inject()
-        val settingsViewModel: SettingsViewModel by inject()
-        SetMeasure(calendarViewModel, settingsViewModel)
     }
 }

@@ -15,17 +15,17 @@ package com.example.inr_management_md3.presentation.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.inr_management_md3.data.datamodels.Medicament
 import com.example.inr_management_md3.data.datamodels.TargetRange
 import com.example.inr_management_md3.data.repository.InrManagementRepository
-import com.example.inr_management_md3.util.DateTimeConverters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.time.LocalTime
 import java.util.*
 
 /**
@@ -44,14 +44,13 @@ class SettingsViewModel(
     private var _selectedMedicament = MutableStateFlow(Medicament())
     val selectedMedicament: StateFlow<Medicament> get() = _selectedMedicament
 
-    val timestamp: Date = DateTimeConverters().zonedDateTimeToDate()
+//    val timestamp: Date = DateTimeConverters().zonedDateTimeToDate()
 
     private var _targetRange = MutableStateFlow(
         TargetRange(
             0,
             0,
-            0,
-            timestamp
+            0
         )
     )
     val targetRange: StateFlow<TargetRange> get() = _targetRange
@@ -63,6 +62,12 @@ class SettingsViewModel(
     var selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
     var selectedRangeTo = mutableStateOf(targetRangeTo[0])
 
+    private val _textState = MutableStateFlow(TextFieldValue())
+    val textState: StateFlow<TextFieldValue> get() = _textState
+
+    private val _timeState = MutableStateFlow(LocalTime.now())
+    val timeState: StateFlow<LocalTime> get() = _timeState
+
     init {
         viewModelScope.launch {
             loadData()
@@ -71,7 +76,7 @@ class SettingsViewModel(
 
     private fun loadData() {
         viewModelScope.launch(Dispatchers.IO) {
-            if (checkIfTrExists().equals(true)) {
+            if (repository.checkIfTargetRangeExists()) {
                 try {
                     getTargetRange()
                 } catch (e: Error) {
@@ -100,16 +105,6 @@ class SettingsViewModel(
         }
     }
 
-    /**
-     * Checks through an sql query which responds with Boolean if there is data in target_range
-     * table stored
-     */
-    private fun checkIfTrExists() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.checkIfTargetRangeExists()
-        }
-    }
-
     fun selectedMedicament(getMedicament: Medicament) {
         _selectedMedicament.value = getMedicament
     }
@@ -119,5 +114,23 @@ class SettingsViewModel(
             repository.addTargetRange(targetRange)
             getTargetRange()
         }
+    }
+
+    fun resetTargetRangeDropdowns() {
+        selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
+        selectedRangeTo = mutableStateOf(targetRangeTo[0])
+    }
+
+    fun getTime(time: LocalTime) {
+        _timeState.value = time
+    }
+
+    fun getFormattedTime(formattedTime: TextFieldValue) {
+        _textState.value = formattedTime
+    }
+
+    fun resetTextState() {
+        val text = TextFieldValue("")
+        _textState.value = text
     }
 }
