@@ -13,14 +13,11 @@
  */
 package com.example.inr_management_md3.presentation.components
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -29,16 +26,46 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 import com.vanpra.composematerialdialogs.MaterialDialog
+import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.datetime.time.TimePickerDefaults
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
+/**
+ *  Reusable TimePicker components
+ */
+
 @Composable
-fun MedicamentSettingsTimePicker(settingsViewModel: SettingsViewModel) {
-    val dialogState = rememberMaterialDialogState()
-    val textState by settingsViewModel.textState.collectAsState()
+fun TimePickerTextField(
+    modifier: Modifier,
+    time: String,
+    onValueChange: (String) -> Unit,
+    onClick: () -> Unit,
+    label: @Composable (() -> Unit)? = null
+) {
+    TextField(
+        modifier = modifier,
+        value = time,
+        onValueChange = onValueChange,
+        readOnly = true,
+        label = label,
+        trailingIcon = {
+            IconButton(
+                onClick = onClick
+            ) {
+                Icon(Icons.Default.Alarm, contentDescription = "Alarm")
+            }
+        }
+    )
+}
+
+@Composable
+fun TimePickerDialog(
+    dialogState: MaterialDialogState,
+    timeOnClick: (LocalTime) -> Unit
+) {
     MaterialDialog(
         dialogState = dialogState,
         buttons = {
@@ -61,89 +88,55 @@ fun MedicamentSettingsTimePicker(settingsViewModel: SettingsViewModel) {
                 inactiveBackgroundColor = Color.White,
                 headerTextColor = MaterialTheme.colorScheme.onTertiaryContainer,
                 inactiveTextColor = Color.Black
-            )
-        ) { time ->
+            ),
+            onTimeChange = timeOnClick
+        )
+    }
+}
+
+@Composable
+fun MedicamentSettingsTimePicker(settingsViewModel: SettingsViewModel) {
+    val dialogState = rememberMaterialDialogState()
+    val timeState by settingsViewModel.textState.collectAsState()
+
+    TimePickerDialog(
+        dialogState = dialogState,
+        timeOnClick = { time ->
             val formattedTime = time.format(
                 DateTimeFormatter.ofPattern("hh:mm a")
             )
             settingsViewModel.getFormattedTime(TextFieldValue(formattedTime))
             settingsViewModel.getTime(time)
         }
-    }
-    Box(
-        modifier = Modifier
-            .wrapContentSize(Alignment.TopStart)
-    ) {
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth(),
-            value = textState,
-            onValueChange = { settingsViewModel.getFormattedTime(it) },
-            readOnly = true,
-            label = { Text(text = stringResource(R.string.measure_time)) },
-            trailingIcon = {
-                IconButton(
-                    onClick = { dialogState.show() }
-                ) {
-                    Icon(Icons.Default.Alarm, contentDescription = "Alarm")
-                }
-            }
-        )
-    }
+    )
+    TimePickerTextField(
+        modifier = Modifier.fillMaxWidth(),
+        time = timeState.text,
+        onValueChange = { settingsViewModel.getFormattedTime(timeState) },
+        onClick = { dialogState.show() },
+        label = { Text(text = stringResource(R.string.measure_time)) }
+    )
 }
 
 @Composable
 fun MeasureResultTimePicker() {
     val dialogState = rememberMaterialDialogState()
-    val textState = remember { mutableStateOf(TextFieldValue()) }
-    MaterialDialog(
+    val timeState = remember { mutableStateOf(TextFieldValue()) }
+
+    TimePickerDialog(
         dialogState = dialogState,
-        buttons = {
-            positiveButton(
-                stringResource(R.string.ok),
-                textStyle = TextStyle(color = MaterialTheme.colorScheme.primary)
-            )
-            negativeButton(
-                stringResource(R.string.cancel),
-                textStyle = TextStyle(color = MaterialTheme.colorScheme.primary)
-            )
-        },
-        backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
-    ) {
-        timepicker(
-            initialTime = LocalTime.now(),
-            colors = TimePickerDefaults.colors(
-                selectorColor = MaterialTheme.colorScheme.primary,
-                activeBackgroundColor = MaterialTheme.colorScheme.primary,
-                inactiveBackgroundColor = Color.White,
-                headerTextColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                inactiveTextColor = Color.Black
-            )
-        ) { time ->
+        timeOnClick = { time ->
             val formattedTime = time.format(
                 DateTimeFormatter.ofPattern("hh:mm a")
             )
-            textState.value = TextFieldValue(formattedTime)
+            timeState.value = TextFieldValue(formattedTime)
         }
-    }
-    Box(
-        modifier = Modifier
-            .wrapContentSize(Alignment.TopStart)
-    ) {
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth(),
-            value = textState.value,
-            onValueChange = { textState.value = it },
-            readOnly = true,
-            label = { Text(text = stringResource(R.string.measure_time)) },
-            trailingIcon = {
-                IconButton(
-                    onClick = { dialogState.show() }
-                ) {
-                    Icon(Icons.Default.Alarm, contentDescription = "Alarm")
-                }
-            }
-        )
-    }
+    )
+    TimePickerTextField(
+        modifier = Modifier.fillMaxWidth(),
+        time = timeState.value.text,
+        onValueChange = { timeState.value = TextFieldValue(it) },
+        onClick = { dialogState.show() },
+        label = { Text(text = stringResource(R.string.measure_time)) }
+    )
 }
