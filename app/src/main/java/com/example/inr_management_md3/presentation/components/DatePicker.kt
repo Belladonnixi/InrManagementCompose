@@ -18,17 +18,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditCalendar
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.example.inr_management_md3.R
-import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.himanshoe.kalendar.common.KalendarKonfig
 import com.himanshoe.kalendar.common.KalendarSelector
 import com.himanshoe.kalendar.common.KalendarStyle
@@ -36,38 +34,10 @@ import com.himanshoe.kalendar.common.data.KalendarEvent
 import com.himanshoe.kalendar.ui.Kalendar
 import com.himanshoe.kalendar.ui.KalendarType
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
-@Composable
-fun DatePickerDialogFirstTry(calendarViewModel: CalendarViewModel) {
-//    val openPopUp by calendarViewModel.openPopUp.collectAsState()
-    val date by calendarViewModel.date.collectAsState()
-    // Dialog state Manager
-    val dialogState: MutableState<Boolean> = remember {
-        mutableStateOf(false)
-    }
-
-    DatePickerTextField(
-        modifier = Modifier.fillMaxWidth(),
-        date = date,
-        onValueChange = { calendarViewModel.setDate(it) },
-        onClick = { dialogState.value = true },
-        label = { Text(text = "Pick date") }
-    )
-    if (dialogState.value) {
-        DatePickerDialog(
-            title = "Pick date",
-            dialogState = dialogState,
-            onCurrentDayClicked = { day, _ ->
-                val formattedDate =
-                    day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
-                calendarViewModel.setDate(formattedDate).toString()
-                calendarViewModel.setRealDate(day)
-            },
-            errorMessage = {}
-        )
-    }
-}
+/**
+ *  Reusable DatePicker Component
+ */
 
 @Composable
 fun DatePickerTextField(
@@ -102,9 +72,9 @@ fun DatePickerDialogContent(
 ) {
     Card(
         modifier = Modifier
-            .fillMaxHeight(0.9f)
+            .fillMaxHeight(0.85f)
             .fillMaxWidth(1f),
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(4.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
     ) {
         Column(
@@ -121,13 +91,14 @@ fun DatePickerDialogContent(
 }
 
 @Composable
-fun BottomButtons(dialogState: MutableState<Boolean>) {
+fun BottomButtons(
+    dialogState: MutableState<Boolean>
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth(1f)
-            .fillMaxWidth(1f)
             .padding(20.dp),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.End
     ) {
         TextButton(
             onClick = { dialogState.value = false },
@@ -136,18 +107,16 @@ fun BottomButtons(dialogState: MutableState<Boolean>) {
                 .padding(end = 5.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.cancel),
-                fontSize = 20.sp
+                text = "CANCEL",
+                fontSize = 16.sp
             )
         }
         TextButton(
-            onClick = {
-                dialogState.value = false
-            }
+            onClick = { dialogState.value = false }
         ) {
             Text(
-                text = stringResource(id = R.string.save),
-                fontSize = 20.sp
+                text = "OK",
+                fontSize = 16.sp
             )
         }
     }
@@ -172,14 +141,10 @@ fun TitleAndButton(title: String) {
         ) {
             Text(
                 text = title,
-                fontSize = 24.sp,
+                fontSize = 18.sp,
                 color = MaterialTheme.colorScheme.onTertiaryContainer
             )
         }
-        Divider(
-            color = MaterialTheme.colorScheme.onTertiaryContainer,
-            thickness = 1.dp
-        )
     }
 }
 

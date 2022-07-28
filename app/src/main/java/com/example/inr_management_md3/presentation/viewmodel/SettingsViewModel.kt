@@ -21,7 +21,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.inr_management_md3.data.datamodels.Medicament
 import com.example.inr_management_md3.data.datamodels.TargetRange
 import com.example.inr_management_md3.data.repository.InrManagementRepository
-import com.example.inr_management_md3.util.DateTimeConverters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -45,7 +44,7 @@ class SettingsViewModel(
     private var _selectedMedicament = MutableStateFlow(Medicament())
     val selectedMedicament: StateFlow<Medicament> get() = _selectedMedicament
 
-    val timestamp: Date = DateTimeConverters().zonedDateTimeToDate()
+//    val timestamp: Date = DateTimeConverters().zonedDateTimeToDate()
 
     private var _targetRange = MutableStateFlow(
         TargetRange(
