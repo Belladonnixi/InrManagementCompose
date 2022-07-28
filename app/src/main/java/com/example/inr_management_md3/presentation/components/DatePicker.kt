@@ -39,12 +39,12 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 /**
- *  Reusable DatePicker Component
+ *  Reusable DatePicker Component just DatePickerTextField and DatePickerDialog are needed
+ *  for implementation
  */
 
 @Composable
 fun DatePickerDialogFirstTry(calendarViewModel: CalendarViewModel) {
-//    val openPopUp by calendarViewModel.openPopUp.collectAsState()
     val date by calendarViewModel.date.collectAsState()
     // Dialog state Manager
     val dialogState: MutableState<Boolean> = remember {
@@ -98,6 +98,37 @@ fun DatePickerTextField(
                 Icon(Icons.Default.EditCalendar, contentDescription = null)
             }
         }
+    )
+}
+
+@Composable
+fun DatePickerDialog(
+    title: String,
+    dialogState: MutableState<Boolean>,
+    onCurrentDayClicked: (LocalDate, KalendarEvent?) -> Unit,
+    errorMessage: (String) -> Unit,
+    cancelButton: () -> Unit,
+    okButton: () -> Unit
+) {
+    Dialog(
+        onDismissRequest = { dialogState.value = false },
+        content = {
+            DatePickerDialogContent(
+                title = title,
+                okButton = okButton,
+                cancelButton = cancelButton,
+                content = {
+                    BodyContent(
+                        onCurrentDayClicked = onCurrentDayClicked,
+                        errorMessage = errorMessage
+                    )
+                }
+            )
+        },
+        properties = DialogProperties(
+            dismissOnBackPress = false,
+            dismissOnClickOutside = false
+        )
     )
 }
 
@@ -213,36 +244,5 @@ fun BodyContent(
         ),
         onCurrentDayClick = onCurrentDayClicked,
         errorMessage = errorMessage
-    )
-}
-
-@Composable
-fun DatePickerDialog(
-    title: String,
-    dialogState: MutableState<Boolean>,
-    onCurrentDayClicked: (LocalDate, KalendarEvent?) -> Unit,
-    errorMessage: (String) -> Unit,
-    cancelButton: () -> Unit,
-    okButton: () -> Unit
-) {
-    Dialog(
-        onDismissRequest = { dialogState.value = false },
-        content = {
-            DatePickerDialogContent(
-                title = title,
-                okButton = okButton,
-                cancelButton = cancelButton,
-                content = {
-                    BodyContent(
-                        onCurrentDayClicked = onCurrentDayClicked,
-                        errorMessage = errorMessage
-                    )
-                }
-            )
-        },
-        properties = DialogProperties(
-            dismissOnBackPress = false,
-            dismissOnClickOutside = false
-        )
     )
 }
