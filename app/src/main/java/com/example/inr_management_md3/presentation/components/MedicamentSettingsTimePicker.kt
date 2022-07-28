@@ -36,7 +36,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun TimePickerTextFieldDropdown(settingsViewModel: SettingsViewModel) {
+fun MedicamentSettingsTimePicker(settingsViewModel: SettingsViewModel) {
     val dialogState = rememberMaterialDialogState()
     val textState by settingsViewModel.textState.collectAsState()
     MaterialDialog(
@@ -93,7 +93,7 @@ fun TimePickerTextFieldDropdown(settingsViewModel: SettingsViewModel) {
 }
 
 @Composable
-fun MeasureResultTimePickerTextFieldDropdown() {
+fun MeasureResultTimePicker() {
     val dialogState = rememberMaterialDialogState()
     val textState = remember { mutableStateOf(TextFieldValue()) }
     MaterialDialog(

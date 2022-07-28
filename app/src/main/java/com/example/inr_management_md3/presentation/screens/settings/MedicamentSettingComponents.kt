@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.inr_management_md3.R
-import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
+import com.example.inr_management_md3.presentation.components.MedicamentSettingsTimePicker
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 
 @Composable
@@ -60,7 +60,7 @@ fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavC
                 }
             }
             if (checked) {
-                TimePickerTextFieldDropdown(settingsViewModel)
+                MedicamentSettingsTimePicker(settingsViewModel)
             }
 
             BoxWithConstraints(

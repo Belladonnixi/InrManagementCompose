@@ -23,11 +23,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
-import com.example.inr_management_md3.presentation.components.DatePickerDialogFirstTry
-import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
+import com.example.inr_management_md3.presentation.components.DatePickerDialog
+import com.example.inr_management_md3.presentation.components.DatePickerTextField
+import com.example.inr_management_md3.presentation.components.MedicamentSettingsTimePicker
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -97,7 +99,44 @@ fun MeasureTimeRangeExposedDropdownTo() {
 }
 
 @Composable
-fun SetMeasure(calendarViewModel: CalendarViewModel, settingsViewModel: SettingsViewModel) {
+fun MeasureSettingsDatePicker(calendarViewModel: CalendarViewModel) {
+    val date by calendarViewModel.date.collectAsState()
+    // Dialog state Manager
+    val dialogState: MutableState<Boolean> = remember {
+        mutableStateOf(false)
+    }
+    if (dialogState.value) {
+        DatePickerDialog(
+            title = stringResource(R.string.pick_date_title),
+            dialogState = dialogState,
+            onCurrentDayClicked = { day, _ ->
+                val formattedDate =
+                    day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
+                calendarViewModel.setDate(formattedDate).toString()
+                calendarViewModel.setRealDate(day)
+            },
+            errorMessage = {},
+            okButton = { dialogState.value = false },
+            cancelButton = {
+                calendarViewModel.setDate("")
+                dialogState.value = false
+            }
+        )
+    }
+    DatePickerTextField(
+        modifier = Modifier.fillMaxWidth(),
+        date = date,
+        onValueChange = { calendarViewModel.setDate(it) },
+        onClick = { dialogState.value = true },
+        label = { Text(text = stringResource(R.string.pick_date)) }
+    )
+}
+
+@Composable
+fun MeasureSettingsContent(
+    calendarViewModel: CalendarViewModel,
+    settingsViewModel: SettingsViewModel
+) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -130,14 +169,14 @@ fun SetMeasure(calendarViewModel: CalendarViewModel, settingsViewModel: Settings
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                DatePickerDialogFirstTry(calendarViewModel)
+                MeasureSettingsDatePicker(calendarViewModel)
             }
             Text(text = stringResource(id = R.string.alarm_time))
             Row(
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                TimePickerTextFieldDropdown(settingsViewModel)
+                MedicamentSettingsTimePicker(settingsViewModel)
             }
             BoxWithConstraints(
                 modifier = Modifier

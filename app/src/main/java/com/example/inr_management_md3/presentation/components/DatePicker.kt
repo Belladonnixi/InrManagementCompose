@@ -18,7 +18,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EditCalendar
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,7 +29,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.inr_management_md3.R
-import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.himanshoe.kalendar.common.KalendarKonfig
 import com.himanshoe.kalendar.common.KalendarSelector
 import com.himanshoe.kalendar.common.KalendarStyle
@@ -36,46 +36,11 @@ import com.himanshoe.kalendar.common.data.KalendarEvent
 import com.himanshoe.kalendar.ui.Kalendar
 import com.himanshoe.kalendar.ui.KalendarType
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 /**
  *  Reusable DatePicker Component just DatePickerTextField and DatePickerDialog are needed
  *  for implementation
  */
-
-@Composable
-fun DatePickerDialogFirstTry(calendarViewModel: CalendarViewModel) {
-    val date by calendarViewModel.date.collectAsState()
-    // Dialog state Manager
-    val dialogState: MutableState<Boolean> = remember {
-        mutableStateOf(false)
-    }
-    if (dialogState.value) {
-        DatePickerDialog(
-            title = stringResource(R.string.pick_date_title),
-            dialogState = dialogState,
-            onCurrentDayClicked = { day, _ ->
-                val formattedDate =
-                    day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
-                calendarViewModel.setDate(formattedDate).toString()
-                calendarViewModel.setRealDate(day)
-            },
-            errorMessage = {},
-            okButton = { dialogState.value = false },
-            cancelButton = {
-                dialogState.value = false
-                calendarViewModel.setDate("")
-            }
-        )
-    }
-    DatePickerTextField(
-        modifier = Modifier.fillMaxWidth(),
-        date = date,
-        onValueChange = { calendarViewModel.setDate(it) },
-        onClick = { dialogState.value = true },
-        label = { Text(text = stringResource(R.string.pick_date)) }
-    )
-}
 
 @Composable
 fun DatePickerTextField(
