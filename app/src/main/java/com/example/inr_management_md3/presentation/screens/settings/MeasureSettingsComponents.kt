@@ -13,60 +13,29 @@
  */
 package com.example.inr_management_md3.presentation.screens.settings
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.DatePickerDialog
 import com.example.inr_management_md3.presentation.components.DatePickerTextField
-import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
-import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.example.inr_management_md3.presentation.components.TimePickerDialog
+import com.example.inr_management_md3.presentation.components.TimePickerTextField
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeasureTimeRangeExposedDropdownTo() {
-    val options = listOf(
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "11",
-        "12",
-        "13",
-        "14",
-        "15",
-        "16",
-        "17",
-        "18",
-        "19",
-        "20",
-        "21",
-        "22",
-        "23",
-        "24",
-        "25",
-        "26",
-        "27",
-        "28",
-        "29",
-        "30"
-    )
+fun MeasureTimeRangeExposedDropdownTo(settingsViewModel: SettingsViewModel) {
+    val options = settingsViewModel.measureDays
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options[0]) }
+    var selectedOptionText by settingsViewModel.selectedMeasureDays
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -78,7 +47,7 @@ fun MeasureTimeRangeExposedDropdownTo() {
             readOnly = true,
             label = { Text(text = stringResource(R.string.every)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            modifier = Modifier.width(110.dp)
+            modifier = Modifier.width(115.dp)
         )
         ExposedDropdownMenu(
             expanded = expanded,
@@ -98,8 +67,8 @@ fun MeasureTimeRangeExposedDropdownTo() {
 }
 
 @Composable
-fun MeasureSettingsDatePicker(calendarViewModel: CalendarViewModel) {
-    val date by calendarViewModel.date.collectAsState()
+fun MeasureSettingsDatePicker(settingsViewModel: SettingsViewModel) {
+    val date by settingsViewModel.date.collectAsState()
     // Dialog state Manager
     val dialogState: MutableState<Boolean> = remember {
         mutableStateOf(false)
@@ -111,13 +80,15 @@ fun MeasureSettingsDatePicker(calendarViewModel: CalendarViewModel) {
             onCurrentDayClicked = { day, _ ->
                 val formattedDate =
                     day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
-                calendarViewModel.setDate(formattedDate).toString()
-                calendarViewModel.setRealDate(day)
+                settingsViewModel.setDate(formattedDate).toString()
+                settingsViewModel.setRealDate(day)
             },
             errorMessage = {},
-            okButton = { dialogState.value = false },
+            okButton = {
+                dialogState.value = false
+            },
             cancelButton = {
-                calendarViewModel.setDate("")
+                settingsViewModel.setDate("")
                 dialogState.value = false
             }
         )
@@ -125,17 +96,45 @@ fun MeasureSettingsDatePicker(calendarViewModel: CalendarViewModel) {
     DatePickerTextField(
         modifier = Modifier.fillMaxWidth(),
         date = date,
-        onValueChange = { calendarViewModel.setDate(it) },
+        onValueChange = { settingsViewModel.setDate(it) },
         onClick = { dialogState.value = true },
         label = { Text(text = stringResource(R.string.pick_date)) }
     )
 }
 
 @Composable
+fun MeasureSettingsTimePicker(settingsViewModel: SettingsViewModel) {
+    val dialogState = rememberMaterialDialogState()
+    val timeState by settingsViewModel.textState.collectAsState()
+
+    TimePickerDialog(
+        dialogState = dialogState,
+        timeOnClick = { time ->
+            val formattedTime = time.format(
+                DateTimeFormatter.ofPattern("hh:mm a")
+            )
+            settingsViewModel.getFormattedTime(TextFieldValue(formattedTime))
+            settingsViewModel.getTime(time)
+        }
+    )
+    TimePickerTextField(
+        modifier = Modifier.fillMaxWidth(),
+        time = timeState.text,
+        onValueChange = { settingsViewModel.getFormattedTime(timeState) },
+        onClick = { dialogState.show() },
+        label = { Text(text = stringResource(R.string.measure_time)) }
+    )
+}
+
+@Composable
 fun MeasureSettingsContent(
-    calendarViewModel: CalendarViewModel,
     settingsViewModel: SettingsViewModel
 ) {
+    val date by settingsViewModel.date.collectAsState()
+    val options = settingsViewModel.measureDays
+    val selectedOptionText by settingsViewModel.selectedMeasureDays
+    val timeState by settingsViewModel.textState.collectAsState()
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -154,7 +153,7 @@ fun MeasureSettingsContent(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                MeasureTimeRangeExposedDropdownTo()
+                MeasureTimeRangeExposedDropdownTo(settingsViewModel)
                 Column(
                     modifier = Modifier.padding(start = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -168,14 +167,14 @@ fun MeasureSettingsContent(
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                MeasureSettingsDatePicker(calendarViewModel)
+                MeasureSettingsDatePicker(settingsViewModel)
             }
             Text(text = stringResource(id = R.string.alarm_time))
             Row(
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                MedicamentSettingsTimePicker(settingsViewModel)
+                MeasureSettingsTimePicker(settingsViewModel)
             }
             BoxWithConstraints(
                 modifier = Modifier
@@ -188,22 +187,11 @@ fun MeasureSettingsContent(
                         .fillMaxWidth()
                         .padding(bottom = 60.dp)
                         .height(60.dp),
-                    enabled = true
+                    enabled =
+                    date.isNotEmpty() && options.isNotEmpty() && selectedOptionText.isNotEmpty()
+                            && timeState.text.isNotEmpty()
                 ) { Text(stringResource(id = R.string.save)) }
             }
         }
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewMeasureTimeRangeExposedDropdownFrom() {
-    INR_Management_Theme {
-        MeasureTimeRangeExposedDropdownTo()
     }
 }

@@ -36,6 +36,11 @@ import androidx.room.PrimaryKey
             parentColumns = ["id_patient"],
             childColumns = ["patient_id"]
         )
+//        ForeignKey(
+//            entity = TakingAlarm::class,
+//            parentColumns = ["id_taking_alarm"],
+//            childColumns = ["taking_alarm_id"]
+//        )
     ]
 )
 data class Taking(
@@ -58,4 +63,6 @@ data class Taking(
     val commentDate: Long = 0,
     @ColumnInfo(name = "comment_day")
     val commentDay: String = ""
+//    @ColumnInfo(name = "taking_alarm_id")
+//    val takingAlarmId: Long = 0
 )
