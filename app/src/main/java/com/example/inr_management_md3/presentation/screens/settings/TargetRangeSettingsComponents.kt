@@ -130,7 +130,7 @@ fun TargetRange(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp),
-                        color = MaterialTheme.colorScheme.surfaceVariant,
+                        color = MaterialTheme.colorScheme.primaryContainer,
                         shape = RoundedCornerShape(10.dp)
                     ) {
                         Column(

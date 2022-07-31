@@ -35,7 +35,7 @@ import com.example.inr_management_md3.data.local.InrManagementDao
         Comment::class,
         TargetRange::class,
         MeasureAlarm::class,
-        TakingTime::class
+        TakingAlarm::class
     ],
     version = 1,
     exportSchema = false

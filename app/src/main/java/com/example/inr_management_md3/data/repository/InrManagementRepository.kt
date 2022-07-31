@@ -14,10 +14,7 @@
 package com.example.inr_management_md3.data.repository
 
 import com.example.inr_management_md3.data.AppDataBase
-import com.example.inr_management_md3.data.datamodels.DosageMedicamentType
-import com.example.inr_management_md3.data.datamodels.Medicament
-import com.example.inr_management_md3.data.datamodels.MedicamentDosage
-import com.example.inr_management_md3.data.datamodels.TargetRange
+import com.example.inr_management_md3.data.datamodels.*
 import kotlinx.coroutines.flow.Flow
 
 interface InrManagementRepository {
@@ -25,6 +22,7 @@ interface InrManagementRepository {
     suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType)
     suspend fun addTargetRange(targetRange: TargetRange)
     suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage)
+    suspend fun addTakingAlarm(takingAlarm: TakingAlarm)
     fun getAllMedicaments(): Flow<List<Medicament>>
     fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>
     fun getLastTargetRange(): Flow<TargetRange>
@@ -46,6 +44,10 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage) {
         appDataBase.inrManagementDao().addMedicamentDosage(medicamentDosage)
+    }
+
+    override suspend fun addTakingAlarm(takingAlarm: TakingAlarm) {
+        appDataBase.inrManagementDao().addTakingAlarm(takingAlarm)
     }
 
     override fun getAllMedicaments(): Flow<List<Medicament>> =

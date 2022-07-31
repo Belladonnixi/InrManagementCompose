@@ -18,7 +18,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "taking_alarm")
-data class TakingTime(
+data class TakingAlarm(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_taking_alarm")
     val idTakingTime: Long = 0,

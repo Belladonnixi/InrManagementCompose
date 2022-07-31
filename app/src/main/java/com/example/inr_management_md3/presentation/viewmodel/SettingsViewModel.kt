@@ -25,8 +25,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.time.LocalTime
-import java.util.*
 
 /**
  *  Shared ViewModel for MeasureSettings-, TargetRangeSettings- and MedicamentSettings-Screens
@@ -67,6 +67,48 @@ class SettingsViewModel(
 
     private val _timeState = MutableStateFlow(LocalTime.now())
     val timeState: StateFlow<LocalTime> get() = _timeState
+
+    private val _date = MutableStateFlow("")
+    val date: StateFlow<String> get() = _date
+
+    private val _realDate = MutableStateFlow<LocalDate?>(null)
+    val realDate: StateFlow<LocalDate?> get() = _realDate
+
+    val measureDays = listOf(
+        "",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30"
+    )
+
+    var selectedMeasureDays = mutableStateOf(measureDays[0])
 
     init {
         viewModelScope.launch {
@@ -132,5 +174,13 @@ class SettingsViewModel(
     fun resetTextState() {
         val text = TextFieldValue("")
         _textState.value = text
+    }
+
+    fun setDate(setDate: String) {
+        _date.value = setDate
+    }
+
+    fun setRealDate(setRealDate: LocalDate) {
+        _realDate.value = setRealDate
     }
 }

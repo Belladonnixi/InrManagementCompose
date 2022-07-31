@@ -19,11 +19,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.inr_management_md3.R
-import com.example.inr_management_md3.presentation.components.TimePickerTextFieldDropdown
+import com.example.inr_management_md3.presentation.components.TimePickerDialog
+import com.example.inr_management_md3.presentation.components.TimePickerTextField
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavController) {
@@ -60,7 +64,7 @@ fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavC
                 }
             }
             if (checked) {
-                TimePickerTextFieldDropdown(settingsViewModel)
+                MedicamentSettingsTimePicker(settingsViewModel)
             }
 
             BoxWithConstraints(
@@ -82,6 +86,30 @@ fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavC
             }
         }
     }
+}
+
+@Composable
+fun MedicamentSettingsTimePicker(settingsViewModel: SettingsViewModel) {
+    val dialogState = rememberMaterialDialogState()
+    val timeState by settingsViewModel.textState.collectAsState()
+
+    TimePickerDialog(
+        dialogState = dialogState,
+        timeOnClick = { time ->
+            val formattedTime = time.format(
+                DateTimeFormatter.ofPattern("hh:mm a")
+            )
+            settingsViewModel.getFormattedTime(TextFieldValue(formattedTime))
+            settingsViewModel.getTime(time)
+        }
+    )
+    TimePickerTextField(
+        modifier = Modifier.fillMaxWidth(),
+        time = timeState.text,
+        onValueChange = { settingsViewModel.getFormattedTime(timeState) },
+        onClick = { dialogState.show() },
+        label = { Text(text = stringResource(R.string.measure_time)) }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
