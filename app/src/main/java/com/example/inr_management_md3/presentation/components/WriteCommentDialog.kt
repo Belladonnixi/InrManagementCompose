@@ -1,3 +1,16 @@
+/**
+ * Copyright © 2022 Jessica Ernst
+ *
+ * This project and source code may use libraries or frameworks that are released under various
+ * Open-Source licenses. Use of those libraries and frameworks are governed by their own individual
+ * licenses.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
+ * OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.example.inr_management_md3.presentation.components
 
 import androidx.compose.foundation.layout.*
@@ -7,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,7 +40,7 @@ fun WriteCommentDialog(
     modifier: Modifier,
     onValueChange: (String) -> Unit,
     label: @Composable (() -> Unit)? = null,
-    maxLines: Int,
+    maxLinesComment: Int,
     cancelButton: () -> Unit,
     okButton: () -> Unit
 ) {
@@ -42,7 +56,7 @@ fun WriteCommentDialog(
                         text = text,
                         onValueChange = onValueChange,
                         modifier = modifier,
-                        maxLines = maxLines,
+                        maxLinesComment = maxLinesComment,
                         label = label
                     )
                 }
@@ -67,7 +81,7 @@ fun WriteCommentDialogContent(
         modifier = Modifier
             .fillMaxHeight(0.85f)
             .fillMaxWidth(1f),
-        shape = RoundedCornerShape(4.dp),
+        shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
     ) {
         Column(
@@ -151,14 +165,14 @@ fun CommentBodyContent(
     modifier: Modifier,
     onValueChange: (String) -> Unit,
     label: @Composable (() -> Unit)? = null,
-    maxLines: Int
+    maxLinesComment: Int
 ) {
     TextField(
         value = text,
         onValueChange = onValueChange,
-        modifier = modifier
-            .fillMaxSize(),
-        maxLines = maxLines,
-        label = label
+        modifier = modifier,
+        maxLines = maxLinesComment,
+        label = label,
+        colors = TextFieldDefaults.textFieldColors(containerColor = Color.White, textColor = Color.Black)
     )
 }

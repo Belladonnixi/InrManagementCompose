@@ -188,8 +188,8 @@ fun MeasureSettingsContent(
                         .padding(bottom = 60.dp)
                         .height(60.dp),
                     enabled =
-                    date.isNotEmpty() && options.isNotEmpty() && selectedOptionText.isNotEmpty()
-                            && timeState.text.isNotEmpty()
+                    date.isNotEmpty() && options.isNotEmpty() && selectedOptionText.isNotEmpty() &&
+                        timeState.text.isNotEmpty()
                 ) { Text(stringResource(id = R.string.save)) }
             }
         }
