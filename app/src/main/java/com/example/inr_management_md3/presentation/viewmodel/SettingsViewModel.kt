@@ -156,17 +156,16 @@ class SettingsViewModel(
         _selectedMedicamentType.value = getMedicamentType
     }
 
-    // if a patient id exists the id will set in Foreign key otherwise it will be null
+    // if a patient id exists the id will set in Foreign key of TargetRange otherwise it will be null
     fun addTargetRangeToDb(targetRange: TargetRange) {
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.checkIfPatientExists()) {
                 repository.getLastPatientId().collect() { response ->
-                    _targetRange.value.patientId = response.id_patient
+                    targetRange.patientId = response.id_patient
+                    repository.addTargetRange(targetRange)
+                    getTargetRangeFromDb()
                 }
-                repository.addTargetRange(targetRange)
-                getTargetRangeFromDb()
             } else {
-                _targetRange.value.patientId = null
                 repository.addTargetRange(targetRange)
                 getTargetRangeFromDb()
             }
