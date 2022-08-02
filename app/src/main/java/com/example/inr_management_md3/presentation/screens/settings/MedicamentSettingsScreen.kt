@@ -52,7 +52,7 @@ fun MedicamentSettingsScreen(
             )
         },
         content = {
-            MedicamentSettings(settingsViewModel, navController)
+            MedicamentSettingsContent(settingsViewModel, navController)
         },
         bottomBar = {
             BottomNavBar(navController = navController)

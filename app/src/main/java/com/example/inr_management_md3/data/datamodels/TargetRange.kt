@@ -31,11 +31,11 @@ import androidx.room.PrimaryKey
 data class TargetRange(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_target_range")
-    val idTargetRange: Long = 0,
+    var idTargetRange: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Int? = null,
+    var patientId: Long? = null,
     @ColumnInfo(name = "target_range_from")
-    val targetRangeFrom: Int = 0,
+    var targetRangeFrom: Int = 0,
     @ColumnInfo(name = "target_range_to")
-    val targetRangeTo: Int = 0
+    var targetRangeTo: Int = 0
 )

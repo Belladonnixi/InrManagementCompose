@@ -19,6 +19,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.inr_management_md3.data.datamodels.MedicamentType
+import com.example.inr_management_md3.data.datamodels.Patient
 import com.example.inr_management_md3.data.datamodels.TargetRange
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 import kotlinx.coroutines.Dispatchers
@@ -48,6 +49,7 @@ class SettingsViewModel(
 
     private var _targetRange = MutableStateFlow(
         TargetRange(
+            0,
             0,
             0,
             0
@@ -110,6 +112,9 @@ class SettingsViewModel(
 
     var selectedMeasureDays = mutableStateOf(measureDays[0])
 
+    private val _patient = MutableStateFlow(Patient())
+    val patient: StateFlow<Patient> get() = _patient
+
     init {
         viewModelScope.launch {
             loadData()
@@ -120,18 +125,18 @@ class SettingsViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.checkIfTargetRangeExists()) {
                 try {
-                    getTargetRange()
+                    getTargetRangeFromDb()
                 } catch (e: Error) {
                     Log.e(TAG, "No data available $e")
                 }
-                getMedicaments()
+                getMedicamentsFromDb()
             } else {
-                getMedicaments()
+                getMedicamentsFromDb()
             }
         }
     }
 
-    private fun getMedicaments() {
+    private fun getMedicamentsFromDb() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getAllMedicaments().collect { response ->
                 _medicamentTypeList.value = response
@@ -139,7 +144,7 @@ class SettingsViewModel(
         }
     }
 
-    private fun getTargetRange() {
+    private fun getTargetRangeFromDb() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getLastTargetRange().collect { response ->
                 _targetRange.value = response
@@ -151,10 +156,20 @@ class SettingsViewModel(
         _selectedMedicamentType.value = getMedicamentType
     }
 
-    fun addTargetRange(targetRange: TargetRange) {
+    // if a patient id exists the id will set in Foreign key otherwise it will be null
+    fun addTargetRangeToDb(targetRange: TargetRange) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addTargetRange(targetRange)
-            getTargetRange()
+            if (repository.checkIfPatientExists()) {
+                repository.getLastPatientId().collect() { response ->
+                    _targetRange.value.patientId = response.id_patient
+                }
+                repository.addTargetRange(targetRange)
+                getTargetRangeFromDb()
+            } else {
+                _targetRange.value.patientId = null
+                repository.addTargetRange(targetRange)
+                getTargetRangeFromDb()
+            }
         }
     }
 
@@ -163,6 +178,7 @@ class SettingsViewModel(
         selectedRangeTo = mutableStateOf(targetRangeTo[0])
     }
 
+    // getting LocalTime for Converting it to save it in db
     fun getTime(time: LocalTime) {
         _timeState.value = time
     }
@@ -183,4 +199,14 @@ class SettingsViewModel(
     fun setRealDate(setRealDate: LocalDate) {
         _realDate.value = setRealDate
     }
+
+    fun addPatientToDb(addPatient: Patient) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.checkIfPatientExists()) {
+            }
+            repository.addPatient(addPatient)
+        }
+    }
+
+    fun getPatientId() {}
 }

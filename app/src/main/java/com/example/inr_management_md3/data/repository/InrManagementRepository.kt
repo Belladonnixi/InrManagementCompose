@@ -23,10 +23,13 @@ interface InrManagementRepository {
     suspend fun addTargetRange(targetRange: TargetRange)
     suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage)
     suspend fun addTakingAlarm(takingAlarm: TakingAlarm)
+    suspend fun addPatient(patient: Patient)
     fun getAllMedicaments(): Flow<List<MedicamentType>>
     fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>
     fun getLastTargetRange(): Flow<TargetRange>
     fun checkIfTargetRangeExists(): Boolean
+    fun checkIfPatientExists(): Boolean
+    fun getLastPatientId(): Flow<Patient>
 }
 
 class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrManagementRepository {
@@ -50,6 +53,10 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
         appDataBase.inrManagementDao().addTakingAlarm(takingAlarm)
     }
 
+    override suspend fun addPatient(patient: Patient) {
+        appDataBase.inrManagementDao().addPatient(patient)
+    }
+
     override fun getAllMedicaments(): Flow<List<MedicamentType>> =
         appDataBase.inrManagementDao().getAllMedicaments()
 
@@ -61,4 +68,10 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override fun checkIfTargetRangeExists(): Boolean =
         appDataBase.inrManagementDao().checkIfTargetRangeExists(1)
+
+    override fun checkIfPatientExists(): Boolean =
+        appDataBase.inrManagementDao().checkIfPatientExists(1)
+
+    override fun getLastPatientId(): Flow<Patient> =
+        appDataBase.inrManagementDao().getLastPatientId()
 }

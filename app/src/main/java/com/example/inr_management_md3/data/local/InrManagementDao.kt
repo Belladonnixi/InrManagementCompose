@@ -30,13 +30,16 @@ interface InrManagementDao {
     suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType)
 
     @Insert(onConflict = REPLACE)
-    suspend fun addTargetRange(targetRange: TargetRange)
+    suspend fun addTargetRange(targetRange: com.example.inr_management_md3.data.datamodels.TargetRange)
 
     @Insert(onConflict = REPLACE)
     suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage)
 
     @Insert(onConflict = REPLACE)
     suspend fun addTakingAlarm(takingAlarm: TakingAlarm)
+
+    @Insert(onConflict = REPLACE)
+    suspend fun addPatient(patient: Patient)
 
     @Query("SELECT * FROM medicament_type")
     fun getAllMedicaments(): Flow<List<MedicamentType>>
@@ -49,4 +52,10 @@ interface InrManagementDao {
 
     @Query("SELECT EXISTS (SELECT id_target_range FROM target_range WHERE id_target_range= :id)")
     fun checkIfTargetRangeExists(id: Long): Boolean
+
+    @Query("SELECT EXISTS (SELECT id_patient FROM patient WHERE id_patient= :id)")
+    fun checkIfPatientExists(id: Long): Boolean
+
+    @Query("SELECT id_patient FROM patient ORDER BY id_patient DESC LIMIT 1")
+    fun getLastPatientId(): Flow<Patient>
 }

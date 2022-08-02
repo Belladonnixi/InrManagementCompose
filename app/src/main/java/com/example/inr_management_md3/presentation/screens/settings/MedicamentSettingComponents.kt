@@ -30,7 +30,7 @@ import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavController) {
+fun MedicamentSettingsContent(settingsViewModel: SettingsViewModel, navController: NavController) {
     var checked by remember { mutableStateOf(false) }
     val selectedMedicament by settingsViewModel.selectedMedicamentType.collectAsState()
     Surface(

@@ -107,7 +107,7 @@ fun TargetRange(
     val selectedRangeTo by settingsViewModel.selectedRangeTo
     val targetRange =
         settingsViewModel.targetRange.collectAsState(
-            initial = TargetRange(0, 0, 0)
+            initial = TargetRange(0, 0, 0, 0)
         )
 
     Surface(
@@ -207,7 +207,7 @@ fun TargetRange(
                                 selectedRangeFrom.toInt(),
                                 selectedRangeTo.toInt()
                             )
-                        settingsViewModel.addTargetRange(setTargetRange)
+                        settingsViewModel.addTargetRangeToDb(setTargetRange)
                         navController.navigateUp()
                         settingsViewModel.resetTargetRangeDropdowns()
                     },
