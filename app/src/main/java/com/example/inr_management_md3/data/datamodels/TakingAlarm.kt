@@ -35,5 +35,5 @@ data class TakingAlarm(
     @ColumnInfo(name = "taking_time")
     val takingTime: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Long = 0
+    val patientId: Long? = 0
 )

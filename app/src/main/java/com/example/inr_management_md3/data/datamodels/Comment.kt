@@ -33,7 +33,7 @@ data class Comment(
     @ColumnInfo(name = "id_comment")
     val idComment: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Long = 0,
+    val patientId: Long? = null,
     @ColumnInfo(name = "comment_date")
     val commentDate: Long = 0,
     @ColumnInfo(name = "comment-day")

@@ -39,5 +39,5 @@ data class MeasureAlarm(
     @ColumnInfo(name = "measure_time")
     val measureTime: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Long = 0
+    val patientId: Long? = 0
 )

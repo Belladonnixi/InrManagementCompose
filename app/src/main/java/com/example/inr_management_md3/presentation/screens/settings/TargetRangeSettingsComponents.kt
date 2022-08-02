@@ -203,6 +203,7 @@ fun TargetRange(
                         val setTargetRange =
                             TargetRange(
                                 0,
+                                null,
                                 selectedRangeFrom.toInt(),
                                 selectedRangeTo.toInt()
                             )

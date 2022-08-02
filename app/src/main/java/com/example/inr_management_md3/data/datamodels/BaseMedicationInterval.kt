@@ -38,7 +38,7 @@ data class BaseMedicationInterval(
     @ColumnInfo(name = "id_base_medication_interval")
     val idBaseMedicationInterval: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Long = 0,
+    val patientId: Long? = 0,
     @ColumnInfo(name = "medicament_dosage_id")
     val medicamentDosageId: Long = 0,
     @ColumnInfo(name = "taking_days_row")

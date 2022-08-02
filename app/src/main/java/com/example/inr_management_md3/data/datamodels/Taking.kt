@@ -48,7 +48,7 @@ data class Taking(
     @ColumnInfo(name = "id_taking")
     val idTaking: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Long = 0,
+    val patientId: Long? = 0,
     @ColumnInfo(name = "taking_alarm_id")
     val takingAlarmId: Long? = 0,
     @ColumnInfo(name = "taking_time")

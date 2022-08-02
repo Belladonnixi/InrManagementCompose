@@ -38,7 +38,7 @@ data class InrMeasuringResult(
     @ColumnInfo(name = "id_inr_measuring_result")
     val idInrMeasuringResult: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Long = 0,
+    val patientId: Long? = 0,
     @ColumnInfo(name = "measure_alarm_id")
     val measureAlarmId: Long = 0,
     @ColumnInfo(name = "timestamp")

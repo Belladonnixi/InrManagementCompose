@@ -33,7 +33,7 @@ data class TargetRange(
     @ColumnInfo(name = "id_target_range")
     val idTargetRange: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Int = 0,
+    val patientId: Int? = null,
     @ColumnInfo(name = "target_range_from")
     val targetRangeFrom: Int = 0,
     @ColumnInfo(name = "target_range_to")
