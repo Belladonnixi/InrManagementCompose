@@ -208,7 +208,9 @@ class SettingsViewModel(
         _realDate.value = setRealDate
     }
 
-    fun writeMedicamentDosageSelectionToPatient() {
+    // function to check if patient exists, getting last patientId, getting MedicamentDosageId
+    // where the medicament_id is matching the selection of dropdown and updating or creating patient
+    fun writeMedicamentDosageToPatientColumn() {
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.checkIfPatientExists()) {
                 repository.getLastPatientId().collect { responseId ->

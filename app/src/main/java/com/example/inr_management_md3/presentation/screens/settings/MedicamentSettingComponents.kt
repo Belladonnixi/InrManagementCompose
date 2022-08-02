@@ -76,7 +76,7 @@ fun MedicamentSettingsContent(settingsViewModel: SettingsViewModel, navControlle
                 Button(
                     onClick = {
                         if (!checked) {
-                            settingsViewModel.writeMedicamentDosageSelectionToPatient()
+                            settingsViewModel.writeMedicamentDosageToPatientColumn()
                             settingsViewModel.resetTextState()
                             navController.navigateUp()
                         }
