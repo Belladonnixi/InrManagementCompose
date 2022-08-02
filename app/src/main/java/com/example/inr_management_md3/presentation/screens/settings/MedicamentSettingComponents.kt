@@ -33,6 +33,7 @@ import java.time.format.DateTimeFormatter
 fun MedicamentSettingsContent(settingsViewModel: SettingsViewModel, navController: NavController) {
     var checked by remember { mutableStateOf(false) }
     val selectedMedicament by settingsViewModel.selectedMedicamentType.collectAsState()
+    val patient by settingsViewModel.patient.collectAsState()
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -74,8 +75,11 @@ fun MedicamentSettingsContent(settingsViewModel: SettingsViewModel, navControlle
             ) {
                 Button(
                     onClick = {
-                        settingsViewModel.resetTextState()
-                        navController.navigateUp()
+                        if (!checked) {
+                            settingsViewModel.writeMedicamentDosageSelectionToPatient()
+                            settingsViewModel.resetTextState()
+                            navController.navigateUp()
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()

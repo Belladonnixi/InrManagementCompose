@@ -30,6 +30,8 @@ interface InrManagementRepository {
     fun checkIfTargetRangeExists(): Boolean
     fun checkIfPatientExists(): Boolean
     fun getLastPatientId(): Flow<Patient>
+    fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage>
+    fun updatePatientMedicamentDosageId(medicamentDosageId: Long?, id: Long)
 }
 
 class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrManagementRepository {
@@ -74,4 +76,11 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override fun getLastPatientId(): Flow<Patient> =
         appDataBase.inrManagementDao().getLastPatientId()
+
+    override fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage> =
+        appDataBase.inrManagementDao()
+            .getMedicamentDosageIdWhereSelectedMedicamentTypeMatches(idMedicamentType)
+
+    override fun updatePatientMedicamentDosageId(medicamentDosageId: Long?, id: Long) =
+        appDataBase.inrManagementDao().updatePatientMedicamentDosageId(medicamentDosageId, id)
 }

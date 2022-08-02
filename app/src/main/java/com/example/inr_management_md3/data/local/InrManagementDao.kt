@@ -58,4 +58,10 @@ interface InrManagementDao {
 
     @Query("SELECT id_patient FROM patient ORDER BY id_patient DESC LIMIT 1")
     fun getLastPatientId(): Flow<Patient>
+
+    @Query("SELECT * FROM medicament_dosage WHERE medicament_type_id = :idMedicamentType")
+    fun getMedicamentDosageIdWhereSelectedMedicamentTypeMatches(idMedicamentType: Long): Flow<MedicamentDosage>
+
+    @Query("UPDATE patient SET medicament_dosage_id = :medicamentDosageId WHERE id_patient = :id")
+    fun updatePatientMedicamentDosageId(medicamentDosageId: Long?, id: Long)
 }

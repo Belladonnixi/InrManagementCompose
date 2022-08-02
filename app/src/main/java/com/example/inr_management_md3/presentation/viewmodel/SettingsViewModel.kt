@@ -112,7 +112,16 @@ class SettingsViewModel(
 
     var selectedMeasureDays = mutableStateOf(measureDays[0])
 
-    private val _patient = MutableStateFlow(Patient())
+    private val _patient = MutableStateFlow(
+        Patient(
+            0,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+    )
     val patient: StateFlow<Patient> get() = _patient
 
     init {
@@ -160,7 +169,7 @@ class SettingsViewModel(
     fun addTargetRangeToDb(targetRange: TargetRange) {
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.checkIfPatientExists()) {
-                repository.getLastPatientId().collect() { response ->
+                repository.getLastPatientId().collect { response ->
                     targetRange.patientId = response.id_patient
                     repository.addTargetRange(targetRange)
                     getTargetRangeFromDb()
@@ -199,13 +208,29 @@ class SettingsViewModel(
         _realDate.value = setRealDate
     }
 
-    fun addPatientToDb(addPatient: Patient) {
+    fun writeMedicamentDosageSelectionToPatient() {
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.checkIfPatientExists()) {
+                repository.getLastPatientId().collect { responseId ->
+                    _patient.value.id_patient = responseId.id_patient
+                    repository.getMedicamentDosageId(
+                        selectedMedicamentType.value.idMedicamentType
+                    ).collect { response ->
+                        _patient.value.medicamentDosageId = response.id_medicament_dosage
+                        repository.updatePatientMedicamentDosageId(
+                            patient.value.medicamentDosageId,
+                            patient.value.id_patient
+                        )
+                    }
+                }
+            } else {
+                repository.getMedicamentDosageId(
+                    selectedMedicamentType.value.idMedicamentType
+                ).collect { response ->
+                    _patient.value.medicamentDosageId = response.id_medicament_dosage
+                    repository.addPatient(patient.value)
+                }
             }
-            repository.addPatient(addPatient)
         }
     }
-
-    fun getPatientId() {}
 }
