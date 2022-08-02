@@ -22,19 +22,14 @@ import androidx.room.PrimaryKey
     tableName = "inr_measuring_result",
     foreignKeys = [
         ForeignKey(
-            entity = BaseMedicationWeekdays::class,
-            parentColumns = ["id_base_medication_weekdays"],
-            childColumns = ["base_medication_weekdays_id"]
-        ),
-        ForeignKey(
-            entity = BaseMedicationInterval::class,
-            parentColumns = ["id_base_medication_interval"],
-            childColumns = ["base_medication_interval_id"]
-        ),
-        ForeignKey(
             entity = Patient::class,
             parentColumns = ["id_patient"],
             childColumns = ["patient_id"]
+        ),
+        ForeignKey(
+            entity = MeasureAlarm::class,
+            parentColumns = ["id_measure_alarm"],
+            childColumns = ["measure_alarm_id"]
         )
     ]
 )
@@ -42,16 +37,12 @@ data class InrMeasuringResult(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_inr_measuring_result")
     val idInrMeasuringResult: Long = 0,
+    @ColumnInfo(name = "patient_id")
+    val patientId: Long = 0,
+    @ColumnInfo(name = "measure_alarm_id")
+    val measureAlarmId: Long = 0,
     @ColumnInfo(name = "timestamp")
     val timestamp: Long = 0,
-    @ColumnInfo(name = "time_specified")
-    val timeSpecified: Long = 0,
     @ColumnInfo(name = "measuring_result")
-    val measuringResult: Float = 0f,
-    @ColumnInfo(name = "base_medication_weekdays_id")
-    val baseMedicationWeekdaysId: Long = 0,
-    @ColumnInfo(name = "base_medication_interval_id")
-    val baseMedicationIntervalId: Long = 0,
-    @ColumnInfo(name = "patient_id")
-    val patientId: Long = 0
+    val measuringResult: Float = 0f
 )

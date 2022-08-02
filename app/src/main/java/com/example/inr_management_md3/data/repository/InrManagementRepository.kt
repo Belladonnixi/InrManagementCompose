@@ -18,20 +18,20 @@ import com.example.inr_management_md3.data.datamodels.*
 import kotlinx.coroutines.flow.Flow
 
 interface InrManagementRepository {
-    suspend fun addMedicament(medicament: Medicament)
+    suspend fun addMedicament(medicamentType: MedicamentType)
     suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType)
     suspend fun addTargetRange(targetRange: TargetRange)
     suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage)
     suspend fun addTakingAlarm(takingAlarm: TakingAlarm)
-    fun getAllMedicaments(): Flow<List<Medicament>>
+    fun getAllMedicaments(): Flow<List<MedicamentType>>
     fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>
     fun getLastTargetRange(): Flow<TargetRange>
     fun checkIfTargetRangeExists(): Boolean
 }
 
 class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrManagementRepository {
-    override suspend fun addMedicament(medicament: Medicament) {
-        appDataBase.inrManagementDao().addMedicament(medicament)
+    override suspend fun addMedicament(medicamentType: MedicamentType) {
+        appDataBase.inrManagementDao().addMedicament(medicamentType)
     }
 
     override suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType) {
@@ -50,7 +50,7 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
         appDataBase.inrManagementDao().addTakingAlarm(takingAlarm)
     }
 
-    override fun getAllMedicaments(): Flow<List<Medicament>> =
+    override fun getAllMedicaments(): Flow<List<MedicamentType>> =
         appDataBase.inrManagementDao().getAllMedicaments()
 
     override fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>> =

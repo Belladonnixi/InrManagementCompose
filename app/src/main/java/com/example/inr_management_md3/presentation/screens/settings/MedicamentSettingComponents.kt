@@ -32,7 +32,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavController) {
     var checked by remember { mutableStateOf(false) }
-    val selectedMedicament by settingsViewModel.selectedMedicament.collectAsState()
+    val selectedMedicament by settingsViewModel.selectedMedicamentType.collectAsState()
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -115,9 +115,9 @@ fun MedicamentSettingsTimePicker(settingsViewModel: SettingsViewModel) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MedicamentTypeExposedDropdown(settingsViewModel: SettingsViewModel) {
-    val options by settingsViewModel.medicamentList.collectAsState()
+    val options by settingsViewModel.medicamentTypeList.collectAsState()
     var expanded by remember { mutableStateOf(false) }
-    val selectedMedicament by settingsViewModel.selectedMedicament.collectAsState()
+    val selectedMedicament by settingsViewModel.selectedMedicamentType.collectAsState()
 
     ExposedDropdownMenuBox(
         expanded = expanded,

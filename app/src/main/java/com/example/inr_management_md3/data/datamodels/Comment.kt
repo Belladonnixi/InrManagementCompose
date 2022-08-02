@@ -15,26 +15,27 @@ package com.example.inr_management_md3.data.datamodels
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "comment"
-//    foreignKeys = [
-//        ForeignKey(
-//            entity = Patient::class,
-//            parentColumns = ["id_patient"],
-//            childColumns = ["patient_id"]
-//        )
-//    ]
+    tableName = "comment",
+    foreignKeys = [
+        ForeignKey(
+            entity = Patient::class,
+            parentColumns = ["id_patient"],
+            childColumns = ["patient_id"]
+        )
+    ]
 )
 data class Comment(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_comment")
     val idComment: Long = 0,
+    @ColumnInfo(name = "patient_id")
+    val patientId: Long = 0,
     @ColumnInfo(name = "comment_date")
     val commentDate: Long = 0,
     @ColumnInfo(name = "comment-day")
     val commentDay: String = ""
-//    @ColumnInfo(name = "patient_id")
-//    val patientId: Long = 0
 )

@@ -173,6 +173,9 @@ fun CommentBodyContent(
         modifier = modifier,
         maxLines = maxLinesComment,
         label = label,
-        colors = TextFieldDefaults.textFieldColors(containerColor = Color.White, textColor = Color.Black)
+        colors = TextFieldDefaults.textFieldColors(
+            containerColor = Color.White,
+            textColor = Color.Black
+        )
     )
 }

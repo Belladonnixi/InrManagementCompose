@@ -22,7 +22,7 @@ import com.example.inr_management_md3.data.local.InrManagementDao
 
 @Database(
     entities = [
-        Medicament::class,
+        MedicamentType::class,
         MedicamentName::class,
         MedicamentDosage::class,
         DosageMedicamentType::class,

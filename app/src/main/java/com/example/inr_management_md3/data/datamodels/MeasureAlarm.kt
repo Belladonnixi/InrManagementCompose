@@ -15,9 +15,19 @@ package com.example.inr_management_md3.data.datamodels
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "measure_alarm")
+@Entity(
+    tableName = "measure_alarm",
+    foreignKeys = [
+        ForeignKey(
+            entity = Patient::class,
+            parentColumns = ["id_patient"],
+            childColumns = ["patient_id"]
+        )
+    ]
+)
 data class MeasureAlarm(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_measure_alarm")
@@ -28,6 +38,6 @@ data class MeasureAlarm(
     val startDate: Long = 0,
     @ColumnInfo(name = "measure_time")
     val measureTime: Long = 0,
-    @ColumnInfo(name = "timestamp")
-    val timestamp: Long = 0
+    @ColumnInfo(name = "patient_id")
+    val patientId: Long = 0
 )

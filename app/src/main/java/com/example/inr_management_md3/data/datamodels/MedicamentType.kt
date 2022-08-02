@@ -17,11 +17,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "medicament")
-data class Medicament(
+@Entity(tableName = "medicament_type")
+data class MedicamentType(
     @PrimaryKey
-    @ColumnInfo(name = "id_medicament")
-    val idMedicament: Long = 0,
+    @ColumnInfo(name = "id_medicament_type")
+    val idMedicamentType: Long = 0,
     @ColumnInfo(name = "type")
     var type: String = ""
 )

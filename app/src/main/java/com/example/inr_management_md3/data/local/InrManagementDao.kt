@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.Flow
 interface InrManagementDao {
 
     @Insert(onConflict = REPLACE)
-    suspend fun addMedicament(medicament: Medicament)
+    suspend fun addMedicament(medicamentType: MedicamentType)
 
     @Insert(onConflict = REPLACE)
     suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType)
@@ -38,8 +38,8 @@ interface InrManagementDao {
     @Insert(onConflict = REPLACE)
     suspend fun addTakingAlarm(takingAlarm: TakingAlarm)
 
-    @Query("SELECT * FROM medicament")
-    fun getAllMedicaments(): Flow<List<Medicament>>
+    @Query("SELECT * FROM medicament_type")
+    fun getAllMedicaments(): Flow<List<MedicamentType>>
 
     @Query("SELECT * FROM dosage_medicament_type")
     fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>

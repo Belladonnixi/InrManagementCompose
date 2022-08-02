@@ -18,7 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.inr_management_md3.data.datamodels.Medicament
+import com.example.inr_management_md3.data.datamodels.MedicamentType
 import com.example.inr_management_md3.data.datamodels.TargetRange
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 import kotlinx.coroutines.Dispatchers
@@ -38,11 +38,11 @@ class SettingsViewModel(
     private val repository: InrManagementRepository
 ) : ViewModel() {
 
-    private val _medicamentList = MutableStateFlow(emptyList<Medicament>())
-    val medicamentList: StateFlow<List<Medicament>> get() = _medicamentList
+    private val _medicamentTypeList = MutableStateFlow(emptyList<MedicamentType>())
+    val medicamentTypeList: StateFlow<List<MedicamentType>> get() = _medicamentTypeList
 
-    private var _selectedMedicament = MutableStateFlow(Medicament())
-    val selectedMedicament: StateFlow<Medicament> get() = _selectedMedicament
+    private var _selectedMedicamentType = MutableStateFlow(MedicamentType())
+    val selectedMedicamentType: StateFlow<MedicamentType> get() = _selectedMedicamentType
 
 //    val timestamp: Date = DateTimeConverters().zonedDateTimeToDate()
 
@@ -134,7 +134,7 @@ class SettingsViewModel(
     private fun getMedicaments() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getAllMedicaments().collect { response ->
-                _medicamentList.value = response
+                _medicamentTypeList.value = response
             }
         }
     }
@@ -147,8 +147,8 @@ class SettingsViewModel(
         }
     }
 
-    fun selectedMedicament(getMedicament: Medicament) {
-        _selectedMedicament.value = getMedicament
+    fun selectedMedicament(getMedicamentType: MedicamentType) {
+        _selectedMedicamentType.value = getMedicamentType
     }
 
     fun addTargetRange(targetRange: TargetRange) {
