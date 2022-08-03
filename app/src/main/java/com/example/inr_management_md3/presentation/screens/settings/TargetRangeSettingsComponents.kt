@@ -106,9 +106,7 @@ fun TargetRange(
     val selectedRangeFrom by settingsViewModel.selectedRangeFrom
     val selectedRangeTo by settingsViewModel.selectedRangeTo
     val targetRange =
-        settingsViewModel.targetRange.collectAsState(
-            initial = TargetRange(0, 0, 0, 0)
-        )
+        settingsViewModel.targetRange.collectAsState()
 
     Surface(
         modifier = Modifier

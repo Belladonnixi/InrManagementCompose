@@ -49,7 +49,7 @@ data class Patient(
     @ColumnInfo(name = "medicament_dosage_id")
     var medicamentDosageId: Long? = 0,
     @ColumnInfo(name = "target_range_id")
-    val targetRangeId: Long? = 0,
+    var targetRangeId: Long? = 0,
     @ColumnInfo(name = "comment_id")
     val commentId: Long? = 0,
     @ColumnInfo(name = "account_Id")

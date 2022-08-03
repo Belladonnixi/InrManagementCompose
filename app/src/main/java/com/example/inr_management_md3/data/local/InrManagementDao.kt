@@ -64,4 +64,7 @@ interface InrManagementDao {
 
     @Query("UPDATE patient SET medicament_dosage_id = :medicamentDosageId WHERE id_patient = :id")
     fun updatePatientMedicamentDosageId(medicamentDosageId: Long?, id: Long)
+
+    @Query("UPDATE patient SET target_range_id = :targetRangeId WHERE id_patient = :id")
+    fun updatePatientTargetRangeId(targetRangeId: Long?, id: Long)
 }

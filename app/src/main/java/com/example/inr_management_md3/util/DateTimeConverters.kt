@@ -13,6 +13,7 @@
  */
 package com.example.inr_management_md3.util
 
+import java.sql.Time
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -37,4 +38,7 @@ class DateTimeConverters {
         val zoneId: ZoneId = TimeZone.getDefault().toZoneId()
         return ZonedDateTime.ofInstant(instant, zoneId)
     }
+
+//    fun localTime(): Time {
+//    }
 }
