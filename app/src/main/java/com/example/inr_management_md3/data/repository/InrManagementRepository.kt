@@ -33,6 +33,7 @@ interface InrManagementRepository {
     fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage>
     fun updatePatientMedicamentDosageId(medicamentDosageId: Long?, id: Long)
     fun updatePatientTargetRangeId(targetRangeId: Long?, id: Long)
+    fun updateTargetRangePatientId(patientId: Long?, id: Long)
 }
 
 class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrManagementRepository {
@@ -87,4 +88,7 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override fun updatePatientTargetRangeId(targetRangeId: Long?, id: Long) =
         appDataBase.inrManagementDao().updatePatientTargetRangeId(targetRangeId, id)
+
+    override fun updateTargetRangePatientId(patientId: Long?, id: Long) =
+        appDataBase.inrManagementDao().updateTargetRangePatientId(patientId, id)
 }

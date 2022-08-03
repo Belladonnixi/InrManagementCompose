@@ -192,6 +192,13 @@ class SettingsViewModel(
                     _targetRange.value = response
                     _patient.value.targetRangeId = targetRange.value.idTargetRange
                     repository.addPatient(patient.value)
+                    repository.getLastPatientId().collect { responseId ->
+                        _targetRange.value.patientId = responseId.id_patient
+                        repository.updateTargetRangePatientId(
+                            targetRange.value.patientId,
+                            targetRange.value.idTargetRange
+                        )
+                    }
                 }
             }
         }
