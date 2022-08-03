@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.inr_management_md3.data.datamodels.MedicamentType
 import com.example.inr_management_md3.data.datamodels.Patient
+import com.example.inr_management_md3.data.datamodels.TakingAlarm
 import com.example.inr_management_md3.data.datamodels.TargetRange
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 import kotlinx.coroutines.Dispatchers
@@ -70,12 +71,14 @@ class SettingsViewModel(
     var selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
     var selectedRangeTo = mutableStateOf(targetRangeTo[0])
 
-    // General
+    /**
+     *  General (more than one Screen)
+     */
     private val _textState = MutableStateFlow(TextFieldValue())
     val textState: StateFlow<TextFieldValue> get() = _textState
 
     private val _timeState = MutableStateFlow(LocalTime.now())
-    val timeState: StateFlow<LocalTime> get() = _timeState
+    private val timeState: StateFlow<LocalTime> get() = _timeState
 
     private val _date = MutableStateFlow("")
     val date: StateFlow<String> get() = _date
@@ -94,6 +97,9 @@ class SettingsViewModel(
         )
     )
     val patient: StateFlow<Patient> get() = _patient
+
+    private var _takingAlarm = MutableStateFlow(TakingAlarm())
+    private val takingAlarm: StateFlow<TakingAlarm> get() = _takingAlarm
 
     /**
      *  MeasureSettings
@@ -257,7 +263,7 @@ class SettingsViewModel(
     }
 
     /**
-     *  General
+     *  General (more than one Screen)
      */
 
     // getting LocalTime for Converting it to save it in db
@@ -280,5 +286,34 @@ class SettingsViewModel(
 
     fun setRealDate(setRealDate: LocalDate) {
         _realDate.value = setRealDate
+    }
+
+    fun addTakingAlarm() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.checkIfPatientExists()) {
+                repository.getLastPatientId().collect { response ->
+                    _patient.value.id_patient = response.id_patient
+                    _takingAlarm.value.patientId = response.id_patient
+                    _takingAlarm.value.takingTime = timeState.value
+                    repository.addTakingAlarm(takingAlarm.value)
+                    repository.getLastTakingAlarmId().collect { responseId ->
+                        _takingAlarm.value.idTakingTime = responseId.idTakingTime
+                        repository.updateTakingAlarmPatientId(
+                            takingAlarm.value.patientId,
+                            takingAlarm.value.idTakingTime
+                        )
+                    }
+                }
+            } else {
+                repository.addTakingAlarm(takingAlarm.value)
+                repository.getLastTakingAlarmId().collect { responseId ->
+                    _takingAlarm.value.idTakingTime = responseId.idTakingTime
+                    repository.updateTakingAlarmPatientId(
+                        takingAlarm.value.patientId,
+                        takingAlarm.value.idTakingTime
+                    )
+                }
+            }
+        }
     }
 }

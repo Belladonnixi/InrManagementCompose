@@ -17,6 +17,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.time.LocalTime
 
 @Entity(
     tableName = "measure_alarm",
@@ -37,7 +38,7 @@ data class MeasureAlarm(
     @ColumnInfo(name = "start_date")
     val startDate: Long = 0,
     @ColumnInfo(name = "measure_time")
-    val measureTime: Long = 0,
+    val measureTime: LocalTime,
     @ColumnInfo(name = "patient_id")
     val patientId: Long? = 0
 )

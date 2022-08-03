@@ -80,6 +80,7 @@ fun MedicamentSettingsContent(settingsViewModel: SettingsViewModel, navControlle
                             navController.navigateUp()
                         } else {
                             settingsViewModel.writeMedicamentDosageToPatientColumn()
+                            settingsViewModel.addTakingAlarm()
                             settingsViewModel.resetTextState()
                             navController.navigateUp()
                         }

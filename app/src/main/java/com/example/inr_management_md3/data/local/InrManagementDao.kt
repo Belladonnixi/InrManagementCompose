@@ -31,7 +31,7 @@ interface InrManagementDao {
     suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType)
 
     @Insert(onConflict = REPLACE)
-    suspend fun addTargetRange(targetRange: com.example.inr_management_md3.data.datamodels.TargetRange)
+    suspend fun addTargetRange(targetRange: TargetRange)
 
     @Insert(onConflict = REPLACE)
     suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage)
@@ -41,6 +41,9 @@ interface InrManagementDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun addPatient(patient: Patient)
+
+    @Insert(onConflict = REPLACE)
+    suspend fun addMeasureAlarm(measureAlarm: MeasureAlarm)
 
     // Selects
     @Query("SELECT * FROM medicament_type")
@@ -58,6 +61,9 @@ interface InrManagementDao {
     @Query("SELECT * FROM medicament_dosage WHERE medicament_type_id = :idMedicamentType")
     fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage>
 
+    @Query("SELECT * FROM taking_alarm ORDER BY id_taking_alarm DESC LIMIT 1")
+    fun getLastTakingAlarmId(): Flow<TakingAlarm>
+
     // Booleans
     @Query("SELECT EXISTS (SELECT id_target_range FROM target_range WHERE id_target_range= :id)")
     fun checkIfTargetRangeExists(id: Long): Boolean
@@ -74,4 +80,7 @@ interface InrManagementDao {
 
     @Query("UPDATE target_range SET patient_id = :patientId WHERE id_target_range = :id")
     fun updateTargetRangePatientId(patientId: Long?, id: Long)
+
+    @Query("UPDATE taking_alarm SET patient_id = :patientId WHERE id_taking_alarm = :id")
+    fun updateTakingAlarmPatientId(patientId: Long?, id: Long)
 }
