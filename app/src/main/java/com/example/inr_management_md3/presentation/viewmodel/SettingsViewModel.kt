@@ -39,6 +39,9 @@ class SettingsViewModel(
     private val repository: InrManagementRepository
 ) : ViewModel() {
 
+    /**
+     *  MedicamentSettings
+     */
     private val _medicamentTypeList = MutableStateFlow(emptyList<MedicamentType>())
     val medicamentTypeList: StateFlow<List<MedicamentType>> get() = _medicamentTypeList
 
@@ -47,6 +50,9 @@ class SettingsViewModel(
 
 //    val timestamp: Date = DateTimeConverters().zonedDateTimeToDate()
 
+    /**
+     *  TargetRangeSettings
+     */
     private var _targetRange = MutableStateFlow(
         TargetRange(
             0,
@@ -64,6 +70,7 @@ class SettingsViewModel(
     var selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
     var selectedRangeTo = mutableStateOf(targetRangeTo[0])
 
+    // General
     private val _textState = MutableStateFlow(TextFieldValue())
     val textState: StateFlow<TextFieldValue> get() = _textState
 
@@ -76,6 +83,21 @@ class SettingsViewModel(
     private val _realDate = MutableStateFlow<LocalDate?>(null)
     val realDate: StateFlow<LocalDate?> get() = _realDate
 
+    private val _patient = MutableStateFlow(
+        Patient(
+            0,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+    )
+    val patient: StateFlow<Patient> get() = _patient
+
+    /**
+     *  MeasureSettings
+     */
     val measureDays = listOf(
         "",
         "1",
@@ -112,18 +134,9 @@ class SettingsViewModel(
 
     var selectedMeasureDays = mutableStateOf(measureDays[0])
 
-    private val _patient = MutableStateFlow(
-        Patient(
-            0,
-            null,
-            null,
-            null,
-            null,
-            null
-        )
-    )
-    val patient: StateFlow<Patient> get() = _patient
-
+    /**
+     *  Initializing
+     */
     init {
         viewModelScope.launch {
             loadData()
@@ -145,6 +158,9 @@ class SettingsViewModel(
         }
     }
 
+    /**
+     *  MedicamentSettings
+     */
     private fun getMedicamentsFromDb() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getAllMedicaments().collect { response ->
@@ -165,6 +181,37 @@ class SettingsViewModel(
         _selectedMedicamentType.value = getMedicamentType
     }
 
+    // function to check if patient exists, getting last patientId, getting MedicamentDosageId
+    // where the medicament_id is matching the selection of dropdown and updating or creating patient
+    fun writeMedicamentDosageToPatientColumn() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.checkIfPatientExists()) {
+                repository.getLastPatientId().collect { responseId ->
+                    _patient.value.id_patient = responseId.id_patient
+                    repository.getMedicamentDosageId(
+                        selectedMedicamentType.value.idMedicamentType
+                    ).collect { response ->
+                        _patient.value.medicamentDosageId = response.id_medicament_dosage
+                        repository.updatePatientMedicamentDosageId(
+                            patient.value.medicamentDosageId,
+                            patient.value.id_patient
+                        )
+                    }
+                }
+            } else {
+                repository.getMedicamentDosageId(
+                    selectedMedicamentType.value.idMedicamentType
+                ).collect { response ->
+                    _patient.value.medicamentDosageId = response.id_medicament_dosage
+                    repository.addPatient(patient.value)
+                }
+            }
+        }
+    }
+
+    /**
+     *  TargetRangeSettings
+     */
     fun setTargetRange(setTargetRange: TargetRange) {
         _targetRange.value = setTargetRange
     }
@@ -209,6 +256,10 @@ class SettingsViewModel(
         selectedRangeTo = mutableStateOf(targetRangeTo[0])
     }
 
+    /**
+     *  General
+     */
+
     // getting LocalTime for Converting it to save it in db
     fun getTime(time: LocalTime) {
         _timeState.value = time
@@ -229,33 +280,5 @@ class SettingsViewModel(
 
     fun setRealDate(setRealDate: LocalDate) {
         _realDate.value = setRealDate
-    }
-
-    // function to check if patient exists, getting last patientId, getting MedicamentDosageId
-    // where the medicament_id is matching the selection of dropdown and updating or creating patient
-    fun writeMedicamentDosageToPatientColumn() {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (repository.checkIfPatientExists()) {
-                repository.getLastPatientId().collect { responseId ->
-                    _patient.value.id_patient = responseId.id_patient
-                    repository.getMedicamentDosageId(
-                        selectedMedicamentType.value.idMedicamentType
-                    ).collect { response ->
-                        _patient.value.medicamentDosageId = response.id_medicament_dosage
-                        repository.updatePatientMedicamentDosageId(
-                            patient.value.medicamentDosageId,
-                            patient.value.id_patient
-                        )
-                    }
-                }
-            } else {
-                repository.getMedicamentDosageId(
-                    selectedMedicamentType.value.idMedicamentType
-                ).collect { response ->
-                    _patient.value.medicamentDosageId = response.id_medicament_dosage
-                    repository.addPatient(patient.value)
-                }
-            }
-        }
     }
 }
