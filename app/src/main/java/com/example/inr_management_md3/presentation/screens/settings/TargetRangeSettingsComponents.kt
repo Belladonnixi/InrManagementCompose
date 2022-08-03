@@ -205,7 +205,8 @@ fun TargetRange(
                                 selectedRangeFrom.toInt(),
                                 selectedRangeTo.toInt()
                             )
-                        settingsViewModel.addTargetRangeToDb(setTargetRange)
+                        settingsViewModel.setTargetRange(setTargetRange)
+                        settingsViewModel.addTargetRangeToDb()
                         navController.navigateUp()
                         settingsViewModel.resetTargetRangeDropdowns()
                     },

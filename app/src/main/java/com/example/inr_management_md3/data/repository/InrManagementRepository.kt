@@ -80,7 +80,7 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage> =
         appDataBase.inrManagementDao()
-            .getMedicamentDosageIdWhereSelectedMedicamentTypeMatches(idMedicamentType)
+            .getMedicamentDosageId(idMedicamentType)
 
     override fun updatePatientMedicamentDosageId(medicamentDosageId: Long?, id: Long) =
         appDataBase.inrManagementDao().updatePatientMedicamentDosageId(medicamentDosageId, id)

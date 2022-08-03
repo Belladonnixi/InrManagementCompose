@@ -165,18 +165,34 @@ class SettingsViewModel(
         _selectedMedicamentType.value = getMedicamentType
     }
 
+    fun setTargetRange(setTargetRange: TargetRange) {
+        _targetRange.value = setTargetRange
+    }
+
     // if a patient id exists the id will set in Foreign key of TargetRange otherwise it will be null
-    fun addTargetRangeToDb(targetRange: TargetRange) {
+    fun addTargetRangeToDb() {
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.checkIfPatientExists()) {
-                repository.getLastPatientId().collect { response ->
-                    targetRange.patientId = response.id_patient
-                    repository.addTargetRange(targetRange)
-                    getTargetRangeFromDb()
+                repository.getLastPatientId().collect { responseId ->
+                    _targetRange.value.patientId = responseId.id_patient
+                    _patient.value.id_patient = responseId.id_patient
+                    repository.addTargetRange(targetRange.value)
+                    repository.getLastTargetRange().collect { response ->
+                        _targetRange.value = response
+                        _patient.value.targetRangeId = targetRange.value.idTargetRange
+                        repository.updatePatientTargetRangeId(
+                            patient.value.targetRangeId,
+                            patient.value.id_patient
+                        )
+                    }
                 }
             } else {
-                repository.addTargetRange(targetRange)
-                getTargetRangeFromDb()
+                repository.addTargetRange(targetRange.value)
+                repository.getLastTargetRange().collect { response ->
+                    _targetRange.value = response
+                    _patient.value.targetRangeId = targetRange.value.idTargetRange
+                    repository.addPatient(patient.value)
+                }
             }
         }
     }
