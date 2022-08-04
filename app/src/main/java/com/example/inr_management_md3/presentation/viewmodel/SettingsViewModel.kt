@@ -133,7 +133,7 @@ class SettingsViewModel(
     val date: StateFlow<String> get() = _date
 
     private val _realDate = MutableStateFlow<LocalDate?>(null)
-    val realDate: StateFlow<LocalDate?> get() = _realDate
+    private val realDate: StateFlow<LocalDate?> get() = _realDate
 
     private val _measureAlarm = MutableStateFlow(
         MeasureAlarm(
@@ -144,7 +144,7 @@ class SettingsViewModel(
             0
         )
     )
-    val measureAlarm: StateFlow<MeasureAlarm> get() = _measureAlarm
+    private val measureAlarm: StateFlow<MeasureAlarm> get() = _measureAlarm
 
     /**
      *  Initializing
