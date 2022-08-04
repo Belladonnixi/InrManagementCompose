@@ -50,8 +50,7 @@ fun CalendarMonthView(calendarViewModel: CalendarViewModel, navController: NavCo
             Box(
                 modifier = Modifier
                     .background(
-                        MaterialTheme.colorScheme.tertiaryContainer,
-                        RoundedCornerShape(10.dp)
+                        MaterialTheme.colorScheme.tertiaryContainer
                     )
                     .fillMaxSize()
                     .padding(8.dp),

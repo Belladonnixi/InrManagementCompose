@@ -18,8 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.inr_management_md3.data.datamodels.Medicament
-import com.example.inr_management_md3.data.datamodels.TargetRange
+import com.example.inr_management_md3.data.datamodels.*
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,16 +37,21 @@ class SettingsViewModel(
     private val repository: InrManagementRepository
 ) : ViewModel() {
 
-    private val _medicamentList = MutableStateFlow(emptyList<Medicament>())
-    val medicamentList: StateFlow<List<Medicament>> get() = _medicamentList
+    /**
+     *  MedicamentSettings
+     */
+    private val _medicamentTypeList = MutableStateFlow(emptyList<MedicamentType>())
+    val medicamentTypeList: StateFlow<List<MedicamentType>> get() = _medicamentTypeList
 
-    private var _selectedMedicament = MutableStateFlow(Medicament())
-    val selectedMedicament: StateFlow<Medicament> get() = _selectedMedicament
+    private var _selectedMedicamentType = MutableStateFlow(MedicamentType())
+    val selectedMedicamentType: StateFlow<MedicamentType> get() = _selectedMedicamentType
 
-//    val timestamp: Date = DateTimeConverters().zonedDateTimeToDate()
-
+    /**
+     *  TargetRangeSettings
+     */
     private var _targetRange = MutableStateFlow(
         TargetRange(
+            0,
             0,
             0,
             0
@@ -62,18 +66,33 @@ class SettingsViewModel(
     var selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
     var selectedRangeTo = mutableStateOf(targetRangeTo[0])
 
+    /**
+     *  General (more than one Screen)
+     */
     private val _textState = MutableStateFlow(TextFieldValue())
     val textState: StateFlow<TextFieldValue> get() = _textState
 
     private val _timeState = MutableStateFlow(LocalTime.now())
-    val timeState: StateFlow<LocalTime> get() = _timeState
+    private val timeState: StateFlow<LocalTime> get() = _timeState
 
-    private val _date = MutableStateFlow("")
-    val date: StateFlow<String> get() = _date
+    private val _patient = MutableStateFlow(
+        Patient(
+            0,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+    )
+    val patient: StateFlow<Patient> get() = _patient
 
-    private val _realDate = MutableStateFlow<LocalDate?>(null)
-    val realDate: StateFlow<LocalDate?> get() = _realDate
+    private var _takingAlarm = MutableStateFlow(TakingAlarm())
+    private val takingAlarm: StateFlow<TakingAlarm> get() = _takingAlarm
 
+    /**
+     *  MeasureSettings
+     */
     val measureDays = listOf(
         "",
         "1",
@@ -110,6 +129,26 @@ class SettingsViewModel(
 
     var selectedMeasureDays = mutableStateOf(measureDays[0])
 
+    private val _date = MutableStateFlow("")
+    val date: StateFlow<String> get() = _date
+
+    private val _realDate = MutableStateFlow<LocalDate?>(null)
+    private val realDate: StateFlow<LocalDate?> get() = _realDate
+
+    private val _measureAlarm = MutableStateFlow(
+        MeasureAlarm(
+            0,
+            0,
+            LocalDate.now(),
+            LocalTime.now(),
+            0
+        )
+    )
+    private val measureAlarm: StateFlow<MeasureAlarm> get() = _measureAlarm
+
+    /**
+     *  Initializing
+     */
     init {
         viewModelScope.launch {
             loadData()
@@ -120,26 +159,29 @@ class SettingsViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.checkIfTargetRangeExists()) {
                 try {
-                    getTargetRange()
+                    getTargetRangeFromDb()
                 } catch (e: Error) {
                     Log.e(TAG, "No data available $e")
                 }
-                getMedicaments()
+                getMedicamentsFromDb()
             } else {
-                getMedicaments()
+                getMedicamentsFromDb()
             }
         }
     }
 
-    private fun getMedicaments() {
+    /**
+     *  MedicamentSettings
+     */
+    private fun getMedicamentsFromDb() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getAllMedicaments().collect { response ->
-                _medicamentList.value = response
+                _medicamentTypeList.value = response
             }
         }
     }
 
-    private fun getTargetRange() {
+    private fun getTargetRangeFromDb() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getLastTargetRange().collect { response ->
                 _targetRange.value = response
@@ -147,14 +189,77 @@ class SettingsViewModel(
         }
     }
 
-    fun selectedMedicament(getMedicament: Medicament) {
-        _selectedMedicament.value = getMedicament
+    fun selectedMedicament(getMedicamentType: MedicamentType) {
+        _selectedMedicamentType.value = getMedicamentType
     }
 
-    fun addTargetRange(targetRange: TargetRange) {
+    // function to check if patient exists, getting last patientId, getting MedicamentDosageId
+    // where the medicament_id is matching the selection of dropdown and updating or creating patient
+    fun writeMedicamentDosageToPatientColumn() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addTargetRange(targetRange)
-            getTargetRange()
+            if (repository.checkIfPatientExists()) {
+                repository.getLastPatientId().collect { responseId ->
+                    _patient.value.id_patient = responseId.id_patient
+                    repository.getMedicamentDosageId(
+                        selectedMedicamentType.value.idMedicamentType
+                    ).collect { response ->
+                        _patient.value.medicamentDosageId = response.id_medicament_dosage
+                        repository.updatePatientMedicamentDosageId(
+                            patient.value.medicamentDosageId,
+                            patient.value.id_patient
+                        )
+                    }
+                }
+            } else {
+                repository.getMedicamentDosageId(
+                    selectedMedicamentType.value.idMedicamentType
+                ).collect { response ->
+                    _patient.value.medicamentDosageId = response.id_medicament_dosage
+                    repository.addPatient(patient.value)
+                }
+            }
+        }
+    }
+
+    /**
+     *  TargetRangeSettings
+     */
+    fun setTargetRange(setTargetRange: TargetRange) {
+        _targetRange.value = setTargetRange
+    }
+
+    // if a patient id exists the id will set in Foreign key of TargetRange otherwise it will be null
+    fun addTargetRangeToDb() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.checkIfPatientExists()) {
+                repository.getLastPatientId().collect { responseId ->
+                    _targetRange.value.patientId = responseId.id_patient
+                    _patient.value.id_patient = responseId.id_patient
+                    repository.addTargetRange(targetRange.value)
+                    repository.getLastTargetRange().collect { response ->
+                        _targetRange.value = response
+                        _patient.value.targetRangeId = targetRange.value.idTargetRange
+                        repository.updatePatientTargetRangeId(
+                            patient.value.targetRangeId,
+                            patient.value.id_patient
+                        )
+                    }
+                }
+            } else {
+                repository.addTargetRange(targetRange.value)
+                repository.getLastTargetRange().collect { response ->
+                    _targetRange.value = response
+                    _patient.value.targetRangeId = targetRange.value.idTargetRange
+                    repository.addPatient(patient.value)
+                    repository.getLastPatientId().collect { responseId ->
+                        _targetRange.value.patientId = responseId.id_patient
+                        repository.updateTargetRangePatientId(
+                            targetRange.value.patientId,
+                            targetRange.value.idTargetRange
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -163,6 +268,46 @@ class SettingsViewModel(
         selectedRangeTo = mutableStateOf(targetRangeTo[0])
     }
 
+    /**
+     *  MeasureSettings
+     */
+    fun addMeasureAlarm() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.checkIfPatientExists()) {
+                repository.getLastPatientId().collect { response ->
+                    _patient.value.id_patient = response.id_patient
+                    _measureAlarm.value.patientId = response.id_patient
+                    _measureAlarm.value.measureTime = timeState.value
+                    _measureAlarm.value.startDate = realDate.value!!
+                    _measureAlarm.value.everyXDays = selectedMeasureDays.value.toInt()
+                    repository.addMeasureAlarm(measureAlarm.value)
+                    repository.getLastMeasureAlarm().collect { responseId ->
+                        _measureAlarm.value.idMeasureAlarm = responseId.idMeasureAlarm
+                        repository.updateMeasureAlarmPatientId(
+                            measureAlarm.value.patientId,
+                            measureAlarm.value.idMeasureAlarm
+                        )
+                    }
+                }
+            } else {
+                repository.addPatient(patient.value)
+                repository.addMeasureAlarm(measureAlarm.value)
+                repository.getLastMeasureAlarm().collect { responseId ->
+                    _measureAlarm.value.idMeasureAlarm = responseId.idMeasureAlarm
+                    repository.updateMeasureAlarmPatientId(
+                        measureAlarm.value.patientId,
+                        measureAlarm.value.idMeasureAlarm
+                    )
+                }
+            }
+        }
+    }
+
+    /**
+     *  General (more than one Screen)
+     */
+
+    // getting LocalTime for Converting it to save it in db
     fun getTime(time: LocalTime) {
         _timeState.value = time
     }
@@ -182,5 +327,34 @@ class SettingsViewModel(
 
     fun setRealDate(setRealDate: LocalDate) {
         _realDate.value = setRealDate
+    }
+
+    fun addTakingAlarm() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.checkIfPatientExists()) {
+                repository.getLastPatientId().collect { response ->
+                    _patient.value.id_patient = response.id_patient
+                    _takingAlarm.value.patientId = response.id_patient
+                    _takingAlarm.value.takingTime = timeState.value
+                    repository.addTakingAlarm(takingAlarm.value)
+                    repository.getLastTakingAlarmId().collect { responseId ->
+                        _takingAlarm.value.idTakingTime = responseId.idTakingTime
+                        repository.updateTakingAlarmPatientId(
+                            takingAlarm.value.patientId,
+                            takingAlarm.value.idTakingTime
+                        )
+                    }
+                }
+            } else {
+                repository.addTakingAlarm(takingAlarm.value)
+                repository.getLastTakingAlarmId().collect { responseId ->
+                    _takingAlarm.value.idTakingTime = responseId.idTakingTime
+                    repository.updateTakingAlarmPatientId(
+                        takingAlarm.value.patientId,
+                        takingAlarm.value.idTakingTime
+                    )
+                }
+            }
+        }
     }
 }

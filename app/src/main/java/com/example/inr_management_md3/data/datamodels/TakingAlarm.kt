@@ -15,15 +15,26 @@ package com.example.inr_management_md3.data.datamodels
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.time.LocalTime
 
-@Entity(tableName = "taking_alarm")
+@Entity(
+    tableName = "taking_alarm",
+    foreignKeys = [
+        ForeignKey(
+            entity = Patient::class,
+            parentColumns = ["id_patient"],
+            childColumns = ["patient_id"]
+        )
+    ]
+)
 data class TakingAlarm(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_taking_alarm")
-    val idTakingTime: Long = 0,
+    var idTakingTime: Long = 0,
     @ColumnInfo(name = "taking_time")
-    val takingTime: Long = 0,
-    @ColumnInfo(name = "timestamp")
-    val timestamp: Long = 0
+    var takingTime: LocalTime = LocalTime.now(),
+    @ColumnInfo(name = "patient_id")
+    var patientId: Long? = 0
 )

@@ -30,9 +30,9 @@ import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavController) {
+fun MedicamentSettingsContent(settingsViewModel: SettingsViewModel, navController: NavController) {
     var checked by remember { mutableStateOf(false) }
-    val selectedMedicament by settingsViewModel.selectedMedicament.collectAsState()
+    val selectedMedicament by settingsViewModel.selectedMedicamentType.collectAsState()
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -74,8 +74,16 @@ fun MedicamentSettings(settingsViewModel: SettingsViewModel, navController: NavC
             ) {
                 Button(
                     onClick = {
-                        settingsViewModel.resetTextState()
-                        navController.navigateUp()
+                        if (!checked) {
+                            settingsViewModel.writeMedicamentDosageToPatientColumn()
+                            settingsViewModel.resetTextState()
+                            navController.navigateUp()
+                        } else {
+                            settingsViewModel.writeMedicamentDosageToPatientColumn()
+                            settingsViewModel.addTakingAlarm()
+                            settingsViewModel.resetTextState()
+                            navController.navigateUp()
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -115,9 +123,9 @@ fun MedicamentSettingsTimePicker(settingsViewModel: SettingsViewModel) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MedicamentTypeExposedDropdown(settingsViewModel: SettingsViewModel) {
-    val options by settingsViewModel.medicamentList.collectAsState()
+    val options by settingsViewModel.medicamentTypeList.collectAsState()
     var expanded by remember { mutableStateOf(false) }
-    val selectedMedicament by settingsViewModel.selectedMedicament.collectAsState()
+    val selectedMedicament by settingsViewModel.selectedMedicamentType.collectAsState()
 
     ExposedDropdownMenuBox(
         expanded = expanded,

@@ -49,7 +49,7 @@ fun MeasureSettingsScreen(navController: NavHostController, settingsViewModel: S
             )
         },
         content = {
-            MeasureSettingsContent(settingsViewModel)
+            MeasureSettingsContent(settingsViewModel, navController)
         },
         bottomBar = {
             BottomNavBar(navController = navController)

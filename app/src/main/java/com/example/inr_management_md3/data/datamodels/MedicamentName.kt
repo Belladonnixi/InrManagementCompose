@@ -22,9 +22,9 @@ import androidx.room.PrimaryKey
     tableName = "medicament_name",
     foreignKeys = [
         ForeignKey(
-            entity = Medicament::class,
-            parentColumns = ["id_medicament"],
-            childColumns = ["medicament_id"]
+            entity = MedicamentType::class,
+            parentColumns = ["id_medicament_type"],
+            childColumns = ["medicament_type_id"]
         )
     ]
 )
@@ -32,7 +32,7 @@ data class MedicamentName(
     @PrimaryKey
     @ColumnInfo(name = "id_medicament_name")
     val idMedicamentName: Long = 0,
-    @ColumnInfo(name = "medicament_id")
+    @ColumnInfo(name = "medicament_type_id")
     val medicamentId: Long = 0,
     @ColumnInfo(name = "name")
     val name: String = ""

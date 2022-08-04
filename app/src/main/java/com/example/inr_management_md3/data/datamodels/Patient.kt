@@ -30,17 +30,28 @@ import androidx.room.PrimaryKey
             entity = TargetRange::class,
             parentColumns = ["id_target_range"],
             childColumns = ["target_range_id"]
+        ),
+        ForeignKey(
+            entity = Comment::class,
+            parentColumns = ["id_comment"],
+            childColumns = ["comment_id"]
         )
     ]
 )
 data class Patient(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_patient")
-    val id_patient: Long = 0,
-    @ColumnInfo(name = "account_Id")
-    val accountId: Long = 0,
-    @ColumnInfo(name = "target_range_id")
-    val targetRangeId: Long = 0,
+    var id_patient: Long = 0,
+    @ColumnInfo(name = "first_name")
+    val firstName: String? = "",
+    @ColumnInfo(name = "last_name")
+    val lastName: String? = "",
     @ColumnInfo(name = "medicament_dosage_id")
-    val medicamentDosageId: Long = 0
+    var medicamentDosageId: Long? = 0,
+    @ColumnInfo(name = "target_range_id")
+    var targetRangeId: Long? = 0,
+    @ColumnInfo(name = "comment_id")
+    val commentId: Long? = 0,
+    @ColumnInfo(name = "account_Id")
+    val accountId: Long? = 0
 )

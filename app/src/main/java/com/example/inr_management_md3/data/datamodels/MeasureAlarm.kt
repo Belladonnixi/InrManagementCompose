@@ -15,19 +15,32 @@ package com.example.inr_management_md3.data.datamodels
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.time.LocalDate
+import java.time.LocalTime
+import java.util.*
 
-@Entity(tableName = "measure_alarm")
+@Entity(
+    tableName = "measure_alarm",
+    foreignKeys = [
+        ForeignKey(
+            entity = Patient::class,
+            parentColumns = ["id_patient"],
+            childColumns = ["patient_id"]
+        )
+    ]
+)
 data class MeasureAlarm(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_measure_alarm")
-    val idMeasureAlarm: Long = 0,
+    var idMeasureAlarm: Long = 0,
     @ColumnInfo(name = "every_x_days")
-    val everyXDays: Int = 0,
+    var everyXDays: Int = 0,
     @ColumnInfo(name = "start_date")
-    val startDate: Long = 0,
+    var startDate: LocalDate = LocalDate.now(),
     @ColumnInfo(name = "measure_time")
-    val measureTime: Long = 0,
-    @ColumnInfo(name = "timestamp")
-    val timestamp: Long = 0
+    var measureTime: LocalTime,
+    @ColumnInfo(name = "patient_id")
+    var patientId: Long? = null
 )

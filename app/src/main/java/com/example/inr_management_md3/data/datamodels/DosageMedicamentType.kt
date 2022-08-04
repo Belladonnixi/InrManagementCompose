@@ -22,9 +22,9 @@ import androidx.room.PrimaryKey
     tableName = "dosage_medicament_type",
     foreignKeys = [
         ForeignKey(
-            entity = Medicament::class,
-            parentColumns = ["id_medicament"],
-            childColumns = ["medicament_id"]
+            entity = MedicamentType::class,
+            parentColumns = ["id_medicament_type"],
+            childColumns = ["medicament_type_id"]
         )
     ]
 )
@@ -34,8 +34,8 @@ data class DosageMedicamentType(
     val idDosageMedicamentType: Long = 0,
     @ColumnInfo(name = "divisibility")
     val divisibility: Float = 0f,
-    @ColumnInfo(name = "medicament_id")
-    val medicamentId: Long = 0,
+    @ColumnInfo(name = "medicament_type_id")
+    val medicamentTypeId: Long = 0,
     @ColumnInfo(name = "max_dosage")
     val maxDosage: Int = 0
 )

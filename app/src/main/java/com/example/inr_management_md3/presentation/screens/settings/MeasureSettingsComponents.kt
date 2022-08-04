@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.DatePickerDialog
 import com.example.inr_management_md3.presentation.components.DatePickerTextField
@@ -128,7 +129,8 @@ fun MeasureSettingsTimePicker(settingsViewModel: SettingsViewModel) {
 
 @Composable
 fun MeasureSettingsContent(
-    settingsViewModel: SettingsViewModel
+    settingsViewModel: SettingsViewModel,
+    navController: NavController
 ) {
     val date by settingsViewModel.date.collectAsState()
     val options = settingsViewModel.measureDays
@@ -182,14 +184,17 @@ fun MeasureSettingsContent(
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
-                    onClick = { /* Do something! */ },
+                    onClick = {
+                        settingsViewModel.addMeasureAlarm()
+                        navController.navigateUp()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 60.dp)
                         .height(60.dp),
                     enabled =
-                    date.isNotEmpty() && options.isNotEmpty() && selectedOptionText.isNotEmpty()
-                            && timeState.text.isNotEmpty()
+                    date.isNotEmpty() && options.isNotEmpty() && selectedOptionText.isNotEmpty() &&
+                        timeState.text.isNotEmpty()
                 ) { Text(stringResource(id = R.string.save)) }
             }
         }

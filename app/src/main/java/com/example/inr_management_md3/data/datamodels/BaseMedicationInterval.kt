@@ -37,14 +37,14 @@ data class BaseMedicationInterval(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_base_medication_interval")
     val idBaseMedicationInterval: Long = 0,
-    @ColumnInfo(name = "dosage_on_taking_days")
-    val dosageOnTakingDays: Float = 0f,
+    @ColumnInfo(name = "patient_id")
+    val patientId: Long? = 0,
+    @ColumnInfo(name = "medicament_dosage_id")
+    val medicamentDosageId: Long = 0,
     @ColumnInfo(name = "taking_days_row")
     val takingDaysRow: Int = 0,
     @ColumnInfo(name = "taking_break_days_row")
     val takingBreakDaysRow: Int = 0,
-    @ColumnInfo(name = "patient_id")
-    val patientId: Long = 0,
-    @ColumnInfo(name = "medicament_dosage_id")
-    val medicamentDosageId: Long = 0
+    @ColumnInfo(name = "dosage_on_taking_days")
+    val dosageOnTakingDays: Float = 0f
 )

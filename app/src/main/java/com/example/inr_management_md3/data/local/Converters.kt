@@ -14,16 +14,38 @@
 package com.example.inr_management_md3.data.local
 
 import androidx.room.TypeConverter
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.*
 
 class Converters {
     @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
+    fun fromTimestampToDate(value: Long?): Date? {
         return value?.let { Date(it) }
     }
 
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time
+    }
+
+    @TypeConverter
+    fun fromStringToTime(value: String): LocalTime {
+        return LocalTime.parse(value)
+    }
+
+    @TypeConverter
+    fun fromTimeToString(time: LocalTime): String {
+        return time.toString()
+    }
+
+    @TypeConverter
+    fun fromStringToLocalDate(value: String): LocalDate {
+        return LocalDate.parse(value)
+    }
+
+    @TypeConverter
+    fun fromLocalDateToString(date: LocalDate): String {
+        return date.toString()
     }
 }

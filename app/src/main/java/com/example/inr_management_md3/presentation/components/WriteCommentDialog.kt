@@ -15,8 +15,6 @@ package com.example.inr_management_md3.presentation.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.EditCalendar
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -29,63 +27,37 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.inr_management_md3.R
-import com.himanshoe.kalendar.common.KalendarKonfig
-import com.himanshoe.kalendar.common.KalendarSelector
-import com.himanshoe.kalendar.common.KalendarStyle
-import com.himanshoe.kalendar.common.data.KalendarEvent
-import com.himanshoe.kalendar.ui.Kalendar
-import com.himanshoe.kalendar.ui.KalendarType
-import java.time.LocalDate
 
 /**
- *  Reusable DatePicker Component just DatePickerTextField and DatePickerDialog are needed
- *  for implementation
+ *  Write comment dialog as reusable stateless component
  */
 
 @Composable
-fun DatePickerTextField(
-    modifier: Modifier,
-    date: String,
-    onValueChange: (String) -> Unit,
-    onClick: () -> Unit,
-    label: @Composable (() -> Unit)? = null
-) {
-    TextField(
-        modifier = modifier,
-        value = date,
-        onValueChange = onValueChange,
-        readOnly = true,
-        label = label,
-        trailingIcon = {
-            IconButton(
-                onClick = onClick
-            ) {
-                Icon(Icons.Default.EditCalendar, contentDescription = null)
-            }
-        }
-    )
-}
-
-@Composable
-fun DatePickerDialog(
+fun WriteCommentDialog(
     title: String,
     dialogState: MutableState<Boolean>,
-    onCurrentDayClicked: (LocalDate, KalendarEvent?) -> Unit,
-    errorMessage: (String) -> Unit,
+    text: String,
+    modifier: Modifier,
+    onValueChange: (String) -> Unit,
+    label: @Composable (() -> Unit)? = null,
+    maxLinesComment: Int,
     cancelButton: () -> Unit,
     okButton: () -> Unit
 ) {
     Dialog(
         onDismissRequest = { dialogState.value = false },
         content = {
-            DatePickerDialogContent(
+            WriteCommentDialogContent(
                 title = title,
                 okButton = okButton,
                 cancelButton = cancelButton,
                 content = {
-                    DatePickerBodyContent(
-                        onCurrentDayClicked = onCurrentDayClicked,
-                        errorMessage = errorMessage
+                    CommentBodyContent(
+                        text = text,
+                        onValueChange = onValueChange,
+                        modifier = modifier,
+                        maxLinesComment = maxLinesComment,
+                        label = label
                     )
                 }
             )
@@ -99,7 +71,7 @@ fun DatePickerDialog(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DatePickerDialogContent(
+fun WriteCommentDialogContent(
     title: String,
     content: @Composable () -> Unit,
     cancelButton: () -> Unit,
@@ -109,7 +81,7 @@ fun DatePickerDialogContent(
         modifier = Modifier
             .fillMaxHeight(0.85f)
             .fillMaxWidth(1f),
-        shape = RoundedCornerShape(4.dp),
+        shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
     ) {
         Column(
@@ -118,9 +90,9 @@ fun DatePickerDialogContent(
                 .fillMaxWidth(1f),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            TitleAndButton(title)
-            DatePickerBody(content)
-            BottomButtons(
+            Title(title)
+            AddCommentBody(content)
+            CommentBottomButtons(
                 okButton = okButton,
                 cancelButton = cancelButton
             )
@@ -129,7 +101,7 @@ fun DatePickerDialogContent(
 }
 
 @Composable
-fun BottomButtons(
+fun CommentBottomButtons(
     cancelButton: () -> Unit,
     okButton: () -> Unit
 ) {
@@ -162,14 +134,14 @@ fun BottomButtons(
 }
 
 @Composable
-fun DatePickerBody(content: @Composable () -> Unit) {
+fun AddCommentBody(content: @Composable () -> Unit) {
     Box(modifier = Modifier.padding(20.dp)) {
         content()
     }
 }
 
 @Composable
-fun TitleAndButton(title: String) {
+fun Title(title: String) {
     Column {
         Row(
             modifier = Modifier
@@ -188,26 +160,22 @@ fun TitleAndButton(title: String) {
 }
 
 @Composable
-fun DatePickerBodyContent(
-    onCurrentDayClicked: (LocalDate, KalendarEvent?) -> Unit,
-    errorMessage: (String) -> Unit
+fun CommentBodyContent(
+    text: String,
+    modifier: Modifier,
+    onValueChange: (String) -> Unit,
+    label: @Composable (() -> Unit)? = null,
+    maxLinesComment: Int
 ) {
-    Kalendar(
-        kalendarType = KalendarType.Firey(),
-        kalendarKonfig = KalendarKonfig(weekCharacters = 2),
-        kalendarStyle = KalendarStyle(
-            kalendarBackgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
-            kalendarSelector = KalendarSelector.Circle(
-                selectedColor = MaterialTheme.colorScheme.primary,
-                todayColor = MaterialTheme.colorScheme.primary,
-                selectedTextColor = MaterialTheme.colorScheme.onPrimary,
-                defaultColor = Color.Transparent,
-                eventTextColor = MaterialTheme.colorScheme.primaryContainer
-            ),
-            hasRadius = true,
-            shape = RoundedCornerShape(10.dp)
-        ),
-        onCurrentDayClick = onCurrentDayClicked,
-        errorMessage = errorMessage
+    TextField(
+        value = text,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        maxLines = maxLinesComment,
+        label = label,
+        colors = TextFieldDefaults.textFieldColors(
+            containerColor = Color.White,
+            textColor = Color.Black
+        )
     )
 }

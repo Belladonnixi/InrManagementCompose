@@ -32,7 +32,7 @@ class DateTimeConverters {
     }
 
     fun dateToZonedDateTime(): ZonedDateTime {
-        val date: Date = Date()
+        val date = Date()
         val instant: Instant = date.toInstant()
         val zoneId: ZoneId = TimeZone.getDefault().toZoneId()
         return ZonedDateTime.ofInstant(instant, zoneId)

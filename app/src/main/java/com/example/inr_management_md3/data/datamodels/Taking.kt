@@ -35,34 +35,28 @@ import androidx.room.PrimaryKey
             entity = Patient::class,
             parentColumns = ["id_patient"],
             childColumns = ["patient_id"]
+        ),
+        ForeignKey(
+            entity = TakingAlarm::class,
+            parentColumns = ["id_taking_alarm"],
+            childColumns = ["taking_alarm_id"]
         )
-//        ForeignKey(
-//            entity = TakingAlarm::class,
-//            parentColumns = ["id_taking_alarm"],
-//            childColumns = ["taking_alarm_id"]
-//        )
     ]
 )
 data class Taking(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_taking")
     val idTaking: Long = 0,
-    @ColumnInfo(name = "base_medication_weekdays_id")
-    val baseMedicationWeekdaysId: Long = 0,
-    @ColumnInfo(name = "base_medication_interval_id")
-    val baseMedicationIntervalId: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Long = 0,
-    @ColumnInfo(name = "time_specified")
-    val timeSpecified: Long = 0,
+    val patientId: Long? = 0,
+    @ColumnInfo(name = "taking_alarm_id")
+    val takingAlarmId: Long? = 0,
     @ColumnInfo(name = "taking_time")
     val takingTime: Long = 0,
     @ColumnInfo(name = "taking_date")
     val takingDate: Long = 0,
-    @ColumnInfo(name = "comment_date")
-    val commentDate: Long = 0,
-    @ColumnInfo(name = "comment_day")
-    val commentDay: String = ""
-//    @ColumnInfo(name = "taking_alarm_id")
-//    val takingAlarmId: Long = 0
+    @ColumnInfo(name = "base_medication_weekdays_id")
+    val baseMedicationWeekdaysId: Long? = 0,
+    @ColumnInfo(name = "base_medication_interval_id")
+    val baseMedicationIntervalId: Long? = 0
 )

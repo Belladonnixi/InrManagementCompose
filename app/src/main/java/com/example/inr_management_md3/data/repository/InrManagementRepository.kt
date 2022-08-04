@@ -18,20 +18,50 @@ import com.example.inr_management_md3.data.datamodels.*
 import kotlinx.coroutines.flow.Flow
 
 interface InrManagementRepository {
-    suspend fun addMedicament(medicament: Medicament)
+    /**
+     *  Inserts
+     */
+    suspend fun addMedicament(medicamentType: MedicamentType)
     suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType)
     suspend fun addTargetRange(targetRange: TargetRange)
     suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage)
     suspend fun addTakingAlarm(takingAlarm: TakingAlarm)
-    fun getAllMedicaments(): Flow<List<Medicament>>
+    suspend fun addPatient(patient: Patient)
+    suspend fun addMeasureAlarm(measureAlarm: MeasureAlarm)
+
+    /**
+     *  Selects
+     */
+    fun getAllMedicaments(): Flow<List<MedicamentType>>
     fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>
     fun getLastTargetRange(): Flow<TargetRange>
+    fun getLastPatientId(): Flow<Patient>
+    fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage>
+    fun getLastTakingAlarmId(): Flow<TakingAlarm>
+    fun getLastMeasureAlarm(): Flow<MeasureAlarm>
+
+    /**
+     *  Booleans
+     */
     fun checkIfTargetRangeExists(): Boolean
+    fun checkIfPatientExists(): Boolean
+
+    /**
+     *  Updates
+     */
+    fun updatePatientMedicamentDosageId(medicamentDosageId: Long?, id: Long)
+    fun updatePatientTargetRangeId(targetRangeId: Long?, id: Long)
+    fun updateTargetRangePatientId(patientId: Long?, id: Long)
+    fun updateTakingAlarmPatientId(patientId: Long?, id: Long)
+    fun updateMeasureAlarmPatientId(patientId: Long?, id: Long)
 }
 
 class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrManagementRepository {
-    override suspend fun addMedicament(medicament: Medicament) {
-        appDataBase.inrManagementDao().addMedicament(medicament)
+    /**
+     *  Inserts
+     */
+    override suspend fun addMedicament(medicamentType: MedicamentType) {
+        appDataBase.inrManagementDao().addMedicament(medicamentType)
     }
 
     override suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType) {
@@ -50,7 +80,18 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
         appDataBase.inrManagementDao().addTakingAlarm(takingAlarm)
     }
 
-    override fun getAllMedicaments(): Flow<List<Medicament>> =
+    override suspend fun addPatient(patient: Patient) {
+        appDataBase.inrManagementDao().addPatient(patient)
+    }
+
+    override suspend fun addMeasureAlarm(measureAlarm: MeasureAlarm) {
+        appDataBase.inrManagementDao().addMeasureAlarm(measureAlarm)
+    }
+
+    /**
+     *  Selects
+     */
+    override fun getAllMedicaments(): Flow<List<MedicamentType>> =
         appDataBase.inrManagementDao().getAllMedicaments()
 
     override fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>> =
@@ -59,6 +100,43 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
     override fun getLastTargetRange(): Flow<TargetRange> =
         appDataBase.inrManagementDao().getLastTargetRange()
 
+    override fun getLastPatientId(): Flow<Patient> =
+        appDataBase.inrManagementDao().getLastPatientId()
+
+    override fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage> =
+        appDataBase.inrManagementDao()
+            .getMedicamentDosageId(idMedicamentType)
+
+    override fun getLastTakingAlarmId(): Flow<TakingAlarm> =
+        appDataBase.inrManagementDao().getLastTakingAlarmId()
+
+    override fun getLastMeasureAlarm(): Flow<MeasureAlarm> =
+        appDataBase.inrManagementDao().getLastMeasureAlarm()
+
+    /**
+     *  Booleans
+     */
     override fun checkIfTargetRangeExists(): Boolean =
         appDataBase.inrManagementDao().checkIfTargetRangeExists(1)
+
+    override fun checkIfPatientExists(): Boolean =
+        appDataBase.inrManagementDao().checkIfPatientExists(1)
+
+    /**
+     *  Updates
+     */
+    override fun updatePatientMedicamentDosageId(medicamentDosageId: Long?, id: Long) =
+        appDataBase.inrManagementDao().updatePatientMedicamentDosageId(medicamentDosageId, id)
+
+    override fun updatePatientTargetRangeId(targetRangeId: Long?, id: Long) =
+        appDataBase.inrManagementDao().updatePatientTargetRangeId(targetRangeId, id)
+
+    override fun updateTargetRangePatientId(patientId: Long?, id: Long) =
+        appDataBase.inrManagementDao().updateTargetRangePatientId(patientId, id)
+
+    override fun updateTakingAlarmPatientId(patientId: Long?, id: Long) =
+        appDataBase.inrManagementDao().updateTakingAlarmPatientId(patientId, id)
+
+    override fun updateMeasureAlarmPatientId(patientId: Long?, id: Long) =
+        appDataBase.inrManagementDao().updateMeasureAlarmPatientId(patientId, id)
 }
