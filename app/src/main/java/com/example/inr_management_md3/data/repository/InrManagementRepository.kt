@@ -18,6 +18,9 @@ import com.example.inr_management_md3.data.datamodels.*
 import kotlinx.coroutines.flow.Flow
 
 interface InrManagementRepository {
+    /**
+     *  Inserts
+     */
     suspend fun addMedicament(medicamentType: MedicamentType)
     suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType)
     suspend fun addTargetRange(targetRange: TargetRange)
@@ -25,21 +28,38 @@ interface InrManagementRepository {
     suspend fun addTakingAlarm(takingAlarm: TakingAlarm)
     suspend fun addPatient(patient: Patient)
     suspend fun addMeasureAlarm(measureAlarm: MeasureAlarm)
+
+    /**
+     *  Selects
+     */
     fun getAllMedicaments(): Flow<List<MedicamentType>>
     fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>
     fun getLastTargetRange(): Flow<TargetRange>
-    fun checkIfTargetRangeExists(): Boolean
-    fun checkIfPatientExists(): Boolean
     fun getLastPatientId(): Flow<Patient>
     fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage>
     fun getLastTakingAlarmId(): Flow<TakingAlarm>
+    fun getLastMeasureAlarm(): Flow<MeasureAlarm>
+
+    /**
+     *  Booleans
+     */
+    fun checkIfTargetRangeExists(): Boolean
+    fun checkIfPatientExists(): Boolean
+
+    /**
+     *  Updates
+     */
     fun updatePatientMedicamentDosageId(medicamentDosageId: Long?, id: Long)
     fun updatePatientTargetRangeId(targetRangeId: Long?, id: Long)
     fun updateTargetRangePatientId(patientId: Long?, id: Long)
     fun updateTakingAlarmPatientId(patientId: Long?, id: Long)
+    fun updateMeasureAlarmPatientId(patientId: Long?, id: Long)
 }
 
 class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrManagementRepository {
+    /**
+     *  Inserts
+     */
     override suspend fun addMedicament(medicamentType: MedicamentType) {
         appDataBase.inrManagementDao().addMedicament(medicamentType)
     }
@@ -68,6 +88,9 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
         appDataBase.inrManagementDao().addMeasureAlarm(measureAlarm)
     }
 
+    /**
+     *  Selects
+     */
     override fun getAllMedicaments(): Flow<List<MedicamentType>> =
         appDataBase.inrManagementDao().getAllMedicaments()
 
@@ -76,12 +99,6 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override fun getLastTargetRange(): Flow<TargetRange> =
         appDataBase.inrManagementDao().getLastTargetRange()
-
-    override fun checkIfTargetRangeExists(): Boolean =
-        appDataBase.inrManagementDao().checkIfTargetRangeExists(1)
-
-    override fun checkIfPatientExists(): Boolean =
-        appDataBase.inrManagementDao().checkIfPatientExists(1)
 
     override fun getLastPatientId(): Flow<Patient> =
         appDataBase.inrManagementDao().getLastPatientId()
@@ -93,6 +110,21 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
     override fun getLastTakingAlarmId(): Flow<TakingAlarm> =
         appDataBase.inrManagementDao().getLastTakingAlarmId()
 
+    override fun getLastMeasureAlarm(): Flow<MeasureAlarm> =
+        appDataBase.inrManagementDao().getLastMeasureAlarm()
+
+    /**
+     *  Booleans
+     */
+    override fun checkIfTargetRangeExists(): Boolean =
+        appDataBase.inrManagementDao().checkIfTargetRangeExists(1)
+
+    override fun checkIfPatientExists(): Boolean =
+        appDataBase.inrManagementDao().checkIfPatientExists(1)
+
+    /**
+     *  Updates
+     */
     override fun updatePatientMedicamentDosageId(medicamentDosageId: Long?, id: Long) =
         appDataBase.inrManagementDao().updatePatientMedicamentDosageId(medicamentDosageId, id)
 
@@ -104,4 +136,7 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override fun updateTakingAlarmPatientId(patientId: Long?, id: Long) =
         appDataBase.inrManagementDao().updateTakingAlarmPatientId(patientId, id)
+
+    override fun updateMeasureAlarmPatientId(patientId: Long?, id: Long) =
+        appDataBase.inrManagementDao().updateMeasureAlarmPatientId(patientId, id)
 }

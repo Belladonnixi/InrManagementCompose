@@ -23,7 +23,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface InrManagementDao {
 
-    // Inserts
+    /**
+     *  Inserts
+     */
+
     @Insert(onConflict = REPLACE)
     suspend fun addMedicament(medicamentType: MedicamentType)
 
@@ -45,7 +48,10 @@ interface InrManagementDao {
     @Insert(onConflict = REPLACE)
     suspend fun addMeasureAlarm(measureAlarm: MeasureAlarm)
 
-    // Selects
+    /**
+     *  Selects
+     */
+
     @Query("SELECT * FROM medicament_type")
     fun getAllMedicaments(): Flow<List<MedicamentType>>
 
@@ -64,14 +70,23 @@ interface InrManagementDao {
     @Query("SELECT * FROM taking_alarm ORDER BY id_taking_alarm DESC LIMIT 1")
     fun getLastTakingAlarmId(): Flow<TakingAlarm>
 
-    // Booleans
+    @Query("SELECT id_measure_alarm FROM measure_alarm ORDER BY id_measure_alarm DESC LIMIT 1")
+    fun getLastMeasureAlarm(): Flow<MeasureAlarm>
+
+    /**
+     *  Booleans
+     */
+
     @Query("SELECT EXISTS (SELECT id_target_range FROM target_range WHERE id_target_range= :id)")
     fun checkIfTargetRangeExists(id: Long): Boolean
 
     @Query("SELECT EXISTS (SELECT id_patient FROM patient WHERE id_patient= :id)")
     fun checkIfPatientExists(id: Long): Boolean
 
-    // Updates
+    /**
+     *  Updates
+     */
+
     @Query("UPDATE patient SET medicament_dosage_id = :medicamentDosageId WHERE id_patient = :id")
     fun updatePatientMedicamentDosageId(medicamentDosageId: Long?, id: Long)
 
@@ -83,4 +98,7 @@ interface InrManagementDao {
 
     @Query("UPDATE taking_alarm SET patient_id = :patientId WHERE id_taking_alarm = :id")
     fun updateTakingAlarmPatientId(patientId: Long?, id: Long)
+
+    @Query("UPDATE measure_alarm SET patient_id = :patientId WHERE id_measure_alarm = :id")
+    fun updateMeasureAlarmPatientId(patientId: Long?, id: Long)
 }

@@ -80,12 +80,6 @@ class SettingsViewModel(
     private val _timeState = MutableStateFlow(LocalTime.now())
     private val timeState: StateFlow<LocalTime> get() = _timeState
 
-    private val _date = MutableStateFlow("")
-    val date: StateFlow<String> get() = _date
-
-    private val _realDate = MutableStateFlow<LocalDate?>(null)
-    val realDate: StateFlow<LocalDate?> get() = _realDate
-
     private val _patient = MutableStateFlow(
         Patient(
             0,
@@ -139,6 +133,12 @@ class SettingsViewModel(
     )
 
     var selectedMeasureDays = mutableStateOf(measureDays[0])
+
+    private val _date = MutableStateFlow("")
+    val date: StateFlow<String> get() = _date
+
+    private val _realDate = MutableStateFlow<LocalDate?>(null)
+    val realDate: StateFlow<LocalDate?> get() = _realDate
 
     /**
      *  Initializing

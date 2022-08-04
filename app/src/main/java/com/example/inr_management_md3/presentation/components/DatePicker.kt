@@ -83,7 +83,7 @@ fun DatePickerDialog(
                 okButton = okButton,
                 cancelButton = cancelButton,
                 content = {
-                    BodyContent(
+                    DatePickerBodyContent(
                         onCurrentDayClicked = onCurrentDayClicked,
                         errorMessage = errorMessage
                     )
@@ -119,7 +119,7 @@ fun DatePickerDialogContent(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             TitleAndButton(title)
-            AddBody(content)
+            DatePickerBody(content)
             BottomButtons(
                 okButton = okButton,
                 cancelButton = cancelButton
@@ -162,7 +162,7 @@ fun BottomButtons(
 }
 
 @Composable
-fun AddBody(content: @Composable () -> Unit) {
+fun DatePickerBody(content: @Composable () -> Unit) {
     Box(modifier = Modifier.padding(20.dp)) {
         content()
     }
@@ -188,7 +188,7 @@ fun TitleAndButton(title: String) {
 }
 
 @Composable
-fun BodyContent(
+fun DatePickerBodyContent(
     onCurrentDayClicked: (LocalDate, KalendarEvent?) -> Unit,
     errorMessage: (String) -> Unit
 ) {
