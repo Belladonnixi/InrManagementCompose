@@ -18,10 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.inr_management_md3.data.datamodels.MedicamentType
-import com.example.inr_management_md3.data.datamodels.Patient
-import com.example.inr_management_md3.data.datamodels.TakingAlarm
-import com.example.inr_management_md3.data.datamodels.TargetRange
+import com.example.inr_management_md3.data.datamodels.*
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,8 +45,6 @@ class SettingsViewModel(
 
     private var _selectedMedicamentType = MutableStateFlow(MedicamentType())
     val selectedMedicamentType: StateFlow<MedicamentType> get() = _selectedMedicamentType
-
-//    val timestamp: Date = DateTimeConverters().zonedDateTimeToDate()
 
     /**
      *  TargetRangeSettings
@@ -139,6 +134,17 @@ class SettingsViewModel(
 
     private val _realDate = MutableStateFlow<LocalDate?>(null)
     val realDate: StateFlow<LocalDate?> get() = _realDate
+
+    private val _measureAlarm = MutableStateFlow(
+        MeasureAlarm(
+            0,
+            0,
+            LocalDate.now(),
+            LocalTime.now(),
+            0
+        )
+    )
+    val measureAlarm: StateFlow<MeasureAlarm> get() = _measureAlarm
 
     /**
      *  Initializing
@@ -260,6 +266,41 @@ class SettingsViewModel(
     fun resetTargetRangeDropdowns() {
         selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
         selectedRangeTo = mutableStateOf(targetRangeTo[0])
+    }
+
+    /**
+     *  MeasureSettings
+     */
+    fun addMeasureAlarm() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.checkIfPatientExists()) {
+                repository.getLastPatientId().collect { response ->
+                    _patient.value.id_patient = response.id_patient
+                    _measureAlarm.value.patientId = response.id_patient
+                    _measureAlarm.value.measureTime = timeState.value
+                    _measureAlarm.value.startDate = realDate.value!!
+                    _measureAlarm.value.everyXDays = selectedMeasureDays.value.toInt()
+                    repository.addMeasureAlarm(measureAlarm.value)
+                    repository.getLastMeasureAlarm().collect { responseId ->
+                        _measureAlarm.value.idMeasureAlarm = responseId.idMeasureAlarm
+                        repository.updateMeasureAlarmPatientId(
+                            measureAlarm.value.patientId,
+                            measureAlarm.value.idMeasureAlarm
+                        )
+                    }
+                }
+            } else {
+                repository.addPatient(patient.value)
+                repository.addMeasureAlarm(measureAlarm.value)
+                repository.getLastMeasureAlarm().collect { responseId ->
+                    _measureAlarm.value.idMeasureAlarm = responseId.idMeasureAlarm
+                    repository.updateMeasureAlarmPatientId(
+                        measureAlarm.value.patientId,
+                        measureAlarm.value.idMeasureAlarm
+                    )
+                }
+            }
+        }
     }
 
     /**

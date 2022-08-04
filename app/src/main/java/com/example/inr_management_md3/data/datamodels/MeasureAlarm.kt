@@ -17,7 +17,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.time.LocalDate
 import java.time.LocalTime
+import java.util.*
 
 @Entity(
     tableName = "measure_alarm",
@@ -32,13 +34,13 @@ import java.time.LocalTime
 data class MeasureAlarm(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_measure_alarm")
-    val idMeasureAlarm: Long = 0,
+    var idMeasureAlarm: Long = 0,
     @ColumnInfo(name = "every_x_days")
-    val everyXDays: Int = 0,
+    var everyXDays: Int = 0,
     @ColumnInfo(name = "start_date")
-    val startDate: Long = 0,
+    var startDate: LocalDate = LocalDate.now(),
     @ColumnInfo(name = "measure_time")
-    val measureTime: LocalTime,
+    var measureTime: LocalTime,
     @ColumnInfo(name = "patient_id")
-    val patientId: Long? = 0
+    var patientId: Long? = null
 )

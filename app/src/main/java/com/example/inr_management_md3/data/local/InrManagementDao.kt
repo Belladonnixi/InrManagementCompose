@@ -70,7 +70,7 @@ interface InrManagementDao {
     @Query("SELECT * FROM taking_alarm ORDER BY id_taking_alarm DESC LIMIT 1")
     fun getLastTakingAlarmId(): Flow<TakingAlarm>
 
-    @Query("SELECT id_measure_alarm FROM measure_alarm ORDER BY id_measure_alarm DESC LIMIT 1")
+    @Query("SELECT * FROM measure_alarm ORDER BY id_measure_alarm DESC LIMIT 1")
     fun getLastMeasureAlarm(): Flow<MeasureAlarm>
 
     /**

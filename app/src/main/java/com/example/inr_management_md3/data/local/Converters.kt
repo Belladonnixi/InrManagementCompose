@@ -14,6 +14,7 @@
 package com.example.inr_management_md3.data.local
 
 import androidx.room.TypeConverter
+import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
 
@@ -36,5 +37,15 @@ class Converters {
     @TypeConverter
     fun fromTimeToString(time: LocalTime): String {
         return time.toString()
+    }
+
+    @TypeConverter
+    fun fromStringToLocalDate(value: String): LocalDate {
+        return LocalDate.parse(value)
+    }
+
+    @TypeConverter
+    fun fromLocalDateToString(date: LocalDate): String {
+        return date.toString()
     }
 }

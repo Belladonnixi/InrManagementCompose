@@ -184,7 +184,10 @@ fun MeasureSettingsContent(
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
-                    onClick = { navController.navigateUp() },
+                    onClick = {
+                        settingsViewModel.addMeasureAlarm()
+                        navController.navigateUp()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 60.dp)
