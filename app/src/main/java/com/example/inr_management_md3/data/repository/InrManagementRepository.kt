@@ -52,6 +52,7 @@ interface InrManagementRepository {
     fun checkIfMedicamentDosageIdExistsInPatient(id: Long): Boolean
     fun checkIfTakingAlarmIsSet(): Boolean
     fun checkIfTakingAlarmIsSetForPatient(id: Long): Boolean
+    fun checkIfMeasureAlarmIsSet(): Boolean
 
     /**
      *  Updates
@@ -149,6 +150,9 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override fun checkIfTakingAlarmIsSetForPatient(id: Long): Boolean =
         appDataBase.inrManagementDao().checkIfTakingAlarmIsSetForPatient(id)
+
+    override fun checkIfMeasureAlarmIsSet(): Boolean =
+        appDataBase.inrManagementDao().checkIfMeasureAlarmIsSet(1)
 
     /**
      *  Updates

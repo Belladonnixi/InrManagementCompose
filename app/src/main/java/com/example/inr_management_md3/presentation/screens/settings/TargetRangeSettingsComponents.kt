@@ -208,7 +208,7 @@ fun TargetRangeContent(
                         settingsViewModel.setTargetRange(setTargetRange)
                         settingsViewModel.addTargetRangeToDb()
                         navController.navigateUp()
-                        settingsViewModel.resetTargetRangeDropdowns()
+//                        settingsViewModel.resetTargetRangeDropdowns()
                     },
                     modifier = Modifier
                         .fillMaxWidth()

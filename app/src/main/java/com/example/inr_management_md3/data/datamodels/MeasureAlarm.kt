@@ -40,7 +40,7 @@ data class MeasureAlarm(
     @ColumnInfo(name = "start_date")
     var startDate: LocalDate = LocalDate.now(),
     @ColumnInfo(name = "measure_time")
-    var measureTime: LocalTime,
+    var measureTime: LocalTime = LocalTime.now(),
     @ColumnInfo(name = "patient_id")
     var patientId: Long? = null
 )

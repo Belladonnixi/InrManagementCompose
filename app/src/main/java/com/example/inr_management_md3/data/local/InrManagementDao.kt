@@ -104,6 +104,9 @@ interface InrManagementDao {
     @Query("SELECT EXISTS (SELECT id_taking_alarm FROM taking_alarm WHERE patient_id = :id)")
     fun checkIfTakingAlarmIsSetForPatient(id: Long): Boolean
 
+    @Query("SELECT EXISTS (SELECT id_measure_alarm FROM measure_alarm WHERE id_measure_alarm = :id)")
+    fun checkIfMeasureAlarmIsSet(id: Long): Boolean
+
     /**
      *  Updates
      */

@@ -26,9 +26,6 @@ class CalendarViewModel :
     private val _realDate = MutableStateFlow<LocalDate?>(null)
     val realDate: StateFlow<LocalDate?> get() = _realDate
 
-    private val _openPopUp = MutableStateFlow(false)
-    val openPopUp: StateFlow<Boolean> get() = _openPopUp
-
     private val _comment = MutableStateFlow("")
     val comment: StateFlow<String> get() = _comment
 
@@ -38,10 +35,6 @@ class CalendarViewModel :
 
     fun setRealDate(setRealDate: LocalDate) {
         _realDate.value = setRealDate
-    }
-
-    fun setUpPopUpState(setPopUp: Boolean) {
-        _openPopUp.value = !setPopUp
     }
 
     fun setComment(setText: String) {

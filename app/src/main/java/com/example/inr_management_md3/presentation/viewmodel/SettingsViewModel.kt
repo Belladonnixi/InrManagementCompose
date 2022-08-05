@@ -44,7 +44,12 @@ class SettingsViewModel(
     private var _medicamentTypeList = MutableStateFlow(emptyList<MedicamentType>())
     val medicamentTypeList: StateFlow<List<MedicamentType>> get() = _medicamentTypeList
 
-    private var _selectedMedicamentType = MutableStateFlow(MedicamentType())
+    private var _selectedMedicamentType = MutableStateFlow(
+        MedicamentType(
+            0,
+            ""
+        )
+    )
     val selectedMedicamentType: StateFlow<MedicamentType> get() = _selectedMedicamentType
 
     private var _savedMedicamentType = MutableStateFlow(String())
@@ -59,7 +64,7 @@ class SettingsViewModel(
     private var _targetRange = MutableStateFlow(
         TargetRange(
             0,
-            0,
+            null,
             0,
             0
         )
@@ -94,7 +99,13 @@ class SettingsViewModel(
     )
     val patient: StateFlow<Patient> get() = _patient
 
-    private var _takingAlarm = MutableStateFlow(TakingAlarm())
+    private var _takingAlarm = MutableStateFlow(
+        TakingAlarm(
+            0,
+            LocalTime.now(),
+            null
+        )
+    )
     private val takingAlarm: StateFlow<TakingAlarm> get() = _takingAlarm
 
     /**
@@ -145,13 +156,16 @@ class SettingsViewModel(
     private val _measureAlarm = MutableStateFlow(
         MeasureAlarm(
             0,
-            0,
+            1,
             LocalDate.now(),
             LocalTime.now(),
-            0
+            null
         )
     )
-    private val measureAlarm: StateFlow<MeasureAlarm> get() = _measureAlarm
+    val measureAlarm: StateFlow<MeasureAlarm> get() = _measureAlarm
+
+//    private var _measureTime = MutableStateFlow((String()))
+//    val measureTime: StateFlow<String> get() = _measureTime
 
     /**
      *  Initializing
@@ -186,6 +200,14 @@ class SettingsViewModel(
                     if (repository.checkIfTargetRangeExists()) {
                         try {
                             getTargetRangeFromDb()
+                        } catch (e: Error) {
+                            Log.e(TAG, "No data available $e")
+                        }
+                        getMedicamentsFromDb()
+                    }
+                    if (repository.checkIfMeasureAlarmIsSet()) {
+                        try {
+                            getSavedMeasureSettingsFromDb()
                         } catch (e: Error) {
                             Log.e(TAG, "No data available $e")
                         }
@@ -348,10 +370,10 @@ class SettingsViewModel(
         }
     }
 
-    fun resetTargetRangeDropdowns() {
-        selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
-        selectedRangeTo = mutableStateOf(targetRangeTo[0])
-    }
+//    fun resetTargetRangeDropdowns() {
+//        selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
+//        selectedRangeTo = mutableStateOf(targetRangeTo[0])
+//    }
 
     /**
      *  MeasureSettings
@@ -388,6 +410,14 @@ class SettingsViewModel(
         }
     }
 
+    private fun getSavedMeasureSettingsFromDb() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getLastMeasureAlarm().collect { response ->
+                _measureAlarm.value = response
+            }
+        }
+    }
+
     /**
      *  General (more than one Screen)
      */
@@ -400,10 +430,11 @@ class SettingsViewModel(
     fun getFormattedTime(formattedTime: TextFieldValue) {
         _textState.value = formattedTime
     }
-//
+
 //    fun resetTextState() {
 //        val text = TextFieldValue("")
 //        _textState.value = text
+//        selectedMeasureDays = mutableStateOf(measureDays[0])
 //    }
 
     fun setDate(setDate: String) {
