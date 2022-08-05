@@ -61,17 +61,29 @@ interface InrManagementDao {
     @Query("SELECT * FROM target_range ORDER BY id_target_range DESC LIMIT 1")
     fun getLastTargetRange(): Flow<TargetRange>
 
-    @Query("SELECT id_patient FROM patient ORDER BY id_patient DESC LIMIT 1")
-    fun getLastPatientId(): Flow<Patient>
+    @Query("SELECT * FROM patient ORDER BY id_patient DESC LIMIT 1")
+    fun getLastPatient(): Flow<Patient>
 
     @Query("SELECT * FROM medicament_dosage WHERE medicament_type_id = :idMedicamentType")
-    fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage>
+    fun getMedicamentDosageIdOfSelectedMedicamentType(idMedicamentType: Long): Flow<MedicamentDosage>
 
     @Query("SELECT * FROM taking_alarm ORDER BY id_taking_alarm DESC LIMIT 1")
     fun getLastTakingAlarmId(): Flow<TakingAlarm>
 
     @Query("SELECT * FROM measure_alarm ORDER BY id_measure_alarm DESC LIMIT 1")
     fun getLastMeasureAlarm(): Flow<MeasureAlarm>
+
+    @Query("SELECT * FROM medicament_type WHERE id_medicament_type = :id")
+    fun getTypeName(id: Long): Flow<MedicamentType>
+
+    @Query("SELECT * FROM medicament_dosage WHERE id_medicament_dosage = :id")
+    fun getMedicamentDosageWhereIdMatches(id: Long): Flow<MedicamentDosage>
+
+    @Query("SELECT * FROM taking_alarm WHERE patient_id = :id ORDER BY id_taking_alarm DESC LIMIT 1")
+    fun getLastTakingAlarmWherePatientIdMatches(id: Long): Flow<TakingAlarm>
+
+    @Query("SELECT * FROM taking_alarm ORDER BY id_taking_alarm DESC LIMIT 1")
+    fun getLastTakingAlarm(): Flow<TakingAlarm>
 
     /**
      *  Booleans
@@ -80,8 +92,17 @@ interface InrManagementDao {
     @Query("SELECT EXISTS (SELECT id_target_range FROM target_range WHERE id_target_range= :id)")
     fun checkIfTargetRangeExists(id: Long): Boolean
 
-    @Query("SELECT EXISTS (SELECT id_patient FROM patient WHERE id_patient= :id)")
+    @Query("SELECT EXISTS (SELECT id_patient FROM patient WHERE id_patient = :id)")
     fun checkIfPatientExists(id: Long): Boolean
+
+    @Query("SELECT EXISTS (SELECT medicament_dosage_id FROM patient WHERE id_patient = :id)")
+    fun checkIfMedicamentDosageIdExistsInPatient(id: Long): Boolean
+
+    @Query("SELECT EXISTS (SELECT id_taking_alarm FROM taking_alarm WHERE id_taking_alarm = :id)")
+    fun checkIfTakingAlarmIsSet(id: Long): Boolean
+
+    @Query("SELECT EXISTS (SELECT id_taking_alarm FROM taking_alarm WHERE patient_id = :id)")
+    fun checkIfTakingAlarmIsSetForPatient(id: Long): Boolean
 
     /**
      *  Updates

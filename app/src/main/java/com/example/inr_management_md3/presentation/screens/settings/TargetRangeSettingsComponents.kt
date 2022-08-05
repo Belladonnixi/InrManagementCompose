@@ -99,7 +99,7 @@ fun TargetRangeExposedDropdownTo(settingsViewModel: SettingsViewModel) {
 }
 
 @Composable
-fun TargetRange(
+fun TargetRangeContent(
     settingsViewModel: SettingsViewModel,
     navController: NavController
 ) {

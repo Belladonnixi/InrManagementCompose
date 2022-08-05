@@ -35,16 +35,23 @@ interface InrManagementRepository {
     fun getAllMedicaments(): Flow<List<MedicamentType>>
     fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>
     fun getLastTargetRange(): Flow<TargetRange>
-    fun getLastPatientId(): Flow<Patient>
+    fun getLastPatient(): Flow<Patient>
     fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage>
     fun getLastTakingAlarmId(): Flow<TakingAlarm>
     fun getLastMeasureAlarm(): Flow<MeasureAlarm>
+    fun getTypeName(id: Long): Flow<MedicamentType>
+    fun getMedicamentDosageWhereIdMatches(id: Long): Flow<MedicamentDosage>
+    fun getLastTakingAlarmWherePatientIdMatches(id: Long): Flow<TakingAlarm>
+    fun getLastTakingAlarm(): Flow<TakingAlarm>
 
     /**
      *  Booleans
      */
     fun checkIfTargetRangeExists(): Boolean
     fun checkIfPatientExists(): Boolean
+    fun checkIfMedicamentDosageIdExistsInPatient(id: Long): Boolean
+    fun checkIfTakingAlarmIsSet(): Boolean
+    fun checkIfTakingAlarmIsSetForPatient(id: Long): Boolean
 
     /**
      *  Updates
@@ -100,18 +107,30 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
     override fun getLastTargetRange(): Flow<TargetRange> =
         appDataBase.inrManagementDao().getLastTargetRange()
 
-    override fun getLastPatientId(): Flow<Patient> =
-        appDataBase.inrManagementDao().getLastPatientId()
+    override fun getLastPatient(): Flow<Patient> =
+        appDataBase.inrManagementDao().getLastPatient()
 
     override fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage> =
         appDataBase.inrManagementDao()
-            .getMedicamentDosageId(idMedicamentType)
+            .getMedicamentDosageIdOfSelectedMedicamentType(idMedicamentType)
 
     override fun getLastTakingAlarmId(): Flow<TakingAlarm> =
         appDataBase.inrManagementDao().getLastTakingAlarmId()
 
     override fun getLastMeasureAlarm(): Flow<MeasureAlarm> =
         appDataBase.inrManagementDao().getLastMeasureAlarm()
+
+    override fun getTypeName(id: Long): Flow<MedicamentType> =
+        appDataBase.inrManagementDao().getTypeName(id)
+
+    override fun getMedicamentDosageWhereIdMatches(id: Long): Flow<MedicamentDosage> =
+        appDataBase.inrManagementDao().getMedicamentDosageWhereIdMatches(id)
+
+    override fun getLastTakingAlarmWherePatientIdMatches(id: Long): Flow<TakingAlarm> =
+        appDataBase.inrManagementDao().getLastTakingAlarmWherePatientIdMatches(id)
+
+    override fun getLastTakingAlarm(): Flow<TakingAlarm> =
+        appDataBase.inrManagementDao().getLastTakingAlarm()
 
     /**
      *  Booleans
@@ -121,6 +140,15 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override fun checkIfPatientExists(): Boolean =
         appDataBase.inrManagementDao().checkIfPatientExists(1)
+
+    override fun checkIfMedicamentDosageIdExistsInPatient(id: Long): Boolean =
+        appDataBase.inrManagementDao().checkIfMedicamentDosageIdExistsInPatient(id)
+
+    override fun checkIfTakingAlarmIsSet(): Boolean =
+        appDataBase.inrManagementDao().checkIfTakingAlarmIsSet(1)
+
+    override fun checkIfTakingAlarmIsSetForPatient(id: Long): Boolean =
+        appDataBase.inrManagementDao().checkIfTakingAlarmIsSetForPatient(id)
 
     /**
      *  Updates

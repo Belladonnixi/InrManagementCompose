@@ -14,11 +14,13 @@
 package com.example.inr_management_md3.presentation.screens.settings
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -33,16 +35,27 @@ import java.time.format.DateTimeFormatter
 fun MedicamentSettingsContent(settingsViewModel: SettingsViewModel, navController: NavController) {
     var checked by remember { mutableStateOf(false) }
     val selectedMedicament by settingsViewModel.selectedMedicamentType.collectAsState()
+    val name by settingsViewModel.savedMedicamentType.collectAsState()
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 40.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
+            .padding(top = 20.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 50.dp, bottom = 30.dp)
         ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            ) {
+                if (name.isNotEmpty()) {
+                    SavedSettingsBox(settingsViewModel)
+                }
+            }
+
             MedicamentTypeExposedDropdown(settingsViewModel)
 
             Row(
@@ -74,14 +87,12 @@ fun MedicamentSettingsContent(settingsViewModel: SettingsViewModel, navControlle
             ) {
                 Button(
                     onClick = {
-                        if (!checked) {
+                        if (checked) {
                             settingsViewModel.writeMedicamentDosageToPatientColumn()
-                            settingsViewModel.resetTextState()
+                            settingsViewModel.addTakingAlarm()
                             navController.navigateUp()
                         } else {
                             settingsViewModel.writeMedicamentDosageToPatientColumn()
-                            settingsViewModel.addTakingAlarm()
-                            settingsViewModel.resetTextState()
                             navController.navigateUp()
                         }
                     },
@@ -91,6 +102,68 @@ fun MedicamentSettingsContent(settingsViewModel: SettingsViewModel, navControlle
                         .height(60.dp),
                     enabled = selectedMedicament.type.isNotEmpty()
                 ) { Text(stringResource(id = R.string.save)) }
+            }
+        }
+    }
+}
+
+@Composable
+fun SavedSettingsBox(settingsViewModel: SettingsViewModel) {
+    val name by settingsViewModel.savedMedicamentType.collectAsState()
+    val time by settingsViewModel.time.collectAsState()
+
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        color = MaterialTheme.colorScheme.primaryContainer,
+        shape = RoundedCornerShape(10.dp)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Your saved medicament settings:",
+                modifier = Modifier.padding(16.dp),
+                fontWeight = FontWeight.SemiBold
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Selected Medicament: " +
+                        name
+                )
+            }
+            if (time.isNotEmpty()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Your Taking Time:",
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    Column(
+                        modifier = Modifier,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = time,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                }
             }
         }
     }

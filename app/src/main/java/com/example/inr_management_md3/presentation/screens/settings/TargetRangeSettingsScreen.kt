@@ -49,7 +49,7 @@ fun TargetRangeSettingsScreen(navController: NavHostController, settingsViewMode
             )
         },
         content = {
-            TargetRange(settingsViewModel, navController)
+            TargetRangeContent(settingsViewModel, navController)
         },
         bottomBar = {
             BottomNavBar(navController = navController)
