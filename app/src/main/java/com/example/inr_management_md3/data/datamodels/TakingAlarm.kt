@@ -34,7 +34,7 @@ data class TakingAlarm(
     @ColumnInfo(name = "id_taking_alarm")
     var idTakingTime: Long = 0,
     @ColumnInfo(name = "taking_time")
-    var takingTime: LocalTime = LocalTime.now(),
+    var takingTime: LocalTime? = null,
     @ColumnInfo(name = "patient_id")
     var patientId: Long? = 0
 )

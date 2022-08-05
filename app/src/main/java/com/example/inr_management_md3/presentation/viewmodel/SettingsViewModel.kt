@@ -313,7 +313,7 @@ class SettingsViewModel(
     private fun getSelectedTimeFromDb() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getLastTakingAlarm().collect { response ->
-                _time.value = response.takingTime.format(
+                _time.value = response.takingTime!!.format(
                     DateTimeFormatter.ofPattern("hh:mm a")
                 )
             }

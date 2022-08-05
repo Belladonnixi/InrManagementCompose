@@ -185,7 +185,7 @@ fun MeasureSettingsContent(
                                 )
                             }
                             Text(
-                                text = "measure time: " + measureAlarm.measureTime.format(
+                                text = "measure time: " + measureAlarm.measureTime!!.format(
                                     DateTimeFormatter.ofPattern("hh:mm a")
                                 ),
                                 modifier = Modifier

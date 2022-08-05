@@ -37,7 +37,9 @@ import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 @Composable
 fun CalendarDayView(calendarViewModel: CalendarViewModel) {
     val date by calendarViewModel.date.collectAsState()
-    val text by calendarViewModel.comment.collectAsState()
+    val text by calendarViewModel.text.collectAsState()
+    val comment by calendarViewModel.comment.collectAsState()
+    val realDate by calendarViewModel.realDate.collectAsState()
     val scrollState = rememberScrollState()
     val iconButtonColor = MaterialTheme.colorScheme.primary
     val dialogState: MutableState<Boolean> = remember {
@@ -189,10 +191,13 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(350.dp),
-                    onValueChange = { calendarViewModel.setComment(it) },
+                    onValueChange = { calendarViewModel.setText(it) },
                     maxLinesComment = 12,
                     cancelButton = { dialogState.value = false },
-                    okButton = { dialogState.value = false }
+                    okButton = {
+                        calendarViewModel.setComment(text)
+                        dialogState.value = false
+                    }
                 )
             }
             Box(
@@ -206,7 +211,12 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
                     )
             ) {
                 Text(
-                    text = text,
+                    text = if (realDate == comment.commentDate) {
+                        calendarViewModel.setText(comment.commentDay)
+                        text
+                    } else {
+                        text
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(240.dp)

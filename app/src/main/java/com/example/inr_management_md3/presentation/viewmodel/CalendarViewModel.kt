@@ -13,7 +13,9 @@
  */
 package com.example.inr_management_md3.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.inr_management_md3.data.datamodels.Comment
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.time.LocalDate
@@ -26,8 +28,11 @@ class CalendarViewModel :
     private val _realDate = MutableStateFlow<LocalDate?>(null)
     val realDate: StateFlow<LocalDate?> get() = _realDate
 
-    private val _comment = MutableStateFlow("")
-    val comment: StateFlow<String> get() = _comment
+    private val _text = MutableStateFlow("")
+    val text: StateFlow<String> get() = _text
+
+    private val _comment = MutableStateFlow(Comment())
+    val comment: StateFlow<Comment> get() = _comment
 
     fun setDate(setDate: String) {
         _date.value = setDate
@@ -37,7 +42,12 @@ class CalendarViewModel :
         _realDate.value = setRealDate
     }
 
-    fun setComment(setText: String) {
-        _comment.value = setText
+    fun setText(setText: String) {
+        _text.value = setText
+    }
+
+    fun setComment(commenting: String) {
+        _comment.value.commentDay = commenting
+        Log.e("comment", "${comment.value.commentDay}")
     }
 }
