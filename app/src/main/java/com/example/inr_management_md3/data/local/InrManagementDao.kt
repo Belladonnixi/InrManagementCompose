@@ -19,6 +19,7 @@ import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.example.inr_management_md3.data.datamodels.*
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface InrManagementDao {
@@ -47,6 +48,9 @@ interface InrManagementDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun addMeasureAlarm(measureAlarm: MeasureAlarm)
+
+    @Insert(onConflict = REPLACE)
+    suspend fun addComment(comment: Comment)
 
     /**
      *  Selects
@@ -85,6 +89,12 @@ interface InrManagementDao {
     @Query("SELECT * FROM taking_alarm ORDER BY id_taking_alarm DESC LIMIT 1")
     fun getLastTakingAlarm(): Flow<TakingAlarm>
 
+    @Query("SELECT * FROM comment WHERE comment_date = :date")
+    fun getCommentOfTheDay(date: LocalDate): Flow<Comment>
+
+    @Query("SELECT * FROM comment ORDER BY id_comment DESC LIMIT 1")
+    fun getLastComment(): Flow<Comment>
+
     /**
      *  Booleans
      */
@@ -107,6 +117,12 @@ interface InrManagementDao {
     @Query("SELECT EXISTS (SELECT id_measure_alarm FROM measure_alarm WHERE id_measure_alarm = :id)")
     fun checkIfMeasureAlarmIsSet(id: Long): Boolean
 
+    @Query("SELECT EXISTS (SELECT comment_date FROM comment WHERE comment_date = :date)")
+    fun checkIfThereIsACommentForTheDay(date: LocalDate): Boolean
+
+    @Query("SELECT EXISTS (SELECT comment_id FROM patient WHERE id_patient = :id)")
+    fun checkIfCommentIdIsInPatient(id: Long): Boolean
+
     /**
      *  Updates
      */
@@ -125,4 +141,10 @@ interface InrManagementDao {
 
     @Query("UPDATE measure_alarm SET patient_id = :patientId WHERE id_measure_alarm = :id")
     fun updateMeasureAlarmPatientId(patientId: Long?, id: Long)
+
+    @Query("UPDATE patient SET comment_id = :commentId WHERE id_patient = :id")
+    fun updatePatientCommentId(commentId: Long?, id: Long)
+
+    @Query("UPDATE comment SET patient_id = :patientId WHERE id_comment = :id")
+    fun updateCommentPatientId(patientId: Long?, id: Long)
 }

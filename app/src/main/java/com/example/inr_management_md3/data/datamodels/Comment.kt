@@ -34,9 +34,9 @@ data class Comment(
     @ColumnInfo(name = "id_comment")
     val idComment: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Long? = null,
+    var patientId: Long? = null,
     @ColumnInfo(name = "comment_date")
-    val commentDate: LocalDate? = null,
+    var commentDate: LocalDate? = null,
     @ColumnInfo(name = "comment-day")
     var commentDay: String = ""
 )

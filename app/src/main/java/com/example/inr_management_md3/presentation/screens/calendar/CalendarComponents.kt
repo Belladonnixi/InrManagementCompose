@@ -196,6 +196,7 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
                     cancelButton = { dialogState.value = false },
                     okButton = {
                         calendarViewModel.setComment(text)
+                        calendarViewModel.addCommentToDb()
                         dialogState.value = false
                     }
                 )
