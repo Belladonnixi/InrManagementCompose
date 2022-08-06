@@ -490,17 +490,3 @@ fun PreviewBaseMedicationInterval() {
         BaseMedicationInterval()
     }
 }
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewTrimDose() {
-    INR_Management_Theme {
-        val calendarViewModel: CalendarViewModel by inject()
-        TrimDoseContent(calendarViewModel)
-    }
-}

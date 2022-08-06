@@ -41,7 +41,7 @@ val repositoryModule = module {
 }
 
 val viewModelModule = module {
-    viewModel { CalendarViewModel() }
+    viewModel { CalendarViewModel(get()) }
     viewModel { SettingsViewModel(get()) }
     viewModel { DoseViewModel() }
 }
