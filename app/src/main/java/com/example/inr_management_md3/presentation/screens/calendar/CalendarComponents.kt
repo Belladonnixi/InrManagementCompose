@@ -185,8 +185,7 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel, navController: NavCont
             }
 
             if (dialogState.value) {
-                WriteCommentDialog(
-                    title = "WRITE COMMENT",
+                WriteCommentDialog(title = "WRITE COMMENT",
                     dialogState = dialogState,
                     text = text,
                     modifier = Modifier
@@ -251,9 +250,7 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel, navController: NavCont
                         .fillMaxWidth()
                         .padding(16.dp)
                         .height(60.dp),
-                    enabled = (
-                        ((text != comment.commentDay && comment.commentDate != null) || (comment.commentDate == null && text.isNotEmpty()))
-                        )
+                    enabled = text.isNotEmpty()
                 ) { Text("Save") }
             }
         }
