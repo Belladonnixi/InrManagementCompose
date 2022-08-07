@@ -16,10 +16,8 @@ package com.example.inr_management_md3.presentation.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.inr_management_md3.data.AppDataBase
 import com.example.inr_management_md3.data.datamodels.Comment
 import com.example.inr_management_md3.data.repository.InrManagementRepository
-import com.example.inr_management_md3.data.repository.InrManagementRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
