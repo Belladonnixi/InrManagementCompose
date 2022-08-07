@@ -73,6 +73,7 @@ fun CalendarMonthView(calendarViewModel: CalendarViewModel, navController: NavCo
                             day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
                         calendarViewModel.setDate(formattedDate).toString()
                         calendarViewModel.setRealDate(day)
+                        calendarViewModel.getCommentOfTheDayFromDb()
                         navController.navigate(Screens.CalendarDay.route)
                     },
                     errorMessage = { exception ->

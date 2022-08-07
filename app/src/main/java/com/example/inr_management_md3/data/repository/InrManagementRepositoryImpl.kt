@@ -147,4 +147,7 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override fun updateCommentPatientId(patientId: Long?, id: Long) =
         appDataBase.inrManagementDao().updateCommentPatientId(patientId, id)
+
+    override fun updateCommentTextOfTheDay(comment: String, id: Long) =
+        appDataBase.inrManagementDao().updateCommentTextOfTheDay(comment, id)
 }

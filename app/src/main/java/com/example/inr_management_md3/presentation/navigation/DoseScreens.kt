@@ -20,6 +20,7 @@ import com.example.inr_management_md3.presentation.screens.dose.BaseMedicationIn
 import com.example.inr_management_md3.presentation.screens.dose.BaseMedicationWeekContent
 import com.example.inr_management_md3.presentation.screens.dose.TrimDoseContent
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import org.koin.androidx.compose.inject
 
 /**
  * Dose screens navigation for TabBar to keep the Composable testable and navigation out of
@@ -40,7 +41,7 @@ enum class DoseScreens(
     Dose(
         icon = R.drawable.pill,
         body = {
-            val calendarViewModel: CalendarViewModel by org.koin.androidx.compose.inject()
+            val calendarViewModel: CalendarViewModel by inject()
             TrimDoseContent(calendarViewModel)
         }
     );

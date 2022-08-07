@@ -147,4 +147,7 @@ interface InrManagementDao {
 
     @Query("UPDATE comment SET patient_id = :patientId WHERE id_comment = :id")
     fun updateCommentPatientId(patientId: Long?, id: Long)
+
+    @Query("UPDATE comment SET `comment-day` = :comment WHERE id_comment = :id")
+    fun updateCommentTextOfTheDay(comment: String, id: Long)
 }

@@ -69,4 +69,5 @@ interface InrManagementRepository {
     fun updateMeasureAlarmPatientId(patientId: Long?, id: Long)
     fun updatePatientCommentId(commentId: Long?, id: Long)
     fun updateCommentPatientId(patientId: Long?, id: Long)
+    fun updateCommentTextOfTheDay(comment: String, id: Long)
 }

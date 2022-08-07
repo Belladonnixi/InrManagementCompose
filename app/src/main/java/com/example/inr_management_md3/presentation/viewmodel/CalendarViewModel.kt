@@ -53,20 +53,6 @@ class CalendarViewModel(
     val comment: StateFlow<Comment> get() = _comment
 
     /**
-     *  Initializing
-     */
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            loadData()
-        }
-    }
-
-    private fun loadData() {
-        viewModelScope.launch(Dispatchers.IO) {
-        }
-    }
-
-    /**
      *  Calendar
      */
     fun setDate(setDate: String) {
@@ -91,17 +77,48 @@ class CalendarViewModel(
 
     fun addCommentToDb() {
         viewModelScope.launch(Dispatchers.IO) {
+            Log.e("start add comment", "${comment.value}")
             if (repository.checkIfPatientExists()) {
                 repository.getLastPatient().collect { patientId ->
                     _comment.value.patientId = patientId.id_patient
                     _comment.value.commentDate = realDate.value
                     repository.addComment(comment.value)
                     repository.getLastComment().collect { commentId ->
-                        if (!repository.checkIfCommentIdIsInPatient(commentId.idComment)) {
+                        val patient = commentId.idComment
+                        if (!repository.checkIfCommentIdIsInPatient(patient)) {
+                            repository.updatePatientCommentId(
+                                patient,
+                                patientId.id_patient
+                            )
                         }
+                        Log.e("comment added", "${comment.value}")
                     }
                 }
             } else {
+                repository.addComment(comment.value)
+            }
+        }
+    }
+
+    fun updateCommentOfTheDay() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val updatedComment = text.value
+            repository.updateCommentTextOfTheDay(updatedComment, comment.value.idComment)
+            Log.e("comment updated", "${text.value}")
+        }
+    }
+
+    // gets the comment for the day if there is one for the date
+    fun getCommentOfTheDayFromDb() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.checkIfThereIsACommentForTheDay(realDate.value!!)) {
+                repository.getCommentOfTheDay(realDate.value!!).collect { comment ->
+                    _comment.value = comment
+                    _text.value = comment.commentDay
+                }
+            } else {
+                _comment.value = Comment(0, null, null, "")
+                _text.value = ""
             }
         }
     }
