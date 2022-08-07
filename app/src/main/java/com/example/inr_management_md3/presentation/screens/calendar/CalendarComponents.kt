@@ -185,7 +185,8 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel, navController: NavCont
             }
 
             if (dialogState.value) {
-                WriteCommentDialog(title = "WRITE COMMENT",
+                WriteCommentDialog(
+                    title = "WRITE COMMENT",
                     dialogState = dialogState,
                     text = text,
                     modifier = Modifier

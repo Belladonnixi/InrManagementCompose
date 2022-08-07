@@ -41,7 +41,7 @@ class CalendarViewModel(
     val date: StateFlow<String> get() = _date
 
     private val _realDate = MutableStateFlow<LocalDate?>(null)
-    val realDate: StateFlow<LocalDate?> get() = _realDate
+    private val realDate: StateFlow<LocalDate?> get() = _realDate
 
     /**
      *  Comment Dialog
@@ -104,7 +104,6 @@ class CalendarViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val updatedComment = text.value
             repository.updateCommentTextOfTheDay(updatedComment, comment.value.idComment)
-            Log.e("comment updated", "${text.value}")
         }
     }
 
