@@ -14,6 +14,7 @@
 package com.example.inr_management_md3.presentation.screens.settings
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -136,6 +137,7 @@ fun MeasureSettingsContent(
     val options = settingsViewModel.measureDays
     val selectedOptionText by settingsViewModel.selectedMeasureDays
     val timeState by settingsViewModel.textState.collectAsState()
+    val measureAlarm by settingsViewModel.measureAlarm.collectAsState()
 
     Surface(
         modifier = Modifier
@@ -147,6 +149,52 @@ fun MeasureSettingsContent(
                 .fillMaxWidth()
                 .padding(top = 50.dp, bottom = 30.dp)
         ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            ) {
+                if (measureAlarm.patientId != null) {
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        shape = RoundedCornerShape(10.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "Your saved measure settings",
+                                modifier = Modifier.padding(top = 16.dp)
+                            )
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = "Measuring every ${measureAlarm.everyXDays} days"
+//                                    modifier = Modifier
+//                                        .padding(16.dp)
+                                )
+                            }
+                            Text(
+                                text = "measure time: " + measureAlarm.measureTime!!.format(
+                                    DateTimeFormatter.ofPattern("hh:mm a")
+                                ),
+                                modifier = Modifier
+                                    .padding(bottom = 16.dp)
+                            )
+                        }
+                    }
+                }
+            }
             Text(text = stringResource(R.string.measure_interval))
             Row(
                 modifier = Modifier
@@ -187,6 +235,7 @@ fun MeasureSettingsContent(
                     onClick = {
                         settingsViewModel.addMeasureAlarm()
                         navController.navigateUp()
+//                        settingsViewModel.resetTextState()
                     },
                     modifier = Modifier
                         .fillMaxWidth()

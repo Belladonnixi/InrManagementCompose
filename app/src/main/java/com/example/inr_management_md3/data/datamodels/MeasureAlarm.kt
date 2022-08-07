@@ -38,9 +38,9 @@ data class MeasureAlarm(
     @ColumnInfo(name = "every_x_days")
     var everyXDays: Int = 0,
     @ColumnInfo(name = "start_date")
-    var startDate: LocalDate = LocalDate.now(),
+    var startDate: LocalDate? = null,
     @ColumnInfo(name = "measure_time")
-    var measureTime: LocalTime,
+    var measureTime: LocalTime? = null,
     @ColumnInfo(name = "patient_id")
     var patientId: Long? = null
 )

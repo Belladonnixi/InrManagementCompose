@@ -17,6 +17,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.time.LocalDate
 
 @Entity(
     tableName = "comment",
@@ -33,9 +34,9 @@ data class Comment(
     @ColumnInfo(name = "id_comment")
     val idComment: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Long? = null,
+    var patientId: Long? = null,
     @ColumnInfo(name = "comment_date")
-    val commentDate: Long = 0,
+    var commentDate: LocalDate? = null,
     @ColumnInfo(name = "comment-day")
-    val commentDay: String = ""
+    var commentDay: String = ""
 )

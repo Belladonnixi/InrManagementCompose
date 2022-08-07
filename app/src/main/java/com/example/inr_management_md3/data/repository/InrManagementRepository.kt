@@ -13,9 +13,9 @@
  */
 package com.example.inr_management_md3.data.repository
 
-import com.example.inr_management_md3.data.AppDataBase
 import com.example.inr_management_md3.data.datamodels.*
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 interface InrManagementRepository {
     /**
@@ -28,6 +28,7 @@ interface InrManagementRepository {
     suspend fun addTakingAlarm(takingAlarm: TakingAlarm)
     suspend fun addPatient(patient: Patient)
     suspend fun addMeasureAlarm(measureAlarm: MeasureAlarm)
+    suspend fun addComment(comment: Comment)
 
     /**
      *  Selects
@@ -35,16 +36,28 @@ interface InrManagementRepository {
     fun getAllMedicaments(): Flow<List<MedicamentType>>
     fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>>
     fun getLastTargetRange(): Flow<TargetRange>
-    fun getLastPatientId(): Flow<Patient>
+    fun getLastPatient(): Flow<Patient>
     fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage>
     fun getLastTakingAlarmId(): Flow<TakingAlarm>
     fun getLastMeasureAlarm(): Flow<MeasureAlarm>
+    fun getTypeName(id: Long): Flow<MedicamentType>
+    fun getMedicamentDosageWhereIdMatches(id: Long): Flow<MedicamentDosage>
+    fun getLastTakingAlarmWherePatientIdMatches(id: Long): Flow<TakingAlarm>
+    fun getLastTakingAlarm(): Flow<TakingAlarm>
+    fun getCommentOfTheDay(date: LocalDate): Flow<Comment>
+    fun getLastComment(): Flow<Comment>
 
     /**
      *  Booleans
      */
     fun checkIfTargetRangeExists(): Boolean
     fun checkIfPatientExists(): Boolean
+    fun checkIfMedicamentDosageIdExistsInPatient(id: Long): Boolean
+    fun checkIfTakingAlarmIsSet(): Boolean
+    fun checkIfTakingAlarmIsSetForPatient(id: Long): Boolean
+    fun checkIfMeasureAlarmIsSet(): Boolean
+    fun checkIfThereIsACommentForTheDay(date: LocalDate): Boolean
+    fun checkIfCommentIdIsInPatient(id: Long): Boolean
 
     /**
      *  Updates
@@ -54,89 +67,7 @@ interface InrManagementRepository {
     fun updateTargetRangePatientId(patientId: Long?, id: Long)
     fun updateTakingAlarmPatientId(patientId: Long?, id: Long)
     fun updateMeasureAlarmPatientId(patientId: Long?, id: Long)
-}
-
-class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrManagementRepository {
-    /**
-     *  Inserts
-     */
-    override suspend fun addMedicament(medicamentType: MedicamentType) {
-        appDataBase.inrManagementDao().addMedicament(medicamentType)
-    }
-
-    override suspend fun addDosageMedicamentType(dosageMedicamentType: DosageMedicamentType) {
-        appDataBase.inrManagementDao().addDosageMedicamentType(dosageMedicamentType)
-    }
-
-    override suspend fun addTargetRange(targetRange: TargetRange) {
-        appDataBase.inrManagementDao().addTargetRange(targetRange)
-    }
-
-    override suspend fun addMedicamentDosage(medicamentDosage: MedicamentDosage) {
-        appDataBase.inrManagementDao().addMedicamentDosage(medicamentDosage)
-    }
-
-    override suspend fun addTakingAlarm(takingAlarm: TakingAlarm) {
-        appDataBase.inrManagementDao().addTakingAlarm(takingAlarm)
-    }
-
-    override suspend fun addPatient(patient: Patient) {
-        appDataBase.inrManagementDao().addPatient(patient)
-    }
-
-    override suspend fun addMeasureAlarm(measureAlarm: MeasureAlarm) {
-        appDataBase.inrManagementDao().addMeasureAlarm(measureAlarm)
-    }
-
-    /**
-     *  Selects
-     */
-    override fun getAllMedicaments(): Flow<List<MedicamentType>> =
-        appDataBase.inrManagementDao().getAllMedicaments()
-
-    override fun getAllDosageMedicamentTypes(): Flow<List<DosageMedicamentType>> =
-        appDataBase.inrManagementDao().getAllDosageMedicamentTypes()
-
-    override fun getLastTargetRange(): Flow<TargetRange> =
-        appDataBase.inrManagementDao().getLastTargetRange()
-
-    override fun getLastPatientId(): Flow<Patient> =
-        appDataBase.inrManagementDao().getLastPatientId()
-
-    override fun getMedicamentDosageId(idMedicamentType: Long): Flow<MedicamentDosage> =
-        appDataBase.inrManagementDao()
-            .getMedicamentDosageId(idMedicamentType)
-
-    override fun getLastTakingAlarmId(): Flow<TakingAlarm> =
-        appDataBase.inrManagementDao().getLastTakingAlarmId()
-
-    override fun getLastMeasureAlarm(): Flow<MeasureAlarm> =
-        appDataBase.inrManagementDao().getLastMeasureAlarm()
-
-    /**
-     *  Booleans
-     */
-    override fun checkIfTargetRangeExists(): Boolean =
-        appDataBase.inrManagementDao().checkIfTargetRangeExists(1)
-
-    override fun checkIfPatientExists(): Boolean =
-        appDataBase.inrManagementDao().checkIfPatientExists(1)
-
-    /**
-     *  Updates
-     */
-    override fun updatePatientMedicamentDosageId(medicamentDosageId: Long?, id: Long) =
-        appDataBase.inrManagementDao().updatePatientMedicamentDosageId(medicamentDosageId, id)
-
-    override fun updatePatientTargetRangeId(targetRangeId: Long?, id: Long) =
-        appDataBase.inrManagementDao().updatePatientTargetRangeId(targetRangeId, id)
-
-    override fun updateTargetRangePatientId(patientId: Long?, id: Long) =
-        appDataBase.inrManagementDao().updateTargetRangePatientId(patientId, id)
-
-    override fun updateTakingAlarmPatientId(patientId: Long?, id: Long) =
-        appDataBase.inrManagementDao().updateTakingAlarmPatientId(patientId, id)
-
-    override fun updateMeasureAlarmPatientId(patientId: Long?, id: Long) =
-        appDataBase.inrManagementDao().updateMeasureAlarmPatientId(patientId, id)
+    fun updatePatientCommentId(commentId: Long?, id: Long)
+    fun updateCommentPatientId(patientId: Long?, id: Long)
+    fun updateCommentTextOfTheDay(comment: String, id: Long)
 }

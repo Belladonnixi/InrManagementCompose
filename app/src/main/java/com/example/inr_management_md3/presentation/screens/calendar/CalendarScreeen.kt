@@ -125,7 +125,7 @@ fun CalendarDayScreen(navController: NavController, calendarViewModel: CalendarV
                     .fillMaxSize()
                     .padding(innerPadding)
             ) {
-                CalendarDayView(calendarViewModel = calendarViewModel)
+                CalendarDayView(calendarViewModel = calendarViewModel, navController)
             }
         },
         bottomBar = {

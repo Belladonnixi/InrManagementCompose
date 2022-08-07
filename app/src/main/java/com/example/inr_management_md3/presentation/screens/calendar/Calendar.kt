@@ -13,7 +13,6 @@
  */
 package com.example.inr_management_md3.presentation.screens.calendar
 
-import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -23,11 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.inr_management_md3.presentation.navigation.Screens
-import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.himanshoe.kalendar.ui.Kalendar
 import com.himanshoe.kalendar.ui.KalendarType
@@ -76,6 +73,7 @@ fun CalendarMonthView(calendarViewModel: CalendarViewModel, navController: NavCo
                             day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
                         calendarViewModel.setDate(formattedDate).toString()
                         calendarViewModel.setRealDate(day)
+                        calendarViewModel.getCommentOfTheDayFromDb()
                         navController.navigate(Screens.CalendarDay.route)
                     },
                     errorMessage = { exception ->
@@ -84,17 +82,5 @@ fun CalendarMonthView(calendarViewModel: CalendarViewModel, navController: NavCo
                 )
             }
         }
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewCalendar() {
-    INR_Management_Theme {
     }
 }

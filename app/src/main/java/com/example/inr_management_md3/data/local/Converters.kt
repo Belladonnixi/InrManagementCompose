@@ -30,22 +30,22 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromStringToTime(value: String): LocalTime {
+    fun fromStringToTime(value: String): LocalTime? {
         return LocalTime.parse(value)
     }
 
     @TypeConverter
-    fun fromTimeToString(time: LocalTime): String {
+    fun fromTimeToString(time: LocalTime?): String {
         return time.toString()
     }
 
     @TypeConverter
-    fun fromStringToLocalDate(value: String): LocalDate {
+    fun fromStringToLocalDate(value: String): LocalDate? {
         return LocalDate.parse(value)
     }
 
     @TypeConverter
-    fun fromLocalDateToString(date: LocalDate): String {
+    fun fromLocalDateToString(date: LocalDate?): String {
         return date.toString()
     }
 }

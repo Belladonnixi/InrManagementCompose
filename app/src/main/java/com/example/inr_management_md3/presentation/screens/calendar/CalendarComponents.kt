@@ -13,6 +13,7 @@
  */
 package com.example.inr_management_md3.presentation.screens.calendar
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -29,20 +30,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.WriteCommentDialog
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalendarDayView(calendarViewModel: CalendarViewModel) {
+fun CalendarDayView(calendarViewModel: CalendarViewModel, navController: NavController) {
     val date by calendarViewModel.date.collectAsState()
-    val text by calendarViewModel.comment.collectAsState()
+    val text by calendarViewModel.text.collectAsState()
     val scrollState = rememberScrollState()
     val iconButtonColor = MaterialTheme.colorScheme.primary
     val dialogState: MutableState<Boolean> = remember {
         mutableStateOf(false)
     }
+    val comment by calendarViewModel.comment.collectAsState()
 
     Surface(
         modifier = Modifier
@@ -182,17 +185,27 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
             }
 
             if (dialogState.value) {
-                WriteCommentDialog(
-                    title = "WRITE COMMENT",
+                WriteCommentDialog(title = "WRITE COMMENT",
                     dialogState = dialogState,
                     text = text,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(350.dp),
-                    onValueChange = { calendarViewModel.setComment(it) },
+                    onValueChange = { calendarViewModel.setText(it) },
                     maxLinesComment = 12,
-                    cancelButton = { dialogState.value = false },
-                    okButton = { dialogState.value = false }
+                    cancelButton = {
+                        if (comment.commentDay != "") {
+                            calendarViewModel.setText(comment.commentDay)
+                            dialogState.value = false
+                        } else {
+                            calendarViewModel.setText("")
+                            dialogState.value = false
+                        }
+                    },
+                    okButton = {
+                        calendarViewModel.setComment(text)
+                        dialogState.value = false
+                    }
                 )
             }
             Box(
@@ -222,12 +235,22 @@ fun CalendarDayView(calendarViewModel: CalendarViewModel) {
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
-                    onClick = { /* Do something! */ },
+                    onClick = {
+                        if (comment.commentDate == null) {
+                            Log.e("comment add", text)
+                            calendarViewModel.addCommentToDb()
+                            navController.navigateUp()
+                        } else {
+                            Log.e("comment exists for day", "$comment")
+                            calendarViewModel.updateCommentOfTheDay()
+                            navController.navigateUp()
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                         .height(60.dp),
-                    enabled = false
+                    enabled = text.isNotEmpty()
                 ) { Text("Save") }
             }
         }

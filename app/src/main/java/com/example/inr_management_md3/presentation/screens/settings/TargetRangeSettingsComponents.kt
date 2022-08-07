@@ -99,7 +99,7 @@ fun TargetRangeExposedDropdownTo(settingsViewModel: SettingsViewModel) {
 }
 
 @Composable
-fun TargetRange(
+fun TargetRangeContent(
     settingsViewModel: SettingsViewModel,
     navController: NavController
 ) {
@@ -208,7 +208,7 @@ fun TargetRange(
                         settingsViewModel.setTargetRange(setTargetRange)
                         settingsViewModel.addTargetRangeToDb()
                         navController.navigateUp()
-                        settingsViewModel.resetTargetRangeDropdowns()
+//                        settingsViewModel.resetTargetRangeDropdowns()
                     },
                     modifier = Modifier
                         .fillMaxWidth()

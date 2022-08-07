@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.BottomNavBar
+import com.example.inr_management_md3.presentation.components.TabBar
 import com.example.inr_management_md3.presentation.navigation.DoseScreens
 import com.example.inr_management_md3.presentation.navigation.Screens
 
@@ -84,7 +85,7 @@ fun DoseScreen(navController: NavController) {
             ) {
                 val allScreens = DoseScreens.values().toList()
                 var currentScreen by rememberSaveable { mutableStateOf(DoseScreens.Week) }
-                DoseTabBar(
+                TabBar(
                     allScreens = allScreens,
                     onTabSelected = { screen -> currentScreen = screen },
                     currentScreen = currentScreen

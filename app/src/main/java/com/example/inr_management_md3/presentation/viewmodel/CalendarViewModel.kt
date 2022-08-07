@@ -13,25 +13,48 @@
  */
 package com.example.inr_management_md3.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.inr_management_md3.data.datamodels.Comment
+import com.example.inr_management_md3.data.repository.InrManagementRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-class CalendarViewModel :
+/**
+ *  ViewModel for CalendarScreens
+ *  the calendar itself, calendar dayView and commentDialog
+ */
+
+class CalendarViewModel(
+    private val repository: InrManagementRepository
+) :
     ViewModel() {
+
+    /**
+     *  Calendar
+     */
     private val _date = MutableStateFlow("")
     val date: StateFlow<String> get() = _date
 
     private val _realDate = MutableStateFlow<LocalDate?>(null)
     val realDate: StateFlow<LocalDate?> get() = _realDate
 
-    private val _openPopUp = MutableStateFlow(false)
-    val openPopUp: StateFlow<Boolean> get() = _openPopUp
+    /**
+     *  Comment Dialog
+     */
+    private val _text = MutableStateFlow("")
+    val text: StateFlow<String> get() = _text
 
-    private val _comment = MutableStateFlow("")
-    val comment: StateFlow<String> get() = _comment
+    private val _comment = MutableStateFlow(Comment())
+    val comment: StateFlow<Comment> get() = _comment
 
+    /**
+     *  Calendar
+     */
     fun setDate(setDate: String) {
         _date.value = setDate
     }
@@ -40,11 +63,63 @@ class CalendarViewModel :
         _realDate.value = setRealDate
     }
 
-    fun setUpPopUpState(setPopUp: Boolean) {
-        _openPopUp.value = !setPopUp
+    /**
+     *  Comment Dialog
+     */
+    fun setText(setText: String) {
+        _text.value = setText
     }
 
-    fun setComment(setText: String) {
-        _comment.value = setText
+    fun setComment(commenting: String) {
+        _comment.value.commentDay = commenting
+        Log.e("comment", comment.value.commentDay)
+    }
+
+    fun addCommentToDb() {
+        viewModelScope.launch(Dispatchers.IO) {
+            Log.e("start add comment", "${comment.value}")
+            if (repository.checkIfPatientExists()) {
+                repository.getLastPatient().collect { patientId ->
+                    _comment.value.patientId = patientId.id_patient
+                    _comment.value.commentDate = realDate.value
+                    repository.addComment(comment.value)
+                    repository.getLastComment().collect { commentId ->
+                        val patient = commentId.idComment
+                        if (!repository.checkIfCommentIdIsInPatient(patient)) {
+                            repository.updatePatientCommentId(
+                                patient,
+                                patientId.id_patient
+                            )
+                        }
+                        Log.e("comment added", "${comment.value}")
+                    }
+                }
+            } else {
+                repository.addComment(comment.value)
+            }
+        }
+    }
+
+    fun updateCommentOfTheDay() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val updatedComment = text.value
+            repository.updateCommentTextOfTheDay(updatedComment, comment.value.idComment)
+            Log.e("comment updated", "${text.value}")
+        }
+    }
+
+    // gets the comment for the day if there is one for the date
+    fun getCommentOfTheDayFromDb() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.checkIfThereIsACommentForTheDay(realDate.value!!)) {
+                repository.getCommentOfTheDay(realDate.value!!).collect { comment ->
+                    _comment.value = comment
+                    _text.value = comment.commentDay
+                }
+            } else {
+                _comment.value = Comment(0, null, null, "")
+                _text.value = ""
+            }
+        }
     }
 }
