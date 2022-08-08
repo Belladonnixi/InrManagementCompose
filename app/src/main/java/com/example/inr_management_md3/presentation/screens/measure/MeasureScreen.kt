@@ -28,10 +28,11 @@ import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.BottomNavBar
 import com.example.inr_management_md3.presentation.navigation.Screens
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.example.inr_management_md3.presentation.viewmodel.MeasureResultViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeasureScreen(navController: NavHostController, calendarViewModel: CalendarViewModel) {
+fun MeasureScreen(navController: NavHostController, calendarViewModel: CalendarViewModel, measureResultViewModel: MeasureResultViewModel) {
     Scaffold(
         topBar = {
             SmallTopAppBar(
@@ -66,7 +67,7 @@ fun MeasureScreen(navController: NavHostController, calendarViewModel: CalendarV
             )
         },
         content = {
-            MeasureResultContent(calendarViewModel)
+            MeasureResultContent(calendarViewModel, measureResultViewModel)
         },
         bottomBar = {
             BottomNavBar(navController = navController)

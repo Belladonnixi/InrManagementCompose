@@ -25,6 +25,7 @@ import com.example.inr_management_md3.presentation.navigation.AppNavigation
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
+import com.example.inr_management_md3.presentation.viewmodel.MeasureResultViewModel
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import org.koin.android.ext.android.inject
@@ -35,9 +36,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberAnimatedNavController()
-            val calendarViewModel: CalendarViewModel by inject()
             val settingsViewModel: SettingsViewModel by inject()
             val doseViewModel: DoseViewModel by inject()
+            val measureResultViewModel: MeasureResultViewModel by inject()
+            val calendarViewModel: CalendarViewModel by inject()
             INR_Management_Theme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -46,7 +48,8 @@ class MainActivity : ComponentActivity() {
                     AppNavigation(
                         navController,
                         calendarViewModel,
-                        settingsViewModel
+                        settingsViewModel,
+                        measureResultViewModel
                     )
                 }
             }

@@ -22,68 +22,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
-import com.example.inr_management_md3.presentation.components.*
-import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.example.inr_management_md3.presentation.components.DatePickerDialog
+import com.example.inr_management_md3.presentation.components.DatePickerTextField
+import com.example.inr_management_md3.presentation.components.TimePickerDialog
+import com.example.inr_management_md3.presentation.components.TimePickerTextField
+import com.example.inr_management_md3.presentation.viewmodel.MeasureResultViewModel
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeasureResultExposedDropDown() {
-    val options = listOf(
-        "0",
-        "0.1",
-        "0.2",
-        "0.3",
-        "0.4",
-        "0.5",
-        "0.6",
-        "0.7",
-        "0.8",
-        "0.9",
-        "1",
-        "1.1",
-        "1.2",
-        "1.3",
-        "1.4",
-        "1.5",
-        "1.6",
-        "1.7",
-        "1.8",
-        "1.9",
-        "2",
-        "2.1",
-        "2.2",
-        "2.3",
-        "2.4",
-        "2.5",
-        "2.6",
-        "2.7",
-        "2.8",
-        "2.9",
-        "3",
-        "3.1",
-        "3.2",
-        "3.4",
-        "3.5",
-        "3.6",
-        "3.7",
-        "3.8",
-        "3.9",
-        "4",
-        "4.1",
-        "4.2",
-        "4.3",
-        "4.4",
-        "4.5",
-        "4.6",
-        "4.7",
-        "4.8",
-        "4.9",
-        "5"
-    )
+fun MeasureResultExposedDropDown(measureResultViewModel: MeasureResultViewModel) {
+    val options = measureResultViewModel.measureResults
+
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options[0]) }
+    var selectedOptionText by measureResultViewModel.selectedMeasureResult
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -116,9 +69,9 @@ fun MeasureResultExposedDropDown() {
 }
 
 @Composable
-fun MeasureResultTimePicker() {
+fun MeasureResultTimePicker(measureResultViewModel: MeasureResultViewModel) {
     val dialogState = rememberMaterialDialogState()
-    val timeState = remember { mutableStateOf(TextFieldValue()) }
+    val timeState by measureResultViewModel.textState.collectAsState()
 
     TimePickerDialog(
         dialogState = dialogState,
@@ -126,21 +79,22 @@ fun MeasureResultTimePicker() {
             val formattedTime = time.format(
                 DateTimeFormatter.ofPattern("hh:mm a")
             )
-            timeState.value = TextFieldValue(formattedTime)
+            measureResultViewModel.getFormattedTime(TextFieldValue(formattedTime))
+            measureResultViewModel.getTime(time)
         }
     )
     TimePickerTextField(
         modifier = Modifier.fillMaxWidth(),
-        time = timeState.value.text,
-        onValueChange = { timeState.value = TextFieldValue(it) },
+        time = timeState.text,
+        onValueChange = { measureResultViewModel.getFormattedTime(timeState) },
         onClick = { dialogState.show() },
         label = { Text(text = stringResource(R.string.measure_time)) }
     )
 }
 
 @Composable
-fun MeasureResultDatePicker(calendarViewModel: CalendarViewModel) {
-    val date by calendarViewModel.date.collectAsState()
+fun MeasureResultDatePicker(measureResultViewModel: MeasureResultViewModel) {
+    val date by measureResultViewModel.date.collectAsState()
     // Dialog state Manager
     val dialogState: MutableState<Boolean> = remember {
         mutableStateOf(false)
@@ -152,13 +106,13 @@ fun MeasureResultDatePicker(calendarViewModel: CalendarViewModel) {
             onCurrentDayClicked = { day, _ ->
                 val formattedDate =
                     day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
-                calendarViewModel.setDate(formattedDate).toString()
-                calendarViewModel.setRealDate(day)
+                measureResultViewModel.setDate(formattedDate).toString()
+                measureResultViewModel.setRealDate(day)
             },
             errorMessage = {},
             okButton = { dialogState.value = false },
             cancelButton = {
-                calendarViewModel.setDate("")
+                measureResultViewModel.setDate("")
                 dialogState.value = false
             }
         )
@@ -166,14 +120,14 @@ fun MeasureResultDatePicker(calendarViewModel: CalendarViewModel) {
     DatePickerTextField(
         modifier = Modifier.fillMaxWidth(),
         date = date,
-        onValueChange = { calendarViewModel.setDate(it) },
+        onValueChange = { measureResultViewModel.setDate(it) },
         onClick = { dialogState.value = true },
         label = { Text(text = stringResource(R.string.pick_date)) }
     )
 }
 
 @Composable
-fun MeasureResultContent(calendarViewModel: CalendarViewModel) {
+fun MeasureResultContent(measureResultViewModel: MeasureResultViewModel) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -199,13 +153,13 @@ fun MeasureResultContent(calendarViewModel: CalendarViewModel) {
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                MeasureResultDatePicker(calendarViewModel)
+                MeasureResultDatePicker(measureResultViewModel)
             }
             Row(
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                MeasureResultTimePicker()
+                MeasureResultTimePicker(measureResultViewModel)
             }
             Row(
                 modifier = Modifier
@@ -214,7 +168,7 @@ fun MeasureResultContent(calendarViewModel: CalendarViewModel) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                MeasureResultExposedDropDown()
+                MeasureResultExposedDropDown(measureResultViewModel)
             }
             BoxWithConstraints(
                 modifier = Modifier
