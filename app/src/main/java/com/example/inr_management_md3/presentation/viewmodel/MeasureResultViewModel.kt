@@ -27,7 +27,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 /**
- *  ViewModel for everything around measure result
+ *  ViewModel for measure result saving to db
  */
 class MeasureResultViewModel(
     private val repository: InrManagementRepository
@@ -123,7 +123,7 @@ class MeasureResultViewModel(
         _textState.value = formattedTime
     }
 
-    fun addMeasureResult() {
+    fun addMeasureResultToDb() {
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.checkIfPatientExists()) {
                 repository.getLastPatient().collect { patient ->

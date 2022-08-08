@@ -180,7 +180,7 @@ fun MeasureResultContent(measureResultViewModel: MeasureResultViewModel) {
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
-                    onClick = { measureResultViewModel.addMeasureResult() },
+                    onClick = { measureResultViewModel.addMeasureResultToDb() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 70.dp)
