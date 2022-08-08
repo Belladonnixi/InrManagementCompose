@@ -128,7 +128,7 @@ fun AppNavigation(
                 else null
             }
         ) {
-            MeasureScreen(navController, calendarViewModel, measureResultViewModel)
+            MeasureScreen(navController, measureResultViewModel)
         }
 
         composable(

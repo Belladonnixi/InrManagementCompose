@@ -128,6 +128,10 @@ fun MeasureResultDatePicker(measureResultViewModel: MeasureResultViewModel) {
 
 @Composable
 fun MeasureResultContent(measureResultViewModel: MeasureResultViewModel) {
+    val date by measureResultViewModel.date.collectAsState()
+    val selectedOptionText by measureResultViewModel.selectedMeasureResult
+    val timeState by measureResultViewModel.textState.collectAsState()
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -176,12 +180,16 @@ fun MeasureResultContent(measureResultViewModel: MeasureResultViewModel) {
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
-                    onClick = { /* Do something! */ },
+                    onClick = { measureResultViewModel.addMeasureResult() },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 65.dp)
+                        .padding(bottom = 70.dp)
                         .height(60.dp),
-                    enabled = true
+                    enabled = (
+                        date.isNotEmpty() &&
+                            timeState.text.isNotEmpty() &&
+                            selectedOptionText.isNotEmpty()
+                        )
                 ) { Text("Save") }
             }
         }

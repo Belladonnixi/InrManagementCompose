@@ -13,6 +13,7 @@
  */
 package com.example.inr_management_md3.data.local
 
+import androidx.compose.ui.layout.MeasureResult
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
@@ -51,6 +52,9 @@ interface InrManagementDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun addComment(comment: Comment)
+
+    @Insert(onConflict = REPLACE)
+    suspend fun addMeasureResult(measureResult: InrMeasuringResult)
 
     /**
      *  Selects

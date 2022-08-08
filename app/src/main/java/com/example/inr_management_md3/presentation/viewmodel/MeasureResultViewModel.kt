@@ -16,9 +16,13 @@ package com.example.inr_management_md3.presentation.viewmodel
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.inr_management_md3.data.datamodels.InrMeasuringResult
 import com.example.inr_management_md3.data.repository.InrManagementRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -44,7 +48,11 @@ class MeasureResultViewModel(
     private var _time = MutableStateFlow((String()))
     val time: StateFlow<String> get() = _time
 
+    private val _measureResult = MutableStateFlow(InrMeasuringResult())
+    val measureResult: StateFlow<InrMeasuringResult> get() = _measureResult
+
     val measureResults = listOf(
+        "",
         "0",
         "0.1",
         "0.2",
@@ -113,5 +121,15 @@ class MeasureResultViewModel(
 
     fun getFormattedTime(formattedTime: TextFieldValue) {
         _textState.value = formattedTime
+    }
+
+    fun addMeasureResult() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.checkIfPatientExists()) {
+                repository.getLastPatient().collect { patient ->
+                    _measureResult.value.patientId = patient.id_patient
+                }
+            }
+        }
     }
 }

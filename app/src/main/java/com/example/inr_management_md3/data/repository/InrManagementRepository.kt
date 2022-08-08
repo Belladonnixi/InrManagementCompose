@@ -29,6 +29,7 @@ interface InrManagementRepository {
     suspend fun addPatient(patient: Patient)
     suspend fun addMeasureAlarm(measureAlarm: MeasureAlarm)
     suspend fun addComment(comment: Comment)
+    suspend fun addMeasureResult(measureResult: InrMeasuringResult)
 
     /**
      *  Selects

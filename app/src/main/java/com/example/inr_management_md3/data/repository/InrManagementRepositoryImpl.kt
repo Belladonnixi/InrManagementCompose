@@ -54,6 +54,10 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
         appDataBase.inrManagementDao().addComment(comment)
     }
 
+    override suspend fun addMeasureResult(measureResult: InrMeasuringResult) {
+        appDataBase.inrManagementDao().addMeasureResult(measureResult)
+    }
+
     /**
      *  Selects
      */
