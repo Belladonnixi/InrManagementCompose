@@ -52,6 +52,9 @@ interface InrManagementDao {
     @Insert(onConflict = REPLACE)
     suspend fun addComment(comment: Comment)
 
+    @Insert(onConflict = REPLACE)
+    suspend fun addMeasureResult(measureResult: InrMeasuringResult)
+
     /**
      *  Selects
      */

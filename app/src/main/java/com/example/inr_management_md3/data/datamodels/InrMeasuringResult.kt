@@ -17,6 +17,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.time.LocalDate
+import java.time.LocalTime
 
 @Entity(
     tableName = "inr_measuring_result",
@@ -38,11 +40,13 @@ data class InrMeasuringResult(
     @ColumnInfo(name = "id_inr_measuring_result")
     val idInrMeasuringResult: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Long? = 0,
+    var patientId: Long? = 0,
     @ColumnInfo(name = "measure_alarm_id")
-    val measureAlarmId: Long = 0,
-    @ColumnInfo(name = "timestamp")
-    val timestamp: Long = 0,
+    var measureAlarmId: Long = 0,
+    @ColumnInfo(name = "date")
+    var date: LocalDate? = null,
+    @ColumnInfo(name = "time")
+    var time: LocalTime? = null,
     @ColumnInfo(name = "measuring_result")
-    val measuringResult: Float = 0f
+    var measuringResult: Float = 0f
 )

@@ -14,6 +14,7 @@
 package com.example.inr_management_md3.util
 
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.util.*
@@ -25,7 +26,7 @@ import java.util.*
 
 class DateTimeConverters {
 
-    fun zonedDateTimeToDate(): Date {
+    fun zonedDateTimeToDate(localDate: LocalDate): Date {
         val zonedDateTime: ZonedDateTime = ZonedDateTime.now()
         val instant: Instant = zonedDateTime.toInstant()
         return Date.from(instant)

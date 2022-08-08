@@ -31,8 +31,7 @@ import java.time.LocalDate
 
 class CalendarViewModel(
     private val repository: InrManagementRepository
-) :
-    ViewModel() {
+) : ViewModel() {
 
     /**
      *  Calendar

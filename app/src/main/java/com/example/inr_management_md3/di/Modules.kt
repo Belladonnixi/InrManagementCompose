@@ -19,6 +19,7 @@ import com.example.inr_management_md3.data.repository.InrManagementRepository
 import com.example.inr_management_md3.data.repository.InrManagementRepositoryImpl
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
+import com.example.inr_management_md3.presentation.viewmodel.MeasureResultViewModel
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -41,9 +42,10 @@ val repositoryModule = module {
 }
 
 val viewModelModule = module {
-    viewModel { CalendarViewModel(get()) }
     viewModel { SettingsViewModel(get()) }
     viewModel { DoseViewModel() }
+    viewModel { MeasureResultViewModel(get()) }
+    viewModel { CalendarViewModel(get()) }
 }
 
 val appModules = listOf(
