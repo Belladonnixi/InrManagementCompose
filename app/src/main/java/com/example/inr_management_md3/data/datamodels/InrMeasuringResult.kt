@@ -42,11 +42,11 @@ data class InrMeasuringResult(
     @ColumnInfo(name = "patient_id")
     var patientId: Long? = 0,
     @ColumnInfo(name = "measure_alarm_id")
-    val measureAlarmId: Long = 0,
+    var measureAlarmId: Long = 0,
     @ColumnInfo(name = "date")
-    val date: LocalDate? = null,
+    var date: LocalDate? = null,
     @ColumnInfo(name = "time")
-    val time: LocalTime? = null,
+    var time: LocalTime? = null,
     @ColumnInfo(name = "measuring_result")
-    val measuringResult: Float = 0f
+    var measuringResult: Float = 0f
 )

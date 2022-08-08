@@ -49,7 +49,7 @@ class MeasureResultViewModel(
     val time: StateFlow<String> get() = _time
 
     private val _measureResult = MutableStateFlow(InrMeasuringResult())
-    val measureResult: StateFlow<InrMeasuringResult> get() = _measureResult
+    private val measureResult: StateFlow<InrMeasuringResult> get() = _measureResult
 
     val measureResults = listOf(
         "",
@@ -128,6 +128,16 @@ class MeasureResultViewModel(
             if (repository.checkIfPatientExists()) {
                 repository.getLastPatient().collect { patient ->
                     _measureResult.value.patientId = patient.id_patient
+                    _measureResult.value.measuringResult = selectedMeasureResult.value.toFloat()
+                    _measureResult.value.date = realDate.value
+                    _measureResult.value.time = timeState.value
+                    if (repository.checkIfMeasureAlarmIsSet()) {
+                        repository.getLastMeasureAlarm().collect { measureAlarm ->
+                            _measureResult.value.measureAlarmId = measureAlarm.idMeasureAlarm
+                            repository.addMeasureResult(measureResult.value)
+                        }
+                        repository.addMeasureResult(measureResult.value)
+                    }
                 }
             }
         }
