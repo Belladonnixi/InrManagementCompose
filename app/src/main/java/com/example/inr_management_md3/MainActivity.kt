@@ -37,7 +37,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberAnimatedNavController()
             val settingsViewModel: SettingsViewModel by inject()
-            val doseViewModel: DoseViewModel by inject()
             val measureResultViewModel: MeasureResultViewModel by inject()
             val calendarViewModel: CalendarViewModel by inject()
             INR_Management_Theme {

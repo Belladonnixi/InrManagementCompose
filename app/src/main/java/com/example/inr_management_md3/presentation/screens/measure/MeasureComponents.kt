@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.components.DatePickerDialog
 import com.example.inr_management_md3.presentation.components.DatePickerTextField
@@ -127,7 +128,7 @@ fun MeasureResultDatePicker(measureResultViewModel: MeasureResultViewModel) {
 }
 
 @Composable
-fun MeasureResultContent(measureResultViewModel: MeasureResultViewModel) {
+fun MeasureResultContent(measureResultViewModel: MeasureResultViewModel, navController: NavController) {
     val date by measureResultViewModel.date.collectAsState()
     val selectedOptionText by measureResultViewModel.selectedMeasureResult
     val timeState by measureResultViewModel.textState.collectAsState()
@@ -180,7 +181,10 @@ fun MeasureResultContent(measureResultViewModel: MeasureResultViewModel) {
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
-                    onClick = { measureResultViewModel.addMeasureResultToDb() },
+                    onClick = {
+                        measureResultViewModel.addMeasureResultToDb()
+                        navController.navigateUp()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 70.dp)
