@@ -27,7 +27,6 @@ import com.example.inr_management_md3.R
 import com.example.inr_management_md3.data.datamodels.Weekdays
 import com.example.inr_management_md3.presentation.components.DatePickerDialog
 import com.example.inr_management_md3.presentation.components.DatePickerTextField
-import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
 import java.time.format.DateTimeFormatter
 
@@ -251,7 +250,8 @@ fun DoseWeekDay(
 // }
 
 @Composable
-fun TrimDoseContent(calendarViewModel: CalendarViewModel, doseViewModel: DoseViewModel) {
+fun TrimDoseContent(doseViewModel: DoseViewModel) {
+    val date by doseViewModel.date.collectAsState()
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -272,7 +272,7 @@ fun TrimDoseContent(calendarViewModel: CalendarViewModel, doseViewModel: DoseVie
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Temporary Dose Adjustment",
+                        text = stringResource(R.string.temporary_dose_adjustment),
                         style = MaterialTheme.typography.headlineSmall
                     )
                 }
@@ -284,7 +284,7 @@ fun TrimDoseContent(calendarViewModel: CalendarViewModel, doseViewModel: DoseVie
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Set Date and Dose"
+                        text = stringResource(R.string.set_date_and_dose)
                     )
                 }
             }
@@ -292,9 +292,9 @@ fun TrimDoseContent(calendarViewModel: CalendarViewModel, doseViewModel: DoseVie
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                DoseDatePicker(calendarViewModel)
+                DoseDatePicker(doseViewModel)
             }
-            Text(text = "Set dose:")
+            Text(text = stringResource(R.string.set_dose))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -310,20 +310,20 @@ fun TrimDoseContent(calendarViewModel: CalendarViewModel, doseViewModel: DoseVie
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Button(
-                    onClick = { /* Do something! */ },
+                    onClick = { doseViewModel.addTemporaryMedicationAdjustmentToDb() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp),
-                    enabled = true
-                ) { Text("Save") }
+                    enabled = date.isNotEmpty()
+                ) { Text(stringResource(id = R.string.save)) }
             }
         }
     }
 }
 
 @Composable
-fun DoseDatePicker(calendarViewModel: CalendarViewModel) {
-    val date by calendarViewModel.date.collectAsState()
+fun DoseDatePicker(doseViewModel: DoseViewModel) {
+    val date by doseViewModel.date.collectAsState()
     // Dialog state Manager
     val dialogState: MutableState<Boolean> = remember {
         mutableStateOf(false)
@@ -335,13 +335,13 @@ fun DoseDatePicker(calendarViewModel: CalendarViewModel) {
             onCurrentDayClicked = { day, _ ->
                 val formattedDate =
                     day.format(DateTimeFormatter.ofPattern("MMM dd. yyyy"))
-                calendarViewModel.setDate(formattedDate).toString()
-                calendarViewModel.setRealDate(day)
+                doseViewModel.setDate(formattedDate).toString()
+                doseViewModel.setRealDate(day)
             },
             errorMessage = {},
             okButton = { dialogState.value = false },
             cancelButton = {
-                calendarViewModel.setDate("")
+                doseViewModel.setDate("")
                 dialogState.value = false
             }
         )
@@ -349,7 +349,7 @@ fun DoseDatePicker(calendarViewModel: CalendarViewModel) {
     DatePickerTextField(
         modifier = Modifier.fillMaxWidth(),
         date = date,
-        onValueChange = { calendarViewModel.setDate(it) },
+        onValueChange = { doseViewModel.setDate(it) },
         onClick = { dialogState.value = true },
         label = { Text(text = stringResource(R.string.pick_date)) }
     )

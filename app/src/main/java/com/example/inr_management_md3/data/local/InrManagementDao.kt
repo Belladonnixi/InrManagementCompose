@@ -61,6 +61,9 @@ interface InrManagementDao {
     @Insert(onConflict = REPLACE)
     suspend fun addBaseMedicationWeekly(bmw: BaseMedicationWeekdays)
 
+    @Insert(onConflict = REPLACE)
+    suspend fun addTemporaryMedicationAdjustment(tma: TemporaryMedicationAdjustment)
+
     /**
      *  Selects
      */
@@ -110,6 +113,9 @@ interface InrManagementDao {
     @Query("SELECT * FROM base_medication_weekdays ORDER BY id_base_medication_weekdays DESC LIMIT 1")
     fun getLastBaseMedicationWeekdays(): Flow<BaseMedicationWeekdays>
 
+    @Query("SELECT * FROM inr_measuring_result ORDER BY id_inr_measuring_result DESC LIMIT 1")
+    fun getLastMeasureResult(): Flow<InrMeasuringResult>
+
     /**
      *  Booleans
      */
@@ -140,6 +146,9 @@ interface InrManagementDao {
 
     @Query("SELECT EXISTS (SELECT id_taking FROM taking WHERE id_taking = :id)")
     fun checkIfTakingExists(id: Long): Boolean
+
+    @Query("SELECT EXISTS (SELECT id_inr_measuring_result FROM inr_measuring_result WHERE id_inr_measuring_result = :id)")
+    fun checkIfMeasureResultExists(id: Long): Boolean
 
     /**
      *  Updates

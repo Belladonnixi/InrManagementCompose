@@ -54,4 +54,7 @@
     <string name="pills">Pills</string>
     <string name="base_medication">Base Medication</string>
     <string name="weekly_format">Weekly format</string>
+    <string name="temporary_dose_adjustment">Temporary Dose Adjustment</string>
+    <string name="set_date_and_dose">Set Date and Dose</string>
+    <string name="set_dose">Set dose:</string>
 </resources>

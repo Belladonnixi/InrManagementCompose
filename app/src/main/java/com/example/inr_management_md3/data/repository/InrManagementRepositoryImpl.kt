@@ -66,6 +66,10 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
         appDataBase.inrManagementDao().addBaseMedicationWeekly(bmw)
     }
 
+    override suspend fun addTemporaryMedicationAdjustment(tma: TemporaryMedicationAdjustment) {
+        appDataBase.inrManagementDao().addTemporaryMedicationAdjustment(tma)
+    }
+
     /**
      *  Selects
      */
@@ -115,6 +119,9 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
     override fun getLastBaseMedicationWeekdays(): Flow<BaseMedicationWeekdays> =
         appDataBase.inrManagementDao().getLastBaseMedicationWeekdays()
 
+    override fun getLastMeasureResult(): Flow<InrMeasuringResult> =
+        appDataBase.inrManagementDao().getLastMeasureResult()
+
     /**
      *  Booleans
      */
@@ -144,6 +151,9 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override fun checkIfTakingExists(): Boolean =
         appDataBase.inrManagementDao().checkIfTakingExists(1)
+
+    override fun checkIfMeasureResultExists(): Boolean =
+        appDataBase.inrManagementDao().checkIfMeasureResultExists(1)
 
     /**
      *  Updates
