@@ -32,6 +32,7 @@ interface InrManagementRepository {
     suspend fun addMeasureResult(measureResult: InrMeasuringResult)
     suspend fun addTaking(taking: Taking)
     suspend fun addBaseMedicationWeekly(bmw: BaseMedicationWeekdays)
+    suspend fun addTemporaryMedicationAdjustment(tma: TemporaryMedicationAdjustment)
 
     /**
      *  Selects
@@ -51,6 +52,7 @@ interface InrManagementRepository {
     fun getLastComment(): Flow<Comment>
     fun getLastTaking(): Flow<Taking>
     fun getLastBaseMedicationWeekdays(): Flow<BaseMedicationWeekdays>
+    fun getLastMeasureResult(): Flow<InrMeasuringResult>
 
     /**
      *  Booleans
@@ -64,6 +66,7 @@ interface InrManagementRepository {
     fun checkIfThereIsACommentForTheDay(date: LocalDate): Boolean
     fun checkIfCommentIdIsInPatient(id: Long): Boolean
     fun checkIfTakingExists(): Boolean
+    fun checkIfMeasureResultExists(): Boolean
 
     /**
      *  Updates

@@ -17,6 +17,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.time.LocalDate
 
 @Entity(
     tableName = "temporary_medication_adjustment",
@@ -35,9 +36,9 @@ data class TemporaryMedicationAdjustment(
     @ColumnInfo(name = "id_temporary_medication_adjustment")
     val idTemporaryMedicationAdjustment: Long = 0,
     @ColumnInfo(name = "inr_measuring_result_id")
-    val inrMeasuringResultId: Long = 0,
+    var inrMeasuringResultId: Long = 0,
     @ColumnInfo(name = "date")
-    val date: Long = 0,
+    var date: LocalDate? = null,
     @ColumnInfo(name = "dosage")
-    val dosage: Float = 0f
+    var dosage: String = ""
 )

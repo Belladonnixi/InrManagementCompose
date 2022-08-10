@@ -18,7 +18,6 @@ import com.example.inr_management_md3.R
 import com.example.inr_management_md3.data.datamodels.LoadWeekdays
 import com.example.inr_management_md3.presentation.screens.dose.BaseMedicationWeekContent
 import com.example.inr_management_md3.presentation.screens.dose.TrimDoseContent
-import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
 import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
 import org.koin.androidx.compose.inject
 
@@ -38,7 +37,7 @@ enum class DoseScreens(
         }
     ),
 
-//    Interval(
+    //    Interval(
 //        icon = R.drawable.ic_baseline_timelapse_24,
 //        body = {
 //            val doseViewModel: DoseViewModel by inject()
@@ -48,9 +47,8 @@ enum class DoseScreens(
     Dose(
         icon = R.drawable.pill,
         body = {
-            val calendarViewModel: CalendarViewModel by inject()
             val doseViewModel: DoseViewModel by inject()
-            TrimDoseContent(calendarViewModel, doseViewModel)
+            TrimDoseContent(doseViewModel)
         }
     );
 

@@ -17,11 +17,13 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.inr_management_md3.data.datamodels.BaseMedicationWeekdays
+import com.example.inr_management_md3.data.datamodels.TemporaryMedicationAdjustment
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 /**
  *  SharedViewModel for DoseScreens Logic
@@ -85,13 +87,27 @@ class DoseViewModel(
     /**
      *  Dose Week
      */
-    private var _medicamentDoseList = MutableStateFlow(emptyList<String>())
+    private val _medicamentDoseList = MutableStateFlow(emptyList<String>())
     val medicamentDoseList: StateFlow<List<String>> get() = _medicamentDoseList
 
-    private var selectedMedicamentDoseList = mutableListOf<String>()
+    var selectedMedicamentDoseList = mutableListOf<String>()
 
-    private var _baseMedicationWeekly = MutableStateFlow(BaseMedicationWeekdays())
-    private val baseMedicationWeekdays: StateFlow<BaseMedicationWeekdays> get() = _baseMedicationWeekly
+    private val _baseMedicationWeekly = MutableStateFlow(BaseMedicationWeekdays())
+    private val baseMedicationWeekdays: StateFlow<BaseMedicationWeekdays>
+        get() = _baseMedicationWeekly
+
+    /**
+     *  TrimDose
+     */
+    private val _date = MutableStateFlow("")
+    val date: StateFlow<String> get() = _date
+
+    private val _realDate = MutableStateFlow<LocalDate?>(null)
+    private val realDate: StateFlow<LocalDate?> get() = _realDate
+
+    private val _temporaryMedicationAdjustment = MutableStateFlow(TemporaryMedicationAdjustment())
+    private val temporaryMedicationAdjustment: StateFlow<TemporaryMedicationAdjustment>
+        get() = _temporaryMedicationAdjustment
 
     /**
      *  Initialize
@@ -159,6 +175,32 @@ class DoseViewModel(
                     _baseMedicationWeekly.value.patientId = patient.id_patient
                     _baseMedicationWeekly.value.medicamentDosageId = patient.medicamentDosageId!!
                     repository.addBaseMedicationWeekly(baseMedicationWeekdays.value)
+                }
+            }
+        }
+    }
+
+    /**
+     *  TrimDose functions
+     */
+    fun setDate(setDate: String) {
+        _date.value = setDate
+    }
+
+    fun setRealDate(setRealDate: LocalDate) {
+        _realDate.value = setRealDate
+    }
+
+    fun addTemporaryMedicationAdjustmentToDb() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.checkIfMeasureResultExists()) {
+                repository.getLastMeasureResult().collect { measureResult ->
+                    _temporaryMedicationAdjustment.value.date = realDate.value
+                    _temporaryMedicationAdjustment.value.inrMeasuringResultId =
+                        measureResult.idInrMeasuringResult
+                    _temporaryMedicationAdjustment.value.dosage =
+                        selectedMedicamentDoseList[0]
+                    repository.addTemporaryMedicationAdjustment(temporaryMedicationAdjustment.value)
                 }
             }
         }
