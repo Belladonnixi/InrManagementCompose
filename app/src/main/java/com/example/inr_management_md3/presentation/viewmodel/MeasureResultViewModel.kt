@@ -128,7 +128,7 @@ class MeasureResultViewModel(
             if (repository.checkIfPatientExists()) {
                 repository.getLastPatient().collect { patient ->
                     _measureResult.value.patientId = patient.id_patient
-                    _measureResult.value.measuringResult = selectedMeasureResult.value.toFloat()
+                    _measureResult.value.measuringResult = selectedMeasureResult.value
                     _measureResult.value.date = realDate.value
                     _measureResult.value.time = timeState.value
                     if (repository.checkIfMeasureAlarmIsSet()) {
