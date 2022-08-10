@@ -164,9 +164,6 @@ class SettingsViewModel(
     )
     val measureAlarm: StateFlow<MeasureAlarm> get() = _measureAlarm
 
-//    private var _measureTime = MutableStateFlow((String()))
-//    val measureTime: StateFlow<String> get() = _measureTime
-
     /**
      *  Initializing
      */
@@ -370,11 +367,6 @@ class SettingsViewModel(
         }
     }
 
-//    fun resetTargetRangeDropdowns() {
-//        selectedRangeFrom = mutableStateOf(targetRangeFrom[0])
-//        selectedRangeTo = mutableStateOf(targetRangeTo[0])
-//    }
-
     /**
      *  MeasureSettings
      */
@@ -430,12 +422,6 @@ class SettingsViewModel(
     fun getFormattedTime(formattedTime: TextFieldValue) {
         _textState.value = formattedTime
     }
-
-//    fun resetTextState() {
-//        val text = TextFieldValue("")
-//        _textState.value = text
-//        selectedMeasureDays = mutableStateOf(measureDays[0])
-//    }
 
     fun setDate(setDate: String) {
         _date.value = setDate

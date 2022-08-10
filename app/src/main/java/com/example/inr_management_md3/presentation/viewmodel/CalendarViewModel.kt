@@ -90,7 +90,6 @@ class CalendarViewModel(
                                 patientId.id_patient
                             )
                         }
-                        Log.e("comment added", "${comment.value}")
                     }
                 }
             } else {

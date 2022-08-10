@@ -13,47 +13,28 @@
  */
 package com.example.inr_management_md3.presentation.screens.dose
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.data.datamodels.Weekdays
 import com.example.inr_management_md3.presentation.components.DatePickerDialog
 import com.example.inr_management_md3.presentation.components.DatePickerTextField
-import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
-import org.koin.androidx.compose.inject
+import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DosageExposedDropdown() {
-    val options = listOf(
-        "0",
-        "1/4",
-        "1/2",
-        "3/4",
-        "1",
-        "1 1/4",
-        "1 1/2",
-        "1 3/4",
-        "2",
-        "2 1/4",
-        "2 1/2",
-        "2 3/4",
-        "3"
-    )
+fun DosageExposedDropdown(doseViewModel: DoseViewModel) {
+    val options by doseViewModel.medicamentDoseList.collectAsState()
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[0]) }
 
@@ -63,12 +44,12 @@ fun DosageExposedDropdown() {
     ) {
         TextField(
             value = selectedOptionText,
-            onValueChange = {},
+            onValueChange = { selectedOptionText = it },
             readOnly = true,
-            label = { Text(text = "Pills") },
+            label = { Text(text = stringResource(R.string.pills)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             modifier = Modifier
-                .width(110.dp)
+                .width(120.dp)
         )
         ExposedDropdownMenu(
             expanded = expanded,
@@ -79,6 +60,7 @@ fun DosageExposedDropdown() {
                     text = { Text(text = selectionOption) },
                     onClick = {
                         selectedOptionText = selectionOption
+                        doseViewModel.addSelectedMedicamentDoseToList(selectedOptionText)
                         expanded = false
                     }
                 )
@@ -89,7 +71,8 @@ fun DosageExposedDropdown() {
 
 @Composable
 fun BaseMedicationWeekContent(
-    week: List<Weekdays>
+    week: List<Weekdays>,
+    doseViewModel: DoseViewModel
 ) {
     Surface(
         modifier = Modifier
@@ -111,7 +94,7 @@ fun BaseMedicationWeekContent(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Base Medication",
+                        text = stringResource(R.string.base_medication),
                         style = MaterialTheme.typography.headlineSmall
                     )
                 }
@@ -122,7 +105,7 @@ fun BaseMedicationWeekContent(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Weekly format"
+                        text = stringResource(R.string.weekly_format)
                     )
                 }
             }
@@ -138,8 +121,8 @@ fun BaseMedicationWeekContent(
                         .weight(4.5f)
                 ) {
                     LazyColumn {
-                        items(week) { weekdays ->
-                            DoseWeekDay(wd = weekdays)
+                        itemsIndexed(week) { _, weekdays ->
+                            DoseWeekDay(wd = weekdays, doseViewModel)
                         }
                     }
                 }
@@ -150,12 +133,12 @@ fun BaseMedicationWeekContent(
                     contentAlignment = Alignment.BottomCenter
                 ) {
                     Button(
-                        onClick = { /* Do something! */ },
+                        onClick = { doseViewModel.addWeekDosesToDb() },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(60.dp),
                         enabled = true
-                    ) { Text("Save") }
+                    ) { Text(stringResource(id = R.string.save)) }
                 }
             }
         }
@@ -163,7 +146,10 @@ fun BaseMedicationWeekContent(
 }
 
 @Composable
-fun DoseWeekDay(wd: Weekdays) {
+fun DoseWeekDay(
+    wd: Weekdays,
+    doseViewModel: DoseViewModel
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -179,7 +165,7 @@ fun DoseWeekDay(wd: Weekdays) {
             verticalArrangement = Arrangement.Center
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                DosageExposedDropdown()
+                DosageExposedDropdown(doseViewModel)
                 Spacer(modifier = Modifier.width(8.dp))
                 Icon(
                     painter = painterResource(id = R.drawable.noun_pill),
@@ -193,79 +179,79 @@ fun DoseWeekDay(wd: Weekdays) {
     }
 }
 
-@Composable
-fun BaseMedicationIntervalContent() {
-    Surface(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 40.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = "Base Medication",
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = "Interval"
-                    )
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                DosageExposedDropdown()
-            }
-            FloatingActionButton(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .padding(32.dp)
-                    .align(Alignment.End)
-            ) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
-            }
-            BoxWithConstraints(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.BottomCenter
-            ) {
-                Button(
-                    onClick = { /* Do something! */ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp),
-                    enabled = true
-                ) { Text("Save") }
-            }
-        }
-    }
-}
+// @Composable
+// fun BaseMedicationIntervalContent(doseViewModel: DoseViewModel) {
+//    Surface(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .padding(top = 40.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
+//    ) {
+//        Column(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//        ) {
+//            Column(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//            ) {
+//                Row(
+//                    modifier = Modifier
+//                        .fillMaxWidth(),
+//                    verticalAlignment = Alignment.CenterVertically,
+//                    horizontalArrangement = Arrangement.Center
+//                ) {
+//                    Text(
+//                        text = "Base Medication",
+//                        style = MaterialTheme.typography.headlineSmall
+//                    )
+//                }
+//                Row(
+//                    modifier = Modifier
+//                        .fillMaxWidth(),
+//                    verticalAlignment = Alignment.CenterVertically,
+//                    horizontalArrangement = Arrangement.Center
+//                ) {
+//                    Text(
+//                        text = "Interval"
+//                    )
+//                }
+//            }
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 16.dp),
+//                verticalAlignment = Alignment.CenterVertically,
+//                horizontalArrangement = Arrangement.Center
+//            ) {
+//                DosageExposedDropdown(doseViewModel)
+//            }
+//            FloatingActionButton(
+//                onClick = { /*TODO*/ },
+//                modifier = Modifier
+//                    .padding(32.dp)
+//                    .align(Alignment.End)
+//            ) {
+//                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+//            }
+//            BoxWithConstraints(
+//                modifier = Modifier
+//                    .fillMaxSize(),
+//                contentAlignment = Alignment.BottomCenter
+//            ) {
+//                Button(
+//                    onClick = { /* Do something! */ },
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .height(60.dp),
+//                    enabled = true
+//                ) { Text("Save") }
+//            }
+//        }
+//    }
+// }
 
 @Composable
-fun TrimDoseContent(calendarViewModel: CalendarViewModel) {
+fun TrimDoseContent(calendarViewModel: CalendarViewModel, doseViewModel: DoseViewModel) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -316,7 +302,7 @@ fun TrimDoseContent(calendarViewModel: CalendarViewModel) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                DosageExposedDropdown()
+                DosageExposedDropdown(doseViewModel)
             }
             BoxWithConstraints(
                 modifier = Modifier
@@ -367,44 +353,4 @@ fun DoseDatePicker(calendarViewModel: CalendarViewModel) {
         onClick = { dialogState.value = true },
         label = { Text(text = stringResource(R.string.pick_date)) }
     )
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewDosageExposedDropdown() {
-    INR_Management_Theme {
-        DosageExposedDropdown()
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewBaseMedicationInterval() {
-    INR_Management_Theme {
-        BaseMedicationIntervalContent()
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mde",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun PreviewTrimDose() {
-    INR_Management_Theme {
-        val calendarViewModel: CalendarViewModel by inject()
-        TrimDoseContent(calendarViewModel)
-    }
 }

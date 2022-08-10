@@ -58,6 +58,14 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
         appDataBase.inrManagementDao().addMeasureResult(measureResult)
     }
 
+    override suspend fun addTaking(taking: Taking) {
+        appDataBase.inrManagementDao().addTaking(taking)
+    }
+
+    override suspend fun addBaseMedicationWeekly(bmw: BaseMedicationWeekdays) {
+        appDataBase.inrManagementDao().addBaseMedicationWeekly(bmw)
+    }
+
     /**
      *  Selects
      */
@@ -101,6 +109,12 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
     override fun getLastComment(): Flow<Comment> =
         appDataBase.inrManagementDao().getLastComment()
 
+    override fun getLastTaking(): Flow<Taking> =
+        appDataBase.inrManagementDao().getLastTaking()
+
+    override fun getLastBaseMedicationWeekdays(): Flow<BaseMedicationWeekdays> =
+        appDataBase.inrManagementDao().getLastBaseMedicationWeekdays()
+
     /**
      *  Booleans
      */
@@ -128,6 +142,9 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
     override fun checkIfCommentIdIsInPatient(id: Long): Boolean =
         appDataBase.inrManagementDao().checkIfCommentIdIsInPatient(id)
 
+    override fun checkIfTakingExists(): Boolean =
+        appDataBase.inrManagementDao().checkIfTakingExists(1)
+
     /**
      *  Updates
      */
@@ -154,4 +171,7 @@ class InrManagementRepositoryImpl(private val appDataBase: AppDataBase) : InrMan
 
     override fun updateCommentTextOfTheDay(comment: String, id: Long) =
         appDataBase.inrManagementDao().updateCommentTextOfTheDay(comment, id)
+
+    override fun updateTakingBaseMedicationWeekdaysId(bmw: Long, id: Long) =
+        appDataBase.inrManagementDao().updateTakingBaseMedicationWeekdaysId(bmw, id)
 }

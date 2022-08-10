@@ -14,9 +14,12 @@
 package com.example.inr_management_md3.data.local
 
 import androidx.room.TypeConverter
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
+
+private const val SEPARATOR = ","
 
 class Converters {
     @TypeConverter
@@ -48,4 +51,12 @@ class Converters {
     fun fromLocalDateToString(date: LocalDate?): String {
         return date.toString()
     }
+
+    @TypeConverter
+    fun baseMedicationDoseToString(baseMedication: MutableList<String>?): String? =
+        baseMedication?.joinToString(separator = SEPARATOR) { it }
+
+    @TypeConverter
+    fun stringToBaseMedicationDose(baseMedication: String?): MutableList<String>? =
+        baseMedication?.split(SEPARATOR)?.map { (it) }?.toMutableList()
 }

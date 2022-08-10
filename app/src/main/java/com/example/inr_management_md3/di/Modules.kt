@@ -43,7 +43,7 @@ val repositoryModule = module {
 
 val viewModelModule = module {
     viewModel { SettingsViewModel(get()) }
-    viewModel { DoseViewModel() }
+    viewModel { DoseViewModel(get()) }
     viewModel { MeasureResultViewModel(get()) }
     viewModel { CalendarViewModel(get()) }
 }

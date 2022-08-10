@@ -55,6 +55,12 @@ interface InrManagementDao {
     @Insert(onConflict = REPLACE)
     suspend fun addMeasureResult(measureResult: InrMeasuringResult)
 
+    @Insert(onConflict = REPLACE)
+    suspend fun addTaking(taking: Taking)
+
+    @Insert(onConflict = REPLACE)
+    suspend fun addBaseMedicationWeekly(bmw: BaseMedicationWeekdays)
+
     /**
      *  Selects
      */
@@ -98,6 +104,12 @@ interface InrManagementDao {
     @Query("SELECT * FROM comment ORDER BY id_comment DESC LIMIT 1")
     fun getLastComment(): Flow<Comment>
 
+    @Query("SELECT * FROM taking ORDER BY id_taking DESC LIMIT 1")
+    fun getLastTaking(): Flow<Taking>
+
+    @Query("SELECT * FROM base_medication_weekdays ORDER BY id_base_medication_weekdays DESC LIMIT 1")
+    fun getLastBaseMedicationWeekdays(): Flow<BaseMedicationWeekdays>
+
     /**
      *  Booleans
      */
@@ -126,6 +138,9 @@ interface InrManagementDao {
     @Query("SELECT EXISTS (SELECT comment_id FROM patient WHERE id_patient = :id)")
     fun checkIfCommentIdIsInPatient(id: Long): Boolean
 
+    @Query("SELECT EXISTS (SELECT id_taking FROM taking WHERE id_taking = :id)")
+    fun checkIfTakingExists(id: Long): Boolean
+
     /**
      *  Updates
      */
@@ -153,4 +168,7 @@ interface InrManagementDao {
 
     @Query("UPDATE comment SET `comment-day` = :comment WHERE id_comment = :id")
     fun updateCommentTextOfTheDay(comment: String, id: Long)
+
+    @Query("UPDATE taking SET base_medication_weekdays_id = :bmw WHERE id_taking = :id")
+    fun updateTakingBaseMedicationWeekdaysId(bmw: Long, id: Long)
 }
