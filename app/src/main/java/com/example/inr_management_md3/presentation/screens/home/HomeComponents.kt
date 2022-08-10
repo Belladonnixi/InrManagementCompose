@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.inr_management_md3.R
 import com.example.inr_management_md3.presentation.viewmodel.HomeViewModel
@@ -81,7 +82,7 @@ fun TodayDoseCard(homeViewModel: HomeViewModel) {
                 }
                 TextButton(onClick = { /*TODO*/ }) {
                     Text(
-                        text = "tap to confirm",
+                        text = stringResource(R.string.confirm),
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -117,7 +118,7 @@ fun TomorrowDoseInrCard(homeViewModel: HomeViewModel) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Tomorrow's dose",
+                        text = stringResource(R.string.tomorrow_dose),
                         color = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.padding(bottom = 16.dp),
                         style = MaterialTheme.typography.titleSmall
@@ -179,7 +180,7 @@ fun TomorrowDoseInrCard(homeViewModel: HomeViewModel) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "next measure",
+                        text = stringResource(R.string.next_measure),
                         color = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.padding(bottom = 16.dp),
                         style = MaterialTheme.typography.titleSmall
@@ -192,7 +193,7 @@ fun TomorrowDoseInrCard(homeViewModel: HomeViewModel) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Tomorrow",
+                            text = stringResource(R.string.tomorrow),
                             color = MaterialTheme.colorScheme.onPrimary,
                             style = MaterialTheme.typography.headlineSmall
                         )
@@ -246,7 +247,7 @@ fun StatisticCard(homeViewModel: HomeViewModel) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Actual INR",
+                        text = stringResource(R.string.actual_inr),
                         color = MaterialTheme.colorScheme.onTertiaryContainer,
                         modifier = Modifier.padding(bottom = 16.dp),
                         style = MaterialTheme.typography.titleSmall
