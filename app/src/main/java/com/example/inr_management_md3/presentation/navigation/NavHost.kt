@@ -32,6 +32,7 @@ import com.example.inr_management_md3.presentation.screens.settings.SettingsScre
 import com.example.inr_management_md3.presentation.screens.settings.TargetRangeSettingsScreen
 import com.example.inr_management_md3.presentation.screens.statistics.StatisticsScreen
 import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
+import com.example.inr_management_md3.presentation.viewmodel.HomeViewModel
 import com.example.inr_management_md3.presentation.viewmodel.MeasureResultViewModel
 import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -43,7 +44,8 @@ fun AppNavigation(
     navController: NavHostController,
     calendarViewModel: CalendarViewModel,
     settingsViewModel: SettingsViewModel,
-    measureResultViewModel: MeasureResultViewModel
+    measureResultViewModel: MeasureResultViewModel,
+    homeViewModel: HomeViewModel
 ) {
     AnimatedNavHost(
         navController = navController,
@@ -68,7 +70,7 @@ fun AppNavigation(
                 else null
             }
         ) {
-            HomeScreen(navController)
+            HomeScreen(navController, homeViewModel)
         }
 
         composable(

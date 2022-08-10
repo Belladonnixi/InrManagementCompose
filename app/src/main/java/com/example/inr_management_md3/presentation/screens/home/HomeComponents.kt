@@ -14,17 +14,21 @@
 package com.example.inr_management_md3.presentation.screens.home
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.inr_management_md3.R
+import com.example.inr_management_md3.presentation.viewmodel.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TodayDoseCard() {
+fun TodayDoseCard(homeViewModel: HomeViewModel) {
+    val date by homeViewModel.dateToday.collectAsState()
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,12 +36,65 @@ fun TodayDoseCard() {
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondary),
         elevation = CardDefaults.cardElevation(10.dp)
     ) {
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = date,
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    modifier = Modifier.padding(bottom = 48.dp)
+                )
+                Row(
+                    modifier = Modifier
+                        .padding(bottom = 48.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "1/2",
+                        color = MaterialTheme.colorScheme.onSecondary,
+                        style = MaterialTheme.typography.displaySmall
+                    )
+                    Column(
+                        modifier = Modifier
+                            .padding(start = 16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.noun_pill_1353845),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSecondary,
+                            modifier = Modifier.size(48.dp)
+                        )
+                    }
+                }
+                TextButton(onClick = { /*TODO*/ }) {
+                    Text(
+                        text = "tap to confirm",
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
+        }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TomorrowDoseInrCard() {
+fun TomorrowDoseInrCard(homeViewModel: HomeViewModel) {
+    val date by homeViewModel.dateTomorrow.collectAsState()
+
     Row {
         ElevatedCard(
             modifier = Modifier
@@ -47,6 +104,57 @@ fun TomorrowDoseInrCard() {
             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primary),
             elevation = CardDefaults.cardElevation(10.dp)
         ) {
+            BoxWithConstraints(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Tomorrow's dose",
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                    Row(
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "1/2",
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            style = MaterialTheme.typography.headlineSmall
+                        )
+                        Column(
+                            modifier = Modifier
+                                .padding(start = 16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.noun_pill_1353845),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onPrimary,
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
+                    }
+                    Text(
+                        text = date,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                }
+            }
         }
         Spacer(modifier = Modifier.width(16.dp))
 
@@ -58,13 +166,52 @@ fun TomorrowDoseInrCard() {
             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primary),
             elevation = CardDefaults.cardElevation(10.dp)
         ) {
+            BoxWithConstraints(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "next measure",
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                    Row(
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Tomorrow",
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            style = MaterialTheme.typography.headlineSmall
+                        )
+                    }
+                    Text(
+                        text = date,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                }
+            }
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StatisticCard() {
+fun StatisticCard(homeViewModel: HomeViewModel) {
+    val date by homeViewModel.dateToday.collectAsState()
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,5 +220,57 @@ fun StatisticCard() {
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer),
         elevation = CardDefaults.cardElevation(10.dp)
     ) {
+        Row {
+            BoxWithConstraints(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(start = 16.dp, top = 16.dp, bottom = 16.dp, end = 8.dp),
+                contentAlignment = Alignment.Center
+            ) {
+            }
+
+            BoxWithConstraints(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(start = 8.dp, top = 16.dp, bottom = 16.dp, end = 16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Actual INR",
+                        color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                    Row(
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "1.9",
+                            color = MaterialTheme.colorScheme.onTertiaryContainer,
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                    }
+                    Text(
+                        text = date,
+                        color = MaterialTheme.colorScheme.onTertiaryContainer,
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                }
+            }
+        }
     }
 }

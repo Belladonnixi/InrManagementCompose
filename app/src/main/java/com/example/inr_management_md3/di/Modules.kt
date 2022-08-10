@@ -17,10 +17,7 @@ import androidx.room.Room
 import com.example.inr_management_md3.data.AppDataBase
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 import com.example.inr_management_md3.data.repository.InrManagementRepositoryImpl
-import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
-import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
-import com.example.inr_management_md3.presentation.viewmodel.MeasureResultViewModel
-import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
+import com.example.inr_management_md3.presentation.viewmodel.*
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -46,6 +43,7 @@ val viewModelModule = module {
     viewModel { DoseViewModel(get()) }
     viewModel { MeasureResultViewModel(get()) }
     viewModel { CalendarViewModel(get()) }
+    viewModel { HomeViewModel(get()) }
 }
 
 val appModules = listOf(

@@ -23,10 +23,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.inr_management_md3.presentation.navigation.AppNavigation
 import com.example.inr_management_md3.presentation.theme.INR_Management_Theme
-import com.example.inr_management_md3.presentation.viewmodel.CalendarViewModel
-import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
-import com.example.inr_management_md3.presentation.viewmodel.MeasureResultViewModel
-import com.example.inr_management_md3.presentation.viewmodel.SettingsViewModel
+import com.example.inr_management_md3.presentation.viewmodel.*
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import org.koin.android.ext.android.inject
 
@@ -39,6 +36,7 @@ class MainActivity : ComponentActivity() {
             val settingsViewModel: SettingsViewModel by inject()
             val measureResultViewModel: MeasureResultViewModel by inject()
             val calendarViewModel: CalendarViewModel by inject()
+            val homeViewModel: HomeViewModel by inject()
             INR_Management_Theme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -48,7 +46,8 @@ class MainActivity : ComponentActivity() {
                         navController,
                         calendarViewModel,
                         settingsViewModel,
-                        measureResultViewModel
+                        measureResultViewModel,
+                        homeViewModel
                     )
                 }
             }
