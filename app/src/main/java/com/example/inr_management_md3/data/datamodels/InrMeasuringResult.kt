@@ -48,5 +48,5 @@ data class InrMeasuringResult(
     @ColumnInfo(name = "time")
     var time: LocalTime? = null,
     @ColumnInfo(name = "measuring_result")
-    var measuringResult: Float = 0f
+    var measuringResult: String = ""
 )
