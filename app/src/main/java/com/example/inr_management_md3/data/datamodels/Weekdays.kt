@@ -25,7 +25,6 @@ object LoadWeekdays {
         Weekdays(R.string.tuesday),
         Weekdays(R.string.wednesday),
         Weekdays(R.string.thursday),
-        Weekdays(R.string.thursday),
         Weekdays(R.string.friday),
         Weekdays(R.string.saturday),
         Weekdays(R.string.sunday)

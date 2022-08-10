@@ -30,6 +30,8 @@ interface InrManagementRepository {
     suspend fun addMeasureAlarm(measureAlarm: MeasureAlarm)
     suspend fun addComment(comment: Comment)
     suspend fun addMeasureResult(measureResult: InrMeasuringResult)
+    suspend fun addTaking(taking: Taking)
+    suspend fun addBaseMedicationWeekly(bmw: BaseMedicationWeekdays)
 
     /**
      *  Selects
@@ -47,6 +49,8 @@ interface InrManagementRepository {
     fun getLastTakingAlarm(): Flow<TakingAlarm>
     fun getCommentOfTheDay(date: LocalDate): Flow<Comment>
     fun getLastComment(): Flow<Comment>
+    fun getLastTaking(): Flow<Taking>
+    fun getLastBaseMedicationWeekdays(): Flow<BaseMedicationWeekdays>
 
     /**
      *  Booleans
@@ -59,6 +63,7 @@ interface InrManagementRepository {
     fun checkIfMeasureAlarmIsSet(): Boolean
     fun checkIfThereIsACommentForTheDay(date: LocalDate): Boolean
     fun checkIfCommentIdIsInPatient(id: Long): Boolean
+    fun checkIfTakingExists(): Boolean
 
     /**
      *  Updates
@@ -71,4 +76,5 @@ interface InrManagementRepository {
     fun updatePatientCommentId(commentId: Long?, id: Long)
     fun updateCommentPatientId(patientId: Long?, id: Long)
     fun updateCommentTextOfTheDay(comment: String, id: Long)
+    fun updateTakingBaseMedicationWeekdaysId(bmw: Long, id: Long)
 }

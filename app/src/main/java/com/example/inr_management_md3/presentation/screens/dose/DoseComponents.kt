@@ -15,7 +15,7 @@ package com.example.inr_management_md3.presentation.screens.dose
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -44,7 +44,7 @@ fun DosageExposedDropdown(doseViewModel: DoseViewModel) {
     ) {
         TextField(
             value = selectedOptionText,
-            onValueChange = {},
+            onValueChange = { selectedOptionText = it },
             readOnly = true,
             label = { Text(text = stringResource(R.string.pills)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
@@ -60,7 +60,7 @@ fun DosageExposedDropdown(doseViewModel: DoseViewModel) {
                     text = { Text(text = selectionOption) },
                     onClick = {
                         selectedOptionText = selectionOption
-                        doseViewModel.addSelectedMedicamentDoseToList(selectionOption)
+                        doseViewModel.addSelectedMedicamentDoseToList(selectedOptionText)
                         expanded = false
                     }
                 )
@@ -121,7 +121,7 @@ fun BaseMedicationWeekContent(
                         .weight(4.5f)
                 ) {
                     LazyColumn {
-                        items(week) { weekdays ->
+                        itemsIndexed(week) { _, weekdays ->
                             DoseWeekDay(wd = weekdays, doseViewModel)
                         }
                     }
@@ -180,7 +180,7 @@ fun DoseWeekDay(
 }
 
 // @Composable
-// fun BaseMedicationIntervalContent() {
+// fun BaseMedicationIntervalContent(doseViewModel: DoseViewModel) {
 //    Surface(
 //        modifier = Modifier
 //            .fillMaxSize()
@@ -223,7 +223,7 @@ fun DoseWeekDay(
 //                verticalAlignment = Alignment.CenterVertically,
 //                horizontalArrangement = Arrangement.Center
 //            ) {
-//                DosageExposedDropdown()
+//                DosageExposedDropdown(doseViewModel)
 //            }
 //            FloatingActionButton(
 //                onClick = { /*TODO*/ },

@@ -16,6 +16,7 @@ package com.example.inr_management_md3.presentation.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.inr_management_md3.data.datamodels.BaseMedicationWeekdays
 import com.example.inr_management_md3.data.repository.InrManagementRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -87,8 +88,10 @@ class DoseViewModel(
     private var _medicamentDoseList = MutableStateFlow(emptyList<String>())
     val medicamentDoseList: StateFlow<List<String>> get() = _medicamentDoseList
 
-    private var _selectedMedicamentDoseList = MutableStateFlow(emptyList<String>())
-    private val selectedMedicamentDoseList: StateFlow<List<String>> get() = _selectedMedicamentDoseList
+    private var selectedMedicamentDoseList = mutableListOf<String>()
+
+    private var _baseMedicationWeekly = MutableStateFlow(BaseMedicationWeekdays())
+    private val baseMedicationWeekdays: StateFlow<BaseMedicationWeekdays> get() = _baseMedicationWeekly
 
     /**
      *  Initialize
@@ -111,14 +114,14 @@ class DoseViewModel(
                                     PHENPROCOUMON -> dosagesPhenprocoumon
                                     ACENOCOUMAROL -> dosagesAcenocoumarol
                                     else -> {
-                                        listOf("no medicament type set")
+                                        listOf("", "no medicament type set")
                                     }
                                 }
                             }
                     }
                 }
             } else {
-                _medicamentDoseList.value = listOf("no medicament type set")
+                _medicamentDoseList.value = listOf("", "no medicament type set")
             }
         }
     }
@@ -127,10 +130,37 @@ class DoseViewModel(
      *  Dose Week functions
      */
     fun addSelectedMedicamentDoseToList(dose: String) {
-        _selectedMedicamentDoseList.value += dose
+        selectedMedicamentDoseList += dose
     }
 
     fun addWeekDosesToDb() {
-        Log.e("selected medicament dose list", "${selectedMedicamentDoseList.value}")
+        Log.d("selected medicament dose list", "$selectedMedicamentDoseList")
+        viewModelScope.launch(Dispatchers.IO) {
+            if (repository.checkIfTakingExists()) {
+                repository.getLastTaking().collect { taking ->
+                    repository.getLastPatient().collect { patient ->
+                        _baseMedicationWeekly.value.weekdaysDosage = selectedMedicamentDoseList
+                        _baseMedicationWeekly.value.patientId = patient.id_patient
+                        _baseMedicationWeekly.value.medicamentDosageId =
+                            patient.medicamentDosageId!!
+                        repository.addBaseMedicationWeekly(baseMedicationWeekdays.value)
+                        repository.getLastBaseMedicationWeekdays().collect { bmw ->
+                            val bmwId = bmw.idBaseMedicationWeekdays
+                            repository.updateTakingBaseMedicationWeekdaysId(
+                                bmwId,
+                                taking.idTaking
+                            )
+                        }
+                    }
+                }
+            } else {
+                repository.getLastPatient().collect { patient ->
+                    _baseMedicationWeekly.value.weekdaysDosage = selectedMedicamentDoseList
+                    _baseMedicationWeekly.value.patientId = patient.id_patient
+                    _baseMedicationWeekly.value.medicamentDosageId = patient.medicamentDosageId!!
+                    repository.addBaseMedicationWeekly(baseMedicationWeekdays.value)
+                }
+            }
+        }
     }
 }

@@ -38,9 +38,9 @@ data class BaseMedicationWeekdays(
     @ColumnInfo(name = "id_base_medication_weekdays")
     val idBaseMedicationWeekdays: Long = 0,
     @ColumnInfo(name = "patient_id")
-    val patientId: Long? = 0,
+    var patientId: Long? = 0,
     @ColumnInfo(name = "medicament_dosage_id")
-    val medicamentDosageId: Long = 0,
+    var medicamentDosageId: Long = 0,
     @ColumnInfo(name = "weekdays_dosage")
-    val weekdaysDosage: Float = 0f
+    var weekdaysDosage: MutableList<String>? = null
 )
