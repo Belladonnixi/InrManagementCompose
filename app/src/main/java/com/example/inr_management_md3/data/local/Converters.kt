@@ -14,24 +14,12 @@
 package com.example.inr_management_md3.data.local
 
 import androidx.room.TypeConverter
-import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
-import java.util.*
 
 private const val SEPARATOR = ","
 
 class Converters {
-    @TypeConverter
-    fun fromTimestampToDate(value: Long?): Date? {
-        return value?.let { Date(it) }
-    }
-
-    @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
-    }
-
     @TypeConverter
     fun fromStringToTime(value: String): LocalTime? {
         return LocalTime.parse(value)
