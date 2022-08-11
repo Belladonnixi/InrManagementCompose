@@ -93,7 +93,7 @@ fun TodayDoseCard(homeViewModel: HomeViewModel) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TomorrowDoseInrCard(homeViewModel: HomeViewModel) {
+fun TomorrowDoseNextMeasureCards(homeViewModel: HomeViewModel) {
     val date by homeViewModel.dateTomorrow.collectAsState()
 
     Row {
@@ -212,7 +212,9 @@ fun TomorrowDoseInrCard(homeViewModel: HomeViewModel) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StatisticCard(homeViewModel: HomeViewModel) {
-    val date by homeViewModel.dateToday.collectAsState()
+    val date by homeViewModel.lastMeasureDate.collectAsState()
+    val measureResult by homeViewModel.measureResult.collectAsState()
+
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -260,7 +262,7 @@ fun StatisticCard(homeViewModel: HomeViewModel) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "1.9",
+                            text = measureResult.measuringResult,
                             color = MaterialTheme.colorScheme.onTertiaryContainer,
                             style = MaterialTheme.typography.headlineMedium
                         )

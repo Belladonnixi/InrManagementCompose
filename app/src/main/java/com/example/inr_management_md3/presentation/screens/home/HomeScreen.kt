@@ -74,7 +74,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                         .weight(1f)
                         .padding(start = 16.dp, bottom = 16.dp, end = 16.dp)
                 ) {
-                    TomorrowDoseInrCard(homeViewModel)
+                    TomorrowDoseNextMeasureCards(homeViewModel)
                 }
                 Row(
                     modifier = Modifier
