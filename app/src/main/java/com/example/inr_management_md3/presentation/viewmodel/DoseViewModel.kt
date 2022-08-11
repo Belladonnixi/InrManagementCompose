@@ -13,7 +13,6 @@
  */
 package com.example.inr_management_md3.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.inr_management_md3.data.datamodels.BaseMedicationWeekdays
