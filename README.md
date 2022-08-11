@@ -12,6 +12,11 @@ OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+Inr Management
+==============
+![Screenshot_20220811-120518_Inr Management](https://user-images.githubusercontent.com/99251460/184199402-2d8d17f1-bdb8-4d7c-b98c-c4c0fda3f2ef.jpg)
+
+
 This is a Work in Progress Project
 ==================================
 
@@ -51,3 +56,4 @@ ginning with tdd, won't play pittbull again, things like that.
 Hope you'll enjoy it anywhere and feel free to give useful and constructive feedback. 
 
 Have a nice day
+
