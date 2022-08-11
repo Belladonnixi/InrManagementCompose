@@ -150,7 +150,6 @@ class DoseViewModel(
     }
 
     fun addWeekDosesToDb() {
-        Log.d("selected medicament dose list", "$selectedMedicamentDoseList")
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.checkIfTakingExists()) {
                 repository.getLastTaking().collect { taking ->
