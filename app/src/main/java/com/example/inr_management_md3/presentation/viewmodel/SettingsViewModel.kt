@@ -233,8 +233,6 @@ class SettingsViewModel(
         Log.e("SelectedMedicament", "${_selectedMedicamentType.value}")
     }
 
-    // function to check if patient exists, getting last patientId, getting MedicamentDosageId
-// where the medicament_id is matching the selection of dropdown and updating or creating patient
     fun writeMedicamentDosageToPatientColumn() {
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.checkIfPatientExists()) {
@@ -413,8 +411,6 @@ class SettingsViewModel(
     /**
      *  General (more than one Screen)
      */
-
-// getting LocalTime for Converting it to save it in db
     fun getTime(time: LocalTime) {
         _timeState.value = time
     }

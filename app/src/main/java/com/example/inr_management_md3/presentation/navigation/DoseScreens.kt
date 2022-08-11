@@ -36,14 +36,6 @@ enum class DoseScreens(
             BaseMedicationWeekContent(LoadWeekdays.weekdays, doseViewModel)
         }
     ),
-
-    //    Interval(
-//        icon = R.drawable.ic_baseline_timelapse_24,
-//        body = {
-//            val doseViewModel: DoseViewModel by inject()
-//            BaseMedicationIntervalContent(doseViewModel)
-//        }
-//    ),
     Dose(
         icon = R.drawable.pill,
         body = {

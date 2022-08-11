@@ -105,7 +105,6 @@ class CalendarViewModel(
         }
     }
 
-    // gets the comment for the day if there is one for the date
     fun getCommentOfTheDayFromDb() {
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.checkIfThereIsACommentForTheDay(realDate.value!!)) {

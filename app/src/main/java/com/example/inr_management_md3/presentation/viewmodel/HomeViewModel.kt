@@ -78,17 +78,6 @@ class HomeViewModel(
         )
     }
 
-//    private fun setNextMeasureDate() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            if (repository.checkIfMeasureAlarmIsSet()) {
-//                repository.getLastMeasureAlarm().collect { measureAlarm ->
-//                    val measureDate = measureAlarm.everyXDays
-//
-//                }
-//            }
-//        }
-//    }
-
     private fun setLastMeasureDate() {
         viewModelScope.launch(Dispatchers.IO) {
             if (repository.checkIfMeasureResultExists()) {
@@ -111,8 +100,4 @@ class HomeViewModel(
             }
         }
     }
-
-    /**
-     *  StatisticsCard
-     */
 }
