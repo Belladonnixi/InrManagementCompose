@@ -57,4 +57,9 @@
     <string name="temporary_dose_adjustment">Temporary Dose Adjustment</string>
     <string name="set_date_and_dose">Set Date and Dose</string>
     <string name="set_dose">Set dose:</string>
+    <string name="confirm">tap to confirm</string>
+    <string name="tomorrow_dose">Tomorrow\'s dose</string>
+    <string name="next_measure">next measure</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="actual_inr">Actual INR</string>
 </resources>

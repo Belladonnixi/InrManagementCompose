@@ -125,8 +125,8 @@ dependencies {
     kapt("androidx.room:room-compiler:2.4.2")
     implementation("androidx.room:room-ktx:2.4.2")
 
-    // Compose Charts https://github.com/tehras/charts
-    implementation 'com.github.tehras.charts:bar:alpha-0.12.0'
+    // Compose Line charts
+    implementation 'com.github.madrapps:plot:0.1.1'
 
     // Date and Time Picker
     implementation 'io.github.vanpra.compose-material-dialogs:datetime:0.7.1'
