@@ -38,7 +38,6 @@ import com.example.inr_management_md3.presentation.components.BottomNavBar
 import com.example.inr_management_md3.presentation.components.TabBar
 import com.example.inr_management_md3.presentation.navigation.DoseScreens
 import com.example.inr_management_md3.presentation.navigation.Screens
-import com.example.inr_management_md3.presentation.viewmodel.DoseViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

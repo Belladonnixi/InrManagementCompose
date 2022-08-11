@@ -13,6 +13,7 @@
  */
 package com.example.inr_management_md3.presentation.screens.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -131,7 +132,7 @@ fun TomorrowDoseNextMeasureCards(homeViewModel: HomeViewModel) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "1/2",
+                            text = "0",
                             color = MaterialTheme.colorScheme.onPrimary,
                             style = MaterialTheme.typography.headlineSmall
                         )
@@ -232,6 +233,11 @@ fun StatisticCard(homeViewModel: HomeViewModel) {
                     .padding(start = 16.dp, top = 16.dp, bottom = 16.dp, end = 8.dp),
                 contentAlignment = Alignment.Center
             ) {
+                Image(
+                    painter = painterResource(id = R.drawable.inr_trend),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
 
             BoxWithConstraints(
