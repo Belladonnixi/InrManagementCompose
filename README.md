@@ -53,6 +53,8 @@ again don't belongs to the course the declarative UI but I like them and for my 
 And the best is.... I won't do the same mistakes again. In iOS I will start my project from the be-
 ginning with tdd, won't play pittbull again, things like that.
 
+## UPDATE: I've made the decision to wait with further development, because Google finished Material Design 3 but the implementation in Compose isn't finished. But when it's finished I can throw away the libraries that I've never liked to implement but didn't have another choice at that moment. So I#ve made the decision to wait on this one for the moment.
+
 Hope you'll enjoy it anywhere and feel free to give useful and constructive feedback. 
 
 Have a nice day
