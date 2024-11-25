@@ -11,16 +11,17 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FO
 OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+# Update:
+
+# will not be finished in Android I'll doing a redesign an then rwritting the Project in Flutter and the missing parts, where then will be a database or better said datastructure rework will be done too.
+
 
 Inr Management
 ==============
 ![Screenshot_20220811-120518_Inr Management](https://user-images.githubusercontent.com/99251460/184199402-2d8d17f1-bdb8-4d7c-b98c-c4c0fda3f2ef.jpg)
 
-### Update:
 
-## will not be finished in Android I'll doing a redesign an then rwritting the Project in Flutter and the missing parts, where then will be a database or better said datastructure rework will be done too.
-
-This is a Work in Progress Project
+This is a Work in Progress Project/ Cancelled
 ==================================
 
 The idea to that project began in 2020 after my pulmonary embolism and began to rise in 2021 where I
