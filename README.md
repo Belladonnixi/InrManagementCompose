@@ -17,7 +17,8 @@ Inr Management
 ![Screenshot_20220811-120518_Inr Management](https://user-images.githubusercontent.com/99251460/184199402-2d8d17f1-bdb8-4d7c-b98c-c4c0fda3f2ef.jpg)
 
 ## Update:
-will not be finished in Android I'll doing a redesign an then rwritting the Project in Flutter and the missing parts, where then will be a database or better said datastructure rework will be done too.
+=================
+## will not be finished in Android I'll doing a redesign an then rwritting the Project in Flutter and the missing parts, where then will be a database or better said datastructure rework will be done too.
 
 This is a Work in Progress Project
 ==================================
