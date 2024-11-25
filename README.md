@@ -13,7 +13,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # Update:
 
-# will not be finished in Android I'll doing a redesign an then rwritting the Project in Flutter and the missing parts, where then will be a database or better said datastructure rework will be done too.
+# will not be finished in Android I'll doing a redesign an then rewritting the project in Flutter and the missing parts, where then will be a database or better said datastructure rework will be done too.
 
 
 Inr Management
